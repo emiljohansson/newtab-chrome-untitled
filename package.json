@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch",
-    "test": "NODE_PATH='.' nyc ava"
+    "test": "NODE_PATH='./src/' nyc ava"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "license": "MIT",
   "ava": {
     "files": [
-      "!bundle.*",
+      "!dist",
       "!test/helpers/**/*.js",
       "test/**/*.js"
     ],
@@ -29,12 +29,10 @@
   },
   "nyc": {
     "include": [
-      "lib/**/*.js",
-      "core/**/*.js",
-      "apps/**/*.js"
+      "src/**/*.js"
     ],
     "exclude": [
-      "bundle.*"
+      "dist"
     ],
     "extension": [
       ".js"

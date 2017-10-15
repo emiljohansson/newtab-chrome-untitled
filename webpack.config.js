@@ -1,15 +1,15 @@
 const path = require('path')
 
 module.exports = {
-  entry: './main.js',
+  entry: './src/main.js',
   resolve: {
     modules: [
       path.resolve('./node_modules'),
-      path.resolve('./')
+      path.resolve('./src')
     ]
   },
   output: {
-    path: path.resolve(__dirname, './'),
+    path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
   },
   devtool: 'source-map',
