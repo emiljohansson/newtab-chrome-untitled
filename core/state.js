@@ -1,7 +1,10 @@
-import { forEach, isArray } from 'lodash'
+import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
 import { Subject } from 'rxjs/Subject'
+import coreFunctions from 'core/coreFunctions'
 import callHook from 'core/callHook'
 import watch from 'core/watch'
+
+const dataWatcher = {}
 
 function ObserverArray (vm, key, array, viewSubject) {
   const subject = new Subject()
@@ -32,7 +35,6 @@ function ObserverArray (vm, key, array, viewSubject) {
           data.inserted = true
           break
         case 'splice':
-          console.log(args.slice(2))
           data.inserted = args.slice(2).length > 0
           break
       }
@@ -43,7 +45,48 @@ function ObserverArray (vm, key, array, viewSubject) {
   })
 }
 
+const dataChanged = (vm, subject, newValue) => {
+  const cb = () => {
+    subject.next(newValue)
+  }
+  dataWatcher[vm.$id] = dataWatcher[vm.$id] || []
+  if (!dataWatcher[vm.$id].$functionInProgress) {
+    cb()
+    return
+  }
+  dataWatcher[vm.$id].push(cb)
+}
+
+const bind = (vm, fn) => {
+  var orgFn = vm[fn]
+  vm[fn] = function (...args) {
+    dataWatcher[vm.$id] = dataWatcher[vm.$id] || []
+    dataWatcher[vm.$id].$functionInProgress = true
+    orgFn.apply(vm, args)
+    let update
+    while (update = dataWatcher[vm.$id].splice(0, 1)[0]) {
+      update()
+    }
+    vm.$nextTick()
+    delete dataWatcher[vm.$id].$functionInProgress
+  }
+}
+
 const iterateData = vm => {
+  const tickCallbacks = []
+  vm.$nextTick = cb => {
+    if (cb != null) {
+      tickCallbacks.push(cb)
+      return
+    }
+    if (tickCallbacks.length < 1) {
+      return
+    }
+    let fn
+    while (fn = tickCallbacks.splice(0, 1)[0]) {
+      fn()
+    }
+  }
   const addWatch = (value, key, list) => {
     const subject = new Subject(value)
     const viewSubject = watch(vm, key)
@@ -63,7 +106,7 @@ const iterateData = vm => {
         return vm.$data[key]
       },
       set (newValue) {
-        subject.next(newValue)
+        dataChanged(vm, subject, newValue)
       }
     })
     vm[key] = value
@@ -73,5 +116,12 @@ const iterateData = vm => {
 
 export default (vm) => {
   vm.$data = vm.data
+  const publicMethods = filter(
+    keys(vm),
+    key => key[0] !== '$' && indexOf(coreFunctions, key) < 0 && isFunction(vm[key])
+  )
+  forEach(publicMethods, fn => {
+    bind(vm, fn)
+  })
   forEach(vm.$data, iterateData(vm))
 }

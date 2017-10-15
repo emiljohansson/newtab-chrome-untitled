@@ -91,6 +91,30 @@ test('should update each data separately in single text node', t => {
   document.body.removeChild(vm.$el)
 })
 
+test('should only update view after $nextTick been triggered', t => {
+  t.plan(2)
+  const el = document.createElement('div')
+  document.body.appendChild(el)
+  const App = {
+    template: `<div>{{foo}}-{{bar}}</div>`,
+    data: {
+      foo: 'not updated',
+      bar: 1
+    },
+    triggerUpdate () {
+      this.foo = 'updated'
+      this.bar = 2
+      t.is(this.$el.innerHTML, 'not updated-1')
+      this.$nextTick(() => {
+        t.is(this.$el.innerHTML, 'updated-2')
+        this.$destroy()
+      })
+    }
+  }
+  const vm = Instance(App, el)
+  vm.triggerUpdate()
+})
+
 test('should replace empty values with an empty string', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
@@ -505,13 +529,15 @@ test('should add and remove apps with oIf', t => {
   }
   app('Bar', Bar)
   const vm = Instance(Foo, el)
-  t.is(vm.$el.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+  const falseExpected = `Hello, <!--${vm.$id}.show-->`
+  const trueExpected = `Hello, <!--${vm.$id}.show--><article>World</article>`
+  t.is(vm.$el.innerHTML, falseExpected)
   vm.show = true
-  t.is(vm.$el.innerHTML, `Hello, <!--${vm.$id}.show--><article>World</article>`)
+  t.is(vm.$el.innerHTML, trueExpected)
   vm.show = false
-  t.is(vm.$el.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+  t.is(vm.$el.innerHTML, falseExpected)
   vm.show = true
-  t.is(vm.$el.innerHTML, `Hello, <!--${vm.$id}.show--><article>World</article>`)
+  t.is(vm.$el.innerHTML, trueExpected)
   t.is(mounted.callCount, 2)
   t.is(destroyed.callCount, 1)
   document.body.removeChild(vm.$el)
@@ -600,8 +626,6 @@ test('moving around array values should update view', t => {
   t.is(vm.$el.children[0].innerHTML, '3')
   t.is(vm.$el.children[2].innerHTML, '1')
 
-  console.log(vm.$el.innerHTML)
-  
   vm.$destroy()
 })
 
@@ -640,7 +664,6 @@ test('moving around array values should update view', t => {
 //   t.is(vm.$el.children[0].innerHTML, '3')
 //   t.is(vm.$el.children[2].innerHTML, '1')
 
-//   console.log(vm.$el.innerHTML)
   
 //   vm.$destroy()
 // })

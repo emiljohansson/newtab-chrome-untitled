@@ -43,7 +43,6 @@ Todo.onCompleteClick = function () {
 }
 
 Todo.onRemoveClick = function () {
-  console.log(this.id)
   this.data.removeTodo(this.id)
 }
 
