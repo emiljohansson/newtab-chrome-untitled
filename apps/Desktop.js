@@ -49,16 +49,19 @@ const template = `
   </div>
   <div is="Window"
     title="Todos"
-    height="300">
+    height="300"
+    o-emit-close="onCloseWindow">
     <div is="Todos"></div>
   </div>
   <div is="Window"
-    title="Playground">
+    title="Playground"
+    o-emit-close="onCloseWindow">
     <div is="Playground"></div>
   </div>
   <div is="Window"
     title="Puzzle"
-    width="190">
+    width="190"
+    o-emit-close="onCloseWindow">
     <div is="Puzzle"></div>
   </div>
   <div o-for="index in windows"
