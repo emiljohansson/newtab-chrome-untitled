@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>New Tab Untitled</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet">
+
+
+  <style media="screen">
+    html {
+      box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+
+    .hline,
+    .vline {
+      /*background-color: red;*/
+      position: absolute;
+    }
+
+    .vline {
+      height: 100%;
+      width: 1px;
+      left: 50%;
+    }
+
+    .hline {
+      height: 1px;
+      width: 100%;
+      top: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hline"></div>
+  <div class="vline"></div>
+  <div is="OS"></div>
+
+  <script src="bundle.js"></script>
+</body>
+
+</html>
