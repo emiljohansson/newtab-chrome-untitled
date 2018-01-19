@@ -1,6 +1,5 @@
 import { Subject } from 'rxjs/Subject'
-import { camelCase, filter, forEach } from 'lodash'
-import noop from 'lib/noop'
+import { camelCase, filter, forEach, noop } from 'lodash'
 
 const emitSelector = 'o-emit-'
 

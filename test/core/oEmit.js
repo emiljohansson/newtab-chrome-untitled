@@ -1,7 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { isFunction } from 'lodash'
-import noop from 'lib/noop'
+import { isFunction, noop } from 'lodash'
 import app from 'core/app'
 import oEmit from 'core/oEmit'
 

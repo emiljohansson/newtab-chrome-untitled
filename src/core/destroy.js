@@ -1,5 +1,4 @@
-import { forEach } from 'lodash'
-import noop from 'lib/noop'
+import { forEach, noop } from 'lodash'
 import callHook from 'core/callHook'
 import { destroy as destroyWatchers } from 'core/watch'
 

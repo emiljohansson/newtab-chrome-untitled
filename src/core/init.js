@@ -1,6 +1,5 @@
-import { filter, forEach, reduce, uniqueId } from 'lodash'
+import { filter, forEach, noop, reduce, uniqueId } from 'lodash'
 import getAllTextNodes from 'lib/getAllTextNodes'
-import noop from 'lib/noop'
 import replaceWithTemplate from 'core/replaceWithTemplate'
 import storeAttributes from 'core/storeAttributes'
 import apps from 'core/apps'
