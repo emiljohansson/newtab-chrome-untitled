@@ -596,11 +596,11 @@ test('should create an array for each reference with oRef in a oFor', t => {
   vm.barsData.unshift({id: 4})
   t.is(vm.$refs.bars[0].id, 4)
   t.is(vm.$refs.bars[1].id, 1)
-  
+
   vm.barsData.splice(0, 1)
   t.is(vm.$refs.bars.length, 3)
   t.is(vm.$refs.bars[0].id, 1)
-  
+
   vm.$destroy()
 })
 
@@ -620,9 +620,9 @@ test('moving around array values should update view', t => {
 
   t.is(vm.$el.children[0].innerHTML, '1')
   t.is(vm.$el.children[2].innerHTML, '3')
-  
+
   vm.values[2] = vm.values.splice(0, 1, vm.values[2])[0]
-  
+
   t.is(vm.$el.children[0].innerHTML, '3')
   t.is(vm.$el.children[2].innerHTML, '1')
 
@@ -658,12 +658,12 @@ test('moving around array values should update view', t => {
 
 //   t.is(vm.$el.children[0].innerHTML, '1')
 //   t.is(vm.$el.children[2].innerHTML, '3')
-  
+
 //   vm.values[2] = vm.values.splice(0, 1, vm.values[2])[0]
-  
+
 //   t.is(vm.$el.children[0].innerHTML, '3')
 //   t.is(vm.$el.children[2].innerHTML, '1')
 
-  
+
 //   vm.$destroy()
 // })

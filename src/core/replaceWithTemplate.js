@@ -21,7 +21,9 @@ const replaceWithTemplate = vm => {
 
   oEmit(vm)
 
-  vm.$el = getElFromTemplate(vm.template)
+  if (vm.template != null && vm.template !== '') {
+    vm.$el = getElFromTemplate(vm.template)
+  }
 
   const forElements = getElsByAttr(vm.$el, forSelector)
   forEach(forElements, element => {

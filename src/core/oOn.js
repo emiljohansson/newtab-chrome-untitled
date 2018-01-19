@@ -7,6 +7,7 @@ const types = [
   'mousedown',
   'mousemove',
   'mouseup',
+  'keydown',
   'keyup'
 ]
 

@@ -44,6 +44,7 @@ app('PlaygroundIfItem', require('apps/Playground').PlaygroundIfItem)
 app('StatusBar', require('apps/StatusBar').default)
 app('Puzzle', require('apps/Puzzle/Puzzle').default)
 app('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
+app('Terminal', require('apps/Terminal/Terminal').default)
 
 Instance(apps('OS'), document.querySelector(`[is=OS]`))
 

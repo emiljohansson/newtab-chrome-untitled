@@ -1,15 +1,18 @@
 import test from 'ava'
+import Instance from 'core/Instance'
 import oFor from 'core/oFor'
 
 test('should create an element for each item in the list', t => {
   const el = document.createElement('div')
   el.innerHTML = `<div o-for="value in list">{{value}}</div>`
   const array = ['foo', 'bar']
-  const vm = {
+  const App = {
     data: {
       list: array
     }
   }
+  const vm = Instance(App, el)
+  console.log('-------------------------------')
   oFor(vm, el.firstChild)
   t.is(el.children.length, 2)
   const firstChild = el.children[0]
@@ -22,11 +25,12 @@ test('should update view when item in list changes', t => {
   const el = document.createElement('div')
   el.innerHTML = `<div o-for="value in list">{{value}}</div>`
   const array = ['foo', 'bar']
-  const vm = {
+  const App = {
     data: {
       list: array
     }
   }
+  const vm = Instance(App, el)
   oFor(vm, el.firstChild)
   t.is(el.children.length, 2)
   vm.data.list[0] = 'Hello'

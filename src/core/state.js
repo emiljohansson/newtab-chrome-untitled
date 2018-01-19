@@ -26,16 +26,16 @@ function ObserverArray (vm, key, array, viewSubject) {
       const data = {
         arg: args,
         method,
-        inserted: false
+        inserted: []
       }
       let inserted
       switch (method) {
         case 'push':
         case 'unshift':
-          data.inserted = true
+          data.inserted = args
           break
         case 'splice':
-          data.inserted = args.slice(2).length > 0
+          data.inserted = args.slice(2)
           break
       }
       const result = Array.prototype[method].apply(this, args)

@@ -8,3 +8,14 @@ test('should do no-operations', t => {
     Foo - {{completed}}
 `)
 })
+
+test('should return string from plain object', t => {
+  const foo = {
+    bar: 'hello'
+  }
+  t.is(replaceBracketContent(`
+    {{foo.bar}}
+`, foo, 'foo.bar', 'foo'), `
+    hello
+`)
+})

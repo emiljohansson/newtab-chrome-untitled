@@ -68,6 +68,12 @@ const template = `
     is="Window"
     o-emit-close="onCloseWindow"></div>
   <div o-if="testShow">Hello</div>
+  <div is="Window"
+    title="Terminal"
+    height="200"
+    o-emit-close="onCloseWindow">
+    <div is="Terminal"></div>
+  </div>
 </article>
 `
 

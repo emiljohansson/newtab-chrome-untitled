@@ -1,4 +1,4 @@
-import { forEach, isElement, map, reduce, uniqueId } from 'lodash'
+import { forEach, isElement, map, noop, reduce, uniqueId } from 'lodash'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
 import replaceWithTemplate from 'core/replaceWithTemplate'
@@ -14,7 +14,7 @@ export const forSelector = 'o-for'
 
 function CacheArray (vm, ref) {
   const array = []
-  
+
   if (ref != null) {
     vm.$refs[ref] = []
   }
@@ -36,7 +36,7 @@ function CacheArray (vm, ref) {
       return result
     }
   })
-  
+
   return array
 }
 
@@ -51,7 +51,7 @@ export default (vm, el) => {
   const tempContainer = document.createDocumentFragment()
   const ref = el.getAttribute('o-ref')
   const forValues = el.getAttribute(forSelector).split(' ')
-  const value = forValues[0]
+  const valueString = forValues[0]
   const dataKey = forValues[2]
   const dataItems = vm.data[dataKey]
 
@@ -60,10 +60,11 @@ export default (vm, el) => {
   const viewSubject = watch(vm, dataKey)
   viewSubject.subscribe(data => {
     let index
-    if (data.inserted) {
+    if (data.inserted.length > 0) {
       index = 0
       if (data.method === 'splice') {
         // TODO move around elements
+        // TODO remove elements
         // data is not correct here
         return
       } else if (data.method === 'push') {
@@ -91,15 +92,16 @@ export default (vm, el) => {
       ? container
       : tempContainer
     const cloneNode = el.cloneNode(true)
-    if (cloneNode.hasAttribute('is')) {
-      const newVm = App(cloneNode, container, dataItem, index === 0)
-      // const method = index === 0
-      //   ? 'unshift'
-      //   : 'push'
-      cache[method]({
-        vm: newVm,
-        data: dataItem
-      })
+    // if (cloneNode.hasAttribute('is')) {
+    const newVm = App(cloneNode, container, dataItem, index === 0)
+    // const method = index === 0
+    //   ? 'unshift'
+    //   : 'push'
+    cache[method]({
+      vm: newVm,
+      data: dataItem
+    })
+    if (el.hasAttribute('is')) {
       return
     }
     const textNodes = getAllTextNodes(cloneNode)
@@ -123,7 +125,8 @@ export default (vm, el) => {
           historyNode.node.textContent = replaceBracketContent(
             historyNode.orgContent,
             newValue,
-            key
+            key,
+            valueString
           )
         })
       }
