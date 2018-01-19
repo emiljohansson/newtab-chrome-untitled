@@ -70,6 +70,7 @@
     "jss": "^9.0.0",
     "jss-preset-default": "^4.0.1",
     "keyboard-handler": "^1.1.2",
+    "keyboard-key-code": "git+https://github.com/emiljohansson/keyboard-key-code.git",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.13",
     "redux": "^3.7.2",
