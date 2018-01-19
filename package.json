@@ -66,6 +66,7 @@
     "nyc": "11.2.1",
     "qs": "^6.5.1",
     "sinon": "3.3.0",
+    "uglify-js": "3.3.7",
     "webpack": "3.5.4"
   },
   "dependencies": {
