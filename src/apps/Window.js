@@ -105,15 +105,18 @@ const { classes } = jss.createStyleSheet({
 }).attach()
 
 const template = `
-<article class="${classes.desktopWindow}" o-class="{
-  isDragging: isDragging
-}">
+<article class="${classes.desktopWindow}"
+  o-class="{
+    isDragging: isDragging
+  }"
+  o-on-click="onWindowClick()"
+>
   <div class="${classes.header}"
     o-on-mousedown="onMenuMouseDown($event)">
     <div class="${classes.headerLeftButtons}">
       <button class="${classes.closeButton}"
         o-on-mousedown="onPreventMouseEvent($event)"
-        o-on-click="onMenuCloseClicked($event)"></button>
+        o-on-click="onMenuCloseClick($event)"></button>
     </div>
     <div class="${classes.headerTitle}">
       {{title}}
@@ -139,6 +142,14 @@ const DesktopWindow = {
     title: 'Untitled',
     zIndex: -1
   }
+}
+
+DesktopWindow.created = function () {
+  // const windowSubject = new Subject()
+  // this.$children[0].desktopWindow = {
+  //   on: windowSubject.subscribe,
+  //   off: windowSubject.unsubscribe
+  // }
 }
 
 DesktopWindow.mounted = function () {
@@ -172,6 +183,18 @@ DesktopWindow.destroyed = function () {
   this.mouseUpSubscription.unsubscribe()
 }
 
+DesktopWindow.blurWindow = function () {
+  this.$children[0].windowBlurred()
+}
+
+DesktopWindow.focusWindow = function () {
+  this.$children[0].windowFocused()
+}
+
+DesktopWindow.onWindowClick = function (event) {
+  this.$emit('focus', this)
+}
+
 DesktopWindow.onMenuMouseDown = function (event) {
   this.isDragging = true
   this.offsetCoor.x = this.$el.offsetLeft - event.x
@@ -182,7 +205,7 @@ DesktopWindow.onMenuMouseDown = function (event) {
   }
 }
 
-DesktopWindow.onMenuCloseClicked = function (event) {
+DesktopWindow.onMenuCloseClick = function (event) {
   const arg = this.index < 0
     ? this
     : this.index

@@ -2,6 +2,7 @@ import jss from 'jss'
 import { isFunction } from 'lodash'
 import keyboard from 'keyboard-handler'
 import * as keyCode from 'keyboard-key-code'
+import WindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
 
 const { classes } = jss.createStyleSheet({
@@ -34,29 +35,29 @@ const { classes } = jss.createStyleSheet({
 }).attach()
 
 const template = `
-<article class="${classes.root}" o-on-click="onClick()">
+<article class="${classes.root}">
 <div>
   <div o-for="output in outputs">
     <div class="${classes.outputCmd}">{{output.cmd}}</div>
     <div>{{output.out}}</div>
   </div>
 </div>
-<div o-ref="fieldx" class="${classes.fieldContainer}">
+<div class="${classes.fieldContainer}">
   <input
     class="${classes.field}"
-    autofocus
+    o-ref="field"
     o-on-keydown="onKeyDown($event)"
   />
 </div>
 </article>
 `
 
-const Terminal = {
+const Terminal = Object.assign({}, WindowApp, {
   template,
   data: {
     outputs: []
   }
-}
+})
 
 Terminal.mounted = function () {
   // TODO only clear if app is in focus
@@ -64,11 +65,10 @@ Terminal.mounted = function () {
   keyboard.keysAreDown([17, 75], () => {
     this.outputs.splice(0, this.outputs.length)
   })
-
 }
 
-Terminal.onClick = function () {
-  // focusField(this.$refs.field.$el)
+Terminal.windowFocused = function () {
+  this.$refs.field.focus()
 }
 
 Terminal.onKeyDown = function (event) {
@@ -76,7 +76,6 @@ Terminal.onKeyDown = function (event) {
   const input = fieldEl.value
   if (keyCode.isEnter(event)) {
     const output = getOutput(input)
-    // this.outputs.push(output)
     this.outputs.push({
       cmd: fieldEl.value,
       out: output

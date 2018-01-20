@@ -1,4 +1,5 @@
 import jss from 'jss'
+import WindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   playground: {
@@ -6,7 +7,7 @@ const { classes } = jss.createStyleSheet({
   }
 }).attach()
 
-export const Playground = {
+export const Playground = Object.assign({}, WindowApp, {
   template: `
 <article class="${classes.playground}">
   <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
@@ -28,7 +29,7 @@ export const Playground = {
     sum: 0,
     show: false
   }
-}
+})
 
 Playground.beforeCreate = function () {
   window.Playground = this

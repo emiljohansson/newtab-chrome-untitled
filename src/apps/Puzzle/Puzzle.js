@@ -1,5 +1,6 @@
 import jss from 'jss'
 import { forEach, reduce } from 'lodash'
+import WindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   puzzle: {
@@ -40,12 +41,12 @@ const swapEl = (el1, el2) => {
   tempEl.parentNode.removeChild(tempEl)
 }
 
-const Puzzle = {
+const Puzzle = Object.assign({}, WindowApp, {
   template,
   data: {
     values: null
   }
-}
+})
 
 Puzzle.beforeCreate = function () {
   this.data.values = []
@@ -55,7 +56,7 @@ Puzzle.beforeCreate = function () {
       value
     })
   }
-}  
+}
 
 Puzzle.mounted = function () {
   const length = this.$children.length
@@ -90,7 +91,7 @@ Puzzle.onItemClick = function (el) {
     return
   }
   swapEl(el, blankEl)
-  
+
   // validate
   if (selectedIndex !== numberOfValues) {
     return

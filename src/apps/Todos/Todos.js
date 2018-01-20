@@ -1,5 +1,6 @@
 import { forEach, reduce } from 'lodash'
 import jss from 'jss'
+import WindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   todos: {
@@ -33,12 +34,12 @@ const template = `
 </article>
 `
 
-const Todos = {
+const Todos = Object.assign({}, WindowApp, {
   template,
   data: {
     todos: []
   }
-}
+})
 
 Todos.beforeCreate = function () {
   this.data.todos = localStorage.todos

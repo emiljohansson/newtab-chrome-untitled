@@ -37,12 +37,9 @@ const template = `
 <article class="${classes.desktop}">
   <div is="Window"
     title="Times"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
-    <div>
-      <div is="Time" title="Sweden" timezone="Europe/Stockholm"></div>
-      <div is="Time" title="Shanghai" timezone="Asia/Shanghai"></div>
-      <div is="Time" title="Los Angeles" timezone="America/Los_Angeles"></div>
-    </div>
+    <div is="TimeApp"></div>
   </div>
   <div class="${classes.timeCenter}">
     <div is="Time" timezone="America/Denver"></div>
@@ -50,32 +47,39 @@ const template = `
   <div is="Window"
     title="Todos"
     height="300"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
     <div is="Todos"></div>
   </div>
   <div is="Window"
     title="Playground"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
     <div is="Playground"></div>
   </div>
   <div is="Window"
     title="Puzzle"
     width="190"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
     <div is="Puzzle"></div>
   </div>
   <div o-for="index in windows"
     is="Window"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow"></div>
   <div o-if="testShow">Hello</div>
   <div is="Window"
     title="Terminal"
     height="200"
+    o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
     <div is="Terminal"></div>
   </div>
 </article>
 `
+
+let activeWindow
 
 const Desktop = {
   template,
@@ -87,7 +91,7 @@ const Desktop = {
 }
 
 Desktop.mounted = function () {
-  keyboard.keysAreDown([16, 78], () => {
+  keyboard.keysAreDown([17, 78], () => {
     const length = this.windows.length
     let index = 0
     if (length > 0) {
@@ -97,6 +101,17 @@ Desktop.mounted = function () {
       index
     })
   })
+}
+
+Desktop.onFocusWindow = function (desktopWindow) {
+  if (activeWindow === desktopWindow) {
+    return
+  }
+  if (activeWindow != null) {
+    activeWindow.blurWindow()
+  }
+  activeWindow = desktopWindow
+  activeWindow.focusWindow()
 }
 
 Desktop.onCloseWindow = function (arg) {
