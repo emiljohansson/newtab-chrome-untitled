@@ -569,6 +569,24 @@ test('should create a app reference with oRef', t => {
   t.is(vm.$refs, undefined)
 })
 
+test('should store a DOM element containing oRef', t => {
+  const el = document.createElement('div')
+  document.body.appendChild(el)
+  let barVm
+  const Foo = {
+    template: `<article>
+  <span o-ref="bar"></span>
+</article>`,
+    data: {}
+  }
+  const vm = Instance(Foo, el)
+  t.deepEqual(vm.$refs.bar, vm.$el.querySelector('span'))
+  t.false(vm.$refs.bar.hasAttribute('o-ref'))
+
+  vm.$destroy()
+  t.is(vm.$refs, undefined)
+})
+
 test('should create an array for each reference with oRef in a oFor', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)

@@ -26,7 +26,7 @@ function ChildrenArray (vm, array) {
 const findChildComponents = vm => {
   let children = filter(
     getChildElements(vm.$el),
-    el => el.hasAttribute('is') && !el.hasAttribute(ifSelector)
+    el => (el.hasAttribute('is') || el.hasAttribute('o-ref')) && !el.hasAttribute(ifSelector)
   )
   if (children.length < 1) {
     return
@@ -35,10 +35,18 @@ const findChildComponents = vm => {
   forEach(children, el => {
     const id = el.getAttribute('is')
     const ref = el.getAttribute('o-ref')
-    const childVm = Instance(apps(id), el)
-    vm.$children.push(childVm)
+    if (id != null) {
+      const childVm = Instance(apps(id), el)
+      vm.$children.push(childVm)
+      if (ref != null) {
+        vm.$refs[ref] = childVm
+      }
+      return
+    }
     if (ref != null) {
-      vm.$refs[ref] = childVm
+      el.removeAttribute('o-ref')
+      vm.$refs[ref] = el
+      return
     }
   })
 }

@@ -12,7 +12,6 @@ test('should create an element for each item in the list', t => {
     }
   }
   const vm = Instance(App, el)
-  console.log('-------------------------------')
   oFor(vm, el.firstChild)
   t.is(el.children.length, 2)
   const firstChild = el.children[0]
