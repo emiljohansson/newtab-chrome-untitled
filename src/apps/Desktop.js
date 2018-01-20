@@ -1,6 +1,6 @@
-import { isNumber } from 'lodash'
+import { forEach, isFunction, isNumber } from 'lodash'
 import jss from 'jss'
-import keyboard from 'keyboard-handler'
+import keyboardHandler from 'keyboard-handler'
 import { classes as weatherClasses } from './Weather'
 
 const styles = {
@@ -91,7 +91,7 @@ const Desktop = {
 }
 
 Desktop.mounted = function () {
-  keyboard.keysAreDown([17, 78], () => {
+  keyboardHandler.keysAreDown([17, 78], () => {
     const length = this.windows.length
     let index = 0
     if (length > 0) {
@@ -121,5 +121,25 @@ Desktop.onCloseWindow = function (arg) {
   }
   arg.$destroy()
 }
+
+export const keyboard = {}
+
+forEach(Object.keys(keyboardHandler), key => {
+  const method = keyboardHandler[key]
+  if (!isFunction(method)) {
+    return
+  }
+  keyboard[key] = function (...args) {
+    const app = args[0]
+    const params = args[1]
+    const callback = args[2]
+    method(params, () => {
+      if (activeWindow !== app.$parent) {
+        return
+      }
+      callback()
+    })
+  }
+})
 
 export default Desktop

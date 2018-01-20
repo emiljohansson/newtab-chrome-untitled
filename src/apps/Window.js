@@ -144,14 +144,6 @@ const DesktopWindow = {
   }
 }
 
-DesktopWindow.created = function () {
-  // const windowSubject = new Subject()
-  // this.$children[0].desktopWindow = {
-  //   on: windowSubject.subscribe,
-  //   off: windowSubject.unsubscribe
-  // }
-}
-
 DesktopWindow.mounted = function () {
   updateZIndex(this)
   const coor = getNewInitCoor(this.$id)

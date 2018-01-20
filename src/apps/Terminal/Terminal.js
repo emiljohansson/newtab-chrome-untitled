@@ -1,7 +1,7 @@
 import jss from 'jss'
 import { isFunction } from 'lodash'
-import keyboard from 'keyboard-handler'
 import * as keyCode from 'keyboard-key-code'
+import { keyboard } from 'apps/Desktop'
 import WindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
 
@@ -60,19 +60,17 @@ const Terminal = Object.assign({}, WindowApp, {
 })
 
 Terminal.mounted = function () {
-  // TODO only clear if app is in focus
-  // TODO add support for focusing an app
-  keyboard.keysAreDown([17, 75], () => {
+  keyboard.keysAreDown(this, [17, 75], () => {
     this.outputs.splice(0, this.outputs.length)
   })
 }
 
 Terminal.windowFocused = function () {
-  this.$refs.field.focus()
+  this.focusField()
 }
 
 Terminal.onKeyDown = function (event) {
-  const fieldEl = event.currentTarget // this.$refs.field.$el
+  const fieldEl = event.currentTarget
   const input = fieldEl.value
   if (keyCode.isEnter(event)) {
     const output = getOutput(input)
@@ -81,14 +79,14 @@ Terminal.onKeyDown = function (event) {
       out: output
     })
     fieldEl.value = ''
-    focusField(fieldEl)
+    this.focusField()
     return
   }
 }
 
-const focusField = el => {
-  el.scrollIntoView()
-  el.focus()
+Terminal.focusField = function () {
+  this.$refs.field.scrollIntoView()
+  this.$refs.field.focus()
 }
 
 const getOutput = input => {
