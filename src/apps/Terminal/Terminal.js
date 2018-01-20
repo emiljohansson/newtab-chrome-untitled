@@ -2,7 +2,7 @@ import jss from 'jss'
 import { isFunction } from 'lodash'
 import * as keyCode from 'keyboard-key-code'
 import { keyboard } from 'apps/Desktop'
-import WindowApp from 'apps/WindowApp'
+import extendWindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
 
 const { classes } = jss.createStyleSheet({
@@ -52,7 +52,7 @@ const template = `
 </article>
 `
 
-const Terminal = Object.assign({}, WindowApp, {
+const Terminal = extendWindowApp('Terminal', {
   template,
   data: {
     outputs: []
@@ -90,9 +90,10 @@ Terminal.focusField = function () {
 }
 
 const getOutput = input => {
-  const fn = cmd[input]
+  const args = input.split(' ')
+  const fn = cmd[args[0]]
   if (isFunction(fn)) {
-    return fn()
+    return fn.apply(null, args.slice(1))
   }
   return `command not found: ${input}`
 }

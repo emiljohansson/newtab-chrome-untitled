@@ -1,5 +1,5 @@
 import jss from 'jss'
-import WindowApp from 'apps/WindowApp'
+import extendWindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   playground: {
@@ -7,7 +7,7 @@ const { classes } = jss.createStyleSheet({
   }
 }).attach()
 
-export const Playground = Object.assign({}, WindowApp, {
+export const Playground = extendWindowApp('Playground', {
   template: `
 <article class="${classes.playground}">
   <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>

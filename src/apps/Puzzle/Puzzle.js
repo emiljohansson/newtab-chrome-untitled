@@ -1,6 +1,6 @@
 import jss from 'jss'
 import { forEach, reduce } from 'lodash'
-import WindowApp from 'apps/WindowApp'
+import extendWindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   puzzle: {
@@ -41,7 +41,7 @@ const swapEl = (el1, el2) => {
   tempEl.parentNode.removeChild(tempEl)
 }
 
-const Puzzle = Object.assign({}, WindowApp, {
+const Puzzle = extendWindowApp('Puzzle', {
   template,
   data: {
     values: null

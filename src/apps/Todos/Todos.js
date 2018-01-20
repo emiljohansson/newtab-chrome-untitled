@@ -1,6 +1,6 @@
 import { forEach, reduce } from 'lodash'
 import jss from 'jss'
-import WindowApp from 'apps/WindowApp'
+import extendWindowApp from 'apps/WindowApp'
 
 const { classes } = jss.createStyleSheet({
   todos: {
@@ -34,7 +34,7 @@ const template = `
 </article>
 `
 
-const Todos = Object.assign({}, WindowApp, {
+const Todos = extendWindowApp('Todos', {
   template,
   data: {
     todos: []

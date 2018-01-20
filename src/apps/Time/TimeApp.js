@@ -1,4 +1,4 @@
-import WindowApp from 'apps/WindowApp'
+import extendWindowApp from 'apps/WindowApp'
 
 const styles = {}
 
@@ -10,7 +10,7 @@ const template = `
 </article>
 `
 
-const TimeApp = Object.assign({}, WindowApp, {
+const TimeApp = extendWindowApp('TimeApp', {
   styles,
   template,
   data: {}

@@ -1,13 +1,8 @@
 import { noop } from 'lodash'
 // import BaseApp from 'core/BaseApp'
-
-const styles = {}
-
-const template = ``
+import { installApp } from 'apps/OS'
 
 const WindowApp = {
-  styles,
-  template,
   data: {}
 }
 
@@ -15,4 +10,8 @@ WindowApp.windowBlurred = function () {}
 
 WindowApp.windowFocused = function () {}
 
-export default WindowApp
+export default (definition, App) => {
+  const AppProto = Object.assign({}, WindowApp, App)
+  installApp(definition, AppProto)
+  return AppProto
+}
