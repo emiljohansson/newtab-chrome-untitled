@@ -60,10 +60,12 @@
     "webpack": "3.5.4"
   },
   "dependencies": {
+    "array-movetoend": "1.0.0",
+    "array-removeat": "1.0.0",
     "jss": "9.0.0",
     "jss-preset-default": "4.0.1",
     "keyboard-handler": "1.1.2",
-    "keyboard-key-code": "git+https://github.com/emiljohansson/keyboard-key-code.git",
+    "keyboard-key-code": "^1.0.1",
     "lodash": "4.17.4",
     "moment-timezone": "0.5.13",
     "qs": "6.5.1",

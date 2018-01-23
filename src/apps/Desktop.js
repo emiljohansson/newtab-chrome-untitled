@@ -1,6 +1,8 @@
 import { forEach, isFunction, isNumber } from 'lodash'
 import jss from 'jss'
 import keyboardHandler from 'keyboard-handler'
+import moveToEnd from 'array-movetoend'
+import removeAt from 'array-removeat'
 import { classes as weatherClasses } from './Weather'
 
 const styles = {
@@ -79,7 +81,27 @@ const template = `
 </article>
 `
 
+const zIndexList = []
 let activeWindow
+let highestZIndex = 2
+
+const updateZIndex = desktopWindow => {
+  const index = zIndexList.indexOf(desktopWindow)
+  highestZIndex++
+  desktopWindow.$el.style.zIndex = highestZIndex
+  if (index < 0) {
+    zIndexList.push(desktopWindow)
+  } else {
+    moveToEnd(zIndexList, index)
+  }
+}
+
+const removeFromZIndex = desktopWindow => {
+  const index = zIndexList.indexOf(desktopWindow)
+  if (index > -1) {
+    removeAt(zIndexList, index)
+  }
+}
 
 const Desktop = {
   template,
@@ -91,6 +113,11 @@ const Desktop = {
 }
 
 Desktop.mounted = function () {
+  forEach(this.$children, $child => {
+    if ($child.isWindow === true) {
+      updateZIndex($child)
+    }
+  })
   keyboardHandler.keysAreDown([17, 78], () => {
     const length = this.windows.length
     let index = 0
@@ -100,10 +127,25 @@ Desktop.mounted = function () {
     this.windows.push({
       index
     })
+
+    // TODO use nextTick
+    this.focusWindow(this.$children[this.$children.length - 1])
+  })
+
+  keyboardHandler.keysAreDown([17, 87], () => {
+    const index = zIndexList.length - 1
+    if (index < 0) {
+      return
+    }
+    this.removeWindow(zIndexList[index])
   })
 }
 
 Desktop.onFocusWindow = function (desktopWindow) {
+  this.focusWindow(desktopWindow)
+}
+
+Desktop.focusWindow = function (desktopWindow) {
   if (activeWindow === desktopWindow) {
     return
   }
@@ -112,14 +154,20 @@ Desktop.onFocusWindow = function (desktopWindow) {
   }
   activeWindow = desktopWindow
   activeWindow.focusWindow()
+  updateZIndex(desktopWindow)
 }
 
-Desktop.onCloseWindow = function (arg) {
-  if (isNumber(arg)) {
-    this.windows.splice(arg, 1)
+Desktop.onCloseWindow = function (desktopWindow, index) {
+  this.removeWindow(desktopWindow, index)
+}
+
+Desktop.removeWindow = function (desktopWindow, index) {
+  removeFromZIndex(desktopWindow)
+  if (index > -1) {
+    this.windows.splice(index, 1)
     return
   }
-  arg.$destroy()
+  desktopWindow.$destroy()
 }
 
 export const keyboard = {}

@@ -1,4 +1,5 @@
 import jss from 'jss'
+import { isFunction } from 'lodash'
 import { Subject } from 'rxjs/Subject'
 
 const savedCoor = localStorage.savedWinPos == null
@@ -23,14 +24,6 @@ const getNewInitCoor = (id) => {
     initCoor.y = 0
   }
   return coor
-}
-
-let highestZIndex = 2
-
-const updateZIndex = vm => {
-  highestZIndex++
-  vm.zIndex = highestZIndex
-  vm.$el.style.zIndex = vm.zIndex
 }
 
 const mouseMoveSubject = new Subject()
@@ -131,6 +124,7 @@ const template = `
 const DesktopWindow = {
   template,
   data: {
+    isWindow: true,
     index: -1,
     height: 'auto',
     width: 300,
@@ -145,7 +139,6 @@ const DesktopWindow = {
 }
 
 DesktopWindow.mounted = function () {
-  updateZIndex(this)
   const coor = getNewInitCoor(this.$id)
   this.setPosition(coor.x, coor.y)
   this.$el.querySelector(`.${classes.content}`).style.height = `${this.height}px`
@@ -167,6 +160,7 @@ DesktopWindow.mounted = function () {
     this.isDragging = false
     document.body.style.userSelect = ''
     localStorage.savedWinPos = JSON.stringify(savedCoor)
+    this.focusWindow()
   })
 }
 
@@ -176,11 +170,19 @@ DesktopWindow.destroyed = function () {
 }
 
 DesktopWindow.blurWindow = function () {
-  this.$children[0].windowBlurred()
+  const $child = this.$children[0]
+  if ($child == null || !isFunction($child.windowBlurred)) {
+    return
+  }
+  $child.windowBlurred()
 }
 
 DesktopWindow.focusWindow = function () {
-  this.$children[0].windowFocused()
+  const $child = this.$children[0]
+  if ($child == null || !isFunction($child.windowFocused)) {
+    return
+  }
+  $child.windowFocused()
 }
 
 DesktopWindow.onWindowClick = function (event) {
@@ -192,16 +194,11 @@ DesktopWindow.onMenuMouseDown = function (event) {
   this.offsetCoor.x = this.$el.offsetLeft - event.x
   this.offsetCoor.y = this.$el.offsetTop - event.y
   document.body.style.userSelect = 'none'
-  if (this.zIndex !== highestZIndex) {
-    updateZIndex(this)
-  }
+  this.$emit('focus', this)
 }
 
 DesktopWindow.onMenuCloseClick = function (event) {
-  const arg = this.index < 0
-    ? this
-    : this.index
-  this.$emit('close', arg)
+  this.$emit('close', this, this.index)
 }
 
 DesktopWindow.onPreventMouseEvent = function (event) {
