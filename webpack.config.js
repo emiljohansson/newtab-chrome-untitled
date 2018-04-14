@@ -14,14 +14,14 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: {
-        presets: ['env'],
-        plugins: [require('babel-plugin-transform-object-rest-spread')]
-      }
-    }]
+    // loaders: [{
+    //   test: /\.js$/,
+    //   exclude: /node_modules/,
+    //   loader: 'babel-loader',
+    //   options: {
+    //     presets: ['env'],
+    //     plugins: [require('babel-plugin-transform-object-rest-spread')]
+    //   }
+    // }]
   }
 }

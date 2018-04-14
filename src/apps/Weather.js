@@ -19,10 +19,12 @@ const getWeather = unit => {
     if (data == null) {
       return
     }
+    const channel = data.query.results.channel
     const location = data.query.results.channel.location
     const condition = data.query.results.channel.item.condition
 
     updateSubject.next({
+      channel,
       city: location.city,
       region: location.region,
       temp: condition.temp,
@@ -39,14 +41,34 @@ export const { classes } = jss.createStyleSheet({
     cursor: 'pointer',
     userSelect: 'none'
   },
+  temp: {
+    display: 'inline-block',
+    position: 'relative',
+
+    '.degree-sign &::after': {
+      content: '\'\'',
+      position: 'absolute',
+      top: '21px',
+      border: '1px solid',
+      borderRadius: '50%',
+      padding: '4px',
+    }
+  },
   f: {
+    extend: 'temp',
     display: 'none',
     '.fahrenheit &': {
       display: 'block'
     }
   },
   c: {
+    extend: 'temp',
     '.fahrenheit &': {
+      display: 'none'
+    }
+  },
+  unit: {
+    '.degree-sign &': {
       display: 'none'
     }
   }
@@ -54,16 +76,19 @@ export const { classes } = jss.createStyleSheet({
 
 const template = `
 <article class="${classes.weather}" o-class="{
+  degree-sign: useDegreeSign,
   fahrenheit: isFahrenheit
 }" o-on-click="onClick">
-  <span class="${classes.f}">{{fahrenheit}}</span>
-  <span class="${classes.c}">{{celsius}}</span>
+  <div class="${classes.f}">{{fahrenheit}}<span class="${classes.unit}">F</span></div>
+  <div class="${classes.c}">{{celsius}}<span class="${classes.unit}">C</span></div>
 </article>
 `
 
 const Weather = {
   template,
   data: {
+    useDegreeSign: false,
+    channel: undefined,
     celsius: '',
     fahrenheit: '',
     isFahrenheit: false
@@ -72,11 +97,15 @@ const Weather = {
 
 Weather.mounted = function () {
   updateSubject.subscribe(state => {
+    if (this.channel == null) {
+      this.channel = state.channel
+      this.$emit('channelRetrieved', this.channel)
+    }
     if (state.unit === 'C') {
-      this.celsius = `${state.temp}C`
+      this.celsius = `${state.temp}`
       return
     }
-    this.fahrenheit = `${state.temp}F`
+    this.fahrenheit = `${state.temp}`
   })
   getWeather('c')
   getWeather('f')

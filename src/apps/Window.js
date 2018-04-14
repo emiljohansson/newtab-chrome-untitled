@@ -1,6 +1,7 @@
 import jss from 'jss'
-import { isFunction } from 'lodash'
+import { forEach, isFunction } from 'lodash'
 import { Subject } from 'rxjs/Subject'
+import * as spacing from 'style/spacing'
 
 const savedCoor = localStorage.savedWinPos == null
   ? {}
@@ -39,24 +40,28 @@ document.body.addEventListener('mouseup', event => {
 
 const { classes } = jss.createStyleSheet({
   desktopWindow: {
-    backgroundColor: 'white',
+    backgroundColor: '#f5f5f5',
     border: '1px solid #ccc',
-    borderRadius: '4px',
+    borderRadius: '3px',
     boxShadow: '0 2px 6px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.04)',
     minHeight: '200px',
-    padding: '4px',
+    padding: spacing.inset.xs,
     position: 'absolute',
-    zIndex: 2
+    zIndex: 2,
+
+    '&:hover $closeButton': {
+      opacity: 1
+    }
   },
   content: {
     overflow: 'scroll',
     position: 'relative'
   },
   header: {
-    background: '#ccc',
-    borderBottom: '1px solid #666',
-    borderTopLeftRadius: '3px',
-    borderTopRightRadius: '3px',
+    background: 'transparent',
+    borderBottom: '1px solid transparent',
+    borderTopLeftRadius: '1px',
+    borderTopRightRadius: '1px',
     height: '19px',
     margin: '-4px',
     marginBottom: '4px',
@@ -85,11 +90,13 @@ const { classes } = jss.createStyleSheet({
     zIndex: 1
   },
   closeButton: {
-    border: '1px solid #999',
-    backgroundColor: 'white',
-    borderRadius: '3px',
+    border: '0px solid',
+    backgroundColor: '#ff7868',
+    borderRadius: '10px',
     padding: '6px',
-    margin: '2px 0 0 2px',
+    margin: '3px 0 0 3px',
+    opacity: 0,
+    transition: 'opacity 0.3s ease-in-out',
 
     '&:active': {
       backgroundColor: '#eaeaea'
@@ -109,7 +116,8 @@ const template = `
     <div class="${classes.headerLeftButtons}">
       <button class="${classes.closeButton}"
         o-on-mousedown="onPreventMouseEvent($event)"
-        o-on-click="onMenuCloseClick($event)"></button>
+        o-on-click="onMenuCloseClick($event)">
+      </button>
     </div>
     <div class="${classes.headerTitle}">
       {{title}}
@@ -138,11 +146,34 @@ const DesktopWindow = {
   }
 }
 
+DesktopWindow.created = function () {
+}
+
 DesktopWindow.mounted = function () {
   const coor = getNewInitCoor(this.$id)
   this.setPosition(coor.x, coor.y)
   this.$el.querySelector(`.${classes.content}`).style.height = `${this.height}px`
   this.$el.style.width = `${this.width}px`
+
+  forEach(this.$children, $child => {
+    const settings = $child.windowSettings
+    if (settings == null) {
+      return
+    }
+    const update = settings => {
+      if (settings.transition) {
+        this.$el.style.transition = settings.transition
+      }
+      if (settings.background) {
+        this.$el.style.background = settings.background
+      }
+      if (settings.backgroundPositionX) {
+        this.$el.style.backgroundPositionX = settings.backgroundPositionX
+      }
+    }
+    update(settings)
+    settings.update = update
+  })
 
   this.mouseMoveSubscription = mouseMoveSubject.subscribe(event => {
     if (!this.isDragging) {

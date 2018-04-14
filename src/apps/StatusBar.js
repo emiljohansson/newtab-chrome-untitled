@@ -1,4 +1,5 @@
 import jss from 'jss'
+import * as spacing from 'style/spacing'
 
 const { classes } = jss.createStyleSheet({
   statusBar: {
@@ -15,26 +16,16 @@ const { classes } = jss.createStyleSheet({
     }
   },
   leftCol: {
-    extend: 'col',
-    paddingLeft: '16px',
-
-    '& > *': {
-      paddingRight: '4px'
-    }
+    extend: 'col'
   },
   rightCol: {
     extend: 'col',
-    paddingRight: '16px',
-    textAlign: 'right',
-    
-    '& > *': {
-      paddingLeft: '4px'
-    }
+    textAlign: 'right'
   }
 }).attach()
 
 const template = `
-<article class="${classes.statusBar}">
+<article class="${classes.statusBar} ${spacing.classes.px_m}">
   <div class="${classes.leftCol}"></div>
   <div class="${classes.rightCol}">
     <div is="Weather"></div>

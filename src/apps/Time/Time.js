@@ -1,3 +1,4 @@
+import jss from 'jss'
 import moment from 'moment-timezone'
 import { Subject } from 'rxjs/Subject'
 import { date } from 'apps/Terminal/cmd'
@@ -12,18 +13,16 @@ setInterval(() => {
   }
 }, 1000)
 
-const styles = {
-  time: {}
-}
+const { classes } = jss.createStyleSheet({
+}).attach()
 
 const template = `
 <article class="time">
-  {{title}} {{time}}
+  <span class="time-title">{{title}}</span><span class="time-time">{{time}}</span>
 </article>
 `
 
 const Time = {
-  styles,
   template,
   data: {
     time: '00:00',

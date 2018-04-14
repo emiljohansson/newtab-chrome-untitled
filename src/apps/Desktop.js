@@ -4,6 +4,7 @@ import keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
 import { classes as weatherClasses } from './Weather'
+import * as spacing from 'style/spacing'
 
 const styles = {
   desktop: {
@@ -13,7 +14,8 @@ const styles = {
     top: '0',
     left: '0',
     right: '0',
-    margin: '20px 16px 16px'
+    margin: spacing.inset.m,
+    marginTop: '20px'
   },
   timeCenter: {
     extend: 'time',
@@ -25,61 +27,70 @@ const styles = {
     textAlign: 'center'
   }
 }
-styles.desktop[`& .${weatherClasses.weather}`] = {
-  fontSize: '3rem',
-  fontWeight: '300',
-  position: 'absolute',
-  right: '0',
-  top: '0'
-}
+// styles.desktop[`& .${weatherClasses.weather}`] = {
+//   fontSize: '3rem',
+//   fontWeight: '300',
+//   position: 'absolute',
+//   right: '0',
+//   top: '0'
+// }
 
 const { classes } = jss.createStyleSheet(styles).attach()
 
 const template = `
 <article class="${classes.desktop}">
-  <div is="Window"
-    title="Times"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="TimeApp"></div>
-  </div>
   <div class="${classes.timeCenter}">
     <div is="Time" timezone="America/Denver"></div>
-  </div>
-  <div is="Window"
-    title="Todos"
-    height="300"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Todos"></div>
-  </div>
-  <div is="Window"
-    title="Playground"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Playground"></div>
-  </div>
-  <div is="Window"
-    title="Puzzle"
-    width="190"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Puzzle"></div>
   </div>
   <div o-for="index in windows"
     is="Window"
     o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow"></div>
-  <div o-if="testShow">Hello</div>
   <div is="Window"
-    title="Terminal"
-    height="200"
+    title=""
+    width="218"
+    height="300"
     o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
-    <div is="Terminal"></div>
+    <div is="WeatherApp"></div>
   </div>
 </article>
 `
+
+// <div is="Window"
+//   title=""
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="TimeApp"></div>
+// </div>
+// <div is="Window"
+//   title="Todos"
+//   height="300"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Todos"></div>
+// </div>
+// <div is="Window"
+//   title="Playground"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Playground"></div>
+// </div>
+// <div is="Window"
+//   title="Puzzle"
+//   width="190"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Puzzle"></div>
+// </div>
+// <div o-if="testShow">Hello</div>
+// <div is="Window"
+//   title="Terminal"
+//   height="200"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Terminal"></div>
+// </div>
 
 const zIndexList = []
 let activeWindow
@@ -129,7 +140,9 @@ Desktop.mounted = function () {
     })
 
     // TODO use nextTick
-    this.focusWindow(this.$children[this.$children.length - 1])
+    if (isFunction(this.focusWindow)) {
+      this.focusWindow(this.$children[this.$children.length - 1])
+    }
   })
 
   keyboardHandler.keysAreDown([17, 87], () => {
@@ -153,7 +166,9 @@ Desktop.focusWindow = function (desktopWindow) {
     activeWindow.blurWindow()
   }
   activeWindow = desktopWindow
-  activeWindow.focusWindow()
+  if (isFunction(activeWindow.focusWindow)) {
+    activeWindow.focusWindow()
+  }
   updateZIndex(desktopWindow)
 }
 

@@ -2,6 +2,7 @@ import jss from 'jss'
 
 const { classes } = jss.createStyleSheet({
   os: {
+    background: 'linear-gradient(to bottom, #ffffff 0%,#f6f6fa 100%)',
     height: '100%',
     width: '100%',
     position: 'absolute',

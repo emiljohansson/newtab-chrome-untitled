@@ -1,4 +1,4 @@
-import { filter, forEach, toArray } from 'lodash'
+import { camelCase, filter, forEach, toArray } from 'lodash'
 
 export default (vm, el) => {
   if (el == null) {
@@ -10,7 +10,7 @@ export default (vm, el) => {
     item => item.name.indexOf('o-') < 0
   )
   forEach(attributes, item => {
-    vm.data[item.name] = item.value
+    vm.data[camelCase(item.name)] = item.value
     el.removeAttribute(item.name)
   })
 }

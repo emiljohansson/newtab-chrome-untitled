@@ -1,5 +1,6 @@
 import test from 'ava'
 import oClass from 'core/oClass'
+import { log } from 'util';
 
 test('should do nothing', t => {
   const vm = {}
