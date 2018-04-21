@@ -1,7 +1,5 @@
 import jss from 'jss'
 
-const spaceDefault = `1rem`
-
 export const space = {
   xs: `0.25rem`,
   s: `0.5rem`,
@@ -17,7 +15,15 @@ export const inset = {
   s: `${space.s}`,
   m: `${space.m}`,
   l: `${space.l}`,
-  xl: `${space.xl}`
+  xl: `${space.xl}`,
+
+  squish: {
+    // xs: `${space.xs}`,
+    // s: `${space.s}`,
+    m: `${space.s} ${space.m}`
+    // l: `${space.l}`,
+    // xl: `${space.xl}`
+  }
 }
 
 // $space.inset-squish-s   = $space.xs $space.s

@@ -1,12 +1,13 @@
 import jss from 'jss'
+import * as spacing from 'style/spacing'
 
 const { classes } = jss.createStyleSheet({
   todo: {
     display: 'flex',
     alignItems: 'center',
-    fontSize: '1.2rem',
+    fontSize: '0.8rem',
     listStyle: 'none',
-    margin: '8px 0',
+    margin: spacing.stack.m,
     position: 'relative',
 
     '&:hover $removeBtn': {
@@ -14,7 +15,7 @@ const { classes } = jss.createStyleSheet({
     },
   },
   label: {
-    padding: '0 40px 2px',
+    padding: `0 ${spacing.space.l}`,
     flexGrow: 1,
 
     '.completed &': {
@@ -25,8 +26,8 @@ const { classes } = jss.createStyleSheet({
     backgroundColor: 'transparent',
     border: '1px solid #ccc',
     borderRadius: '50%',
-    height: '30px',
-    width: '30px',
+    height: '20px',
+    width: '20px',
     padding: '0',
     position: 'absolute',
     outline: 'none'

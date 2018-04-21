@@ -3,9 +3,9 @@ import { forEach, isFunction } from 'lodash'
 import { Subject } from 'rxjs/Subject'
 import * as spacing from 'style/spacing'
 
-const savedCoor = localStorage.savedWinPos == null
+const savedCoor = window.localStorage.savedWinPos == null
   ? {}
-  : JSON.parse(localStorage.savedWinPos)
+  : JSON.parse(window.localStorage.savedWinPos)
 
 const initCoor = {
   x: 0,
@@ -139,7 +139,7 @@ const DesktopWindow = {
     isDragging: false,
     offsetCoor: {
       x: 0,
-      y: 0,
+      y: 0
     },
     title: 'Untitled',
     zIndex: -1
@@ -190,7 +190,7 @@ DesktopWindow.mounted = function () {
     }
     this.isDragging = false
     document.body.style.userSelect = ''
-    localStorage.savedWinPos = JSON.stringify(savedCoor)
+    window.localStorage.savedWinPos = JSON.stringify(savedCoor)
     this.focusWindow()
   })
 }

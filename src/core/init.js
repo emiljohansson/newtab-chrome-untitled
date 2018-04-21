@@ -1,11 +1,9 @@
-import { filter, forEach, noop, reduce, uniqueId } from 'lodash'
-import getAllTextNodes from 'lib/getAllTextNodes'
+import { filter, forEach, uniqueId } from 'lodash'
 import replaceWithTemplate from 'core/replaceWithTemplate'
 import storeAttributes from 'core/storeAttributes'
 import apps from 'core/apps'
 import callHook from 'core/callHook'
 import Instance from 'core/Instance'
-import oContent from 'core/oContent'
 import { ifSelector } from 'core/oIf'
 
 function ChildrenArray (vm, array) {
@@ -46,7 +44,7 @@ const findChildComponents = vm => {
     if (ref != null) {
       el.removeAttribute('o-ref')
       vm.$refs[ref] = el
-      return
+      // return
     }
   })
 }
@@ -55,8 +53,8 @@ const getChildElements = el => {
   if (el == null) {
     return []
   }
-  let elements = filter(el.children, el => el.toString() !== '[object Text]')
   const children = el.children
+  let elements = filter(el.children, el => el.toString() !== '[object Text]')
   let index = children.length
   while (index--) {
     elements = elements.concat(getChildElements(children[index]))

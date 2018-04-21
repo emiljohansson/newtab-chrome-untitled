@@ -21,12 +21,19 @@ const { classes } = jss.createStyleSheet({
   rightCol: {
     extend: 'col',
     textAlign: 'right'
+  },
+  appMenu: {
   }
 }).attach()
 
 const template = `
 <article class="${classes.statusBar} ${spacing.classes.px_m}">
-  <div class="${classes.leftCol}"></div>
+  <div class="${classes.leftCol}">
+    <div class="${classes.appMenu}"
+     o-on-click="onAppMenuClick()">
+      <i class="fas fa-bars"></i>
+    </div>
+  </div>
   <div class="${classes.rightCol}">
     <div is="Weather"></div>
     <div is="Time" timezone="America/Denver"></div>
@@ -43,6 +50,10 @@ const StatusBar = {
 
 StatusBar.mounted = function () {
   // this.element is ready
+}
+
+StatusBar.onAppMenuClick = function () {
+  console.log('click')
 }
 
 export default StatusBar

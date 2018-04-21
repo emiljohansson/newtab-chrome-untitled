@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   entry: './src/main.js',
+  // entry: {
+  //   core: './src/core.js'
+  // },
   resolve: {
     modules: [
       path.resolve('./node_modules'),
@@ -10,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   devtool: 'source-map',
   module: {
@@ -24,4 +27,9 @@ module.exports = {
     //   }
     // }]
   }
+  // plugins: [
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'common'
+  //   })
+  // ]
 }

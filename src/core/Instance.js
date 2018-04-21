@@ -1,6 +1,5 @@
 import { cloneDeep } from 'lodash'
-import app from 'core/app'
-import callHook from 'core/callHook'
+import install from 'core/install'
 import destroy from 'core/destroy'
 import mount from 'core/mount'
 import init from 'core/init'
@@ -8,7 +7,7 @@ import state from 'core/state'
 import oFor from 'core/oFor'
 import oIf from 'core/oIf'
 
-app('BaseApp', require('core/BaseApp').default)
+install('BaseApp', require('core/BaseApp').default)
 
 export default (definition, el, context) => {
   const vm = cloneDeep(definition)

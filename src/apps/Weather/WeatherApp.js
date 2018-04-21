@@ -43,16 +43,21 @@ const getStyleByCondition = condition => {
       style.background = 'linear-gradient(to right, rgba(251,179,64,1) 0%, rgba(245,130,85,1) 100%)'
       style.icon = 'sun'
       break
-    case 'Rainy':
-      style.background = 'linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)'
-      style.icon = 'tint'
-      break
     case 'Snowy':
+    case 'Rain And Snow':
       style.background = 'linear-gradient(to bottom, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%)'
       style.icon = 'snowflake'
       break
+    case 'Rainy':
+    case 'Showers':
+      style.background = 'linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)'
+      style.icon = 'tint'
+      break
     case 'Partly Cloudy':
     case 'Breezy':
+    case 'Clear':
+    case 'Cloudy':
+    case 'Mostly Cloudy':
       style.background = 'linear-gradient(rgb(147, 206, 222) 0%, rgb(117, 189, 209) 41%, rgb(118, 191, 73) 100%)'
       style.icon = 'cloud'
   }

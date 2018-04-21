@@ -44,15 +44,15 @@ const parse = vm => elementListener => {
     const handler = event => {
       const args = stringArgs.length
         ? stringArgs.map(string => {
-            // if (string === '$event') {
-            //   return event
-            // }
-            // if (string === 'index') {
-            //   return index
-            // }
-            // return data
-            return event
-          })
+          // if (string === '$event') {
+          //   return event
+          // }
+          // if (string === 'index') {
+          //   return index
+          // }
+          // return data
+          return event
+        })
         : []
       vm[fn].apply(vm, args)
     }

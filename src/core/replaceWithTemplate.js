@@ -1,17 +1,15 @@
-import { filter, forEach, reduce } from 'lodash'
+import { forEach, reduce } from 'lodash'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oClass from 'core/oClass'
 import oEmit from 'core/oEmit'
-import oContent, { contentSelector } from 'core/oContent'
+import oContent from 'core/oContent'
 import oFor, { forSelector } from 'core/oFor'
 import oOn from 'core/oOn'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'lib/getAllTextNodes'
 import replaceBracketContent from 'lib/replaceBracketContent'
 import getElsByAttr from 'lib/getElsByAttr'
-
-const bracketsRegExp = /{{([^}]+)}}/g
 
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {

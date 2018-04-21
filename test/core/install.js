@@ -1,11 +1,11 @@
 import test from 'ava'
 import apps from 'core/apps'
-import app from 'core/app'
+import install from 'core/install'
 
-test('should store app definition', t => {
+test('should store install definition', t => {
   const definition = {
     data: {}
   }
-  app('Foo', definition)
+  install('Foo', definition)
   t.deepEqual(apps('Foo'), definition)
 })

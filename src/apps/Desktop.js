@@ -1,9 +1,8 @@
-import { forEach, isFunction, isNumber } from 'lodash'
+import { forEach, isFunction } from 'lodash'
 import jss from 'jss'
 import keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
-import { classes as weatherClasses } from './Weather'
 import * as spacing from 'style/spacing'
 
 const styles = {
@@ -54,6 +53,13 @@ const template = `
     o-emit-close="onCloseWindow">
     <div is="WeatherApp"></div>
   </div>
+  <div is="Window"
+    title=""
+    height="300"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="Todos"></div>
+  </div>
 </article>
 `
 
@@ -62,13 +68,6 @@ const template = `
 //   o-emit-focus="onFocusWindow"
 //   o-emit-close="onCloseWindow">
 //   <div is="TimeApp"></div>
-// </div>
-// <div is="Window"
-//   title="Todos"
-//   height="300"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Todos"></div>
 // </div>
 // <div is="Window"
 //   title="Playground"

@@ -2,7 +2,7 @@ import test from 'ava'
 import sinon from 'sinon'
 import { isFunction } from 'lodash'
 import fireEvent from '../helpers/fireEvent'
-import app from 'core/app'
+import install from 'core/install'
 import Instance from 'core/Instance'
 import watch from 'core/watch'
 
@@ -151,7 +151,7 @@ test('should create sub apps', t => {
     }
   }
 
-  app('Bar', Bar)
+  install('Bar', Bar)
 
   const vm = Instance(Foo, el)
   t.is(vm.$el.innerHTML.trim(), '<article>World</article>')
@@ -178,7 +178,7 @@ test('should create sub apps in for loop', t => {
     }
   }
 
-  app('Bar', Bar)
+  install('Bar', Bar)
 
   const vm = Instance(Foo, el)
   t.is(vm.$el.children.length, 2)
@@ -210,7 +210,7 @@ test('should add an item to the view when calling unshift/push on an array', t =
     }
   }
 
-  app('Bar', Bar)
+  install('Bar', Bar)
 
   const vm = Instance(Foo, el)
   t.is(vm.$el.children.length, 2)
@@ -254,8 +254,8 @@ test('should destroy child apps', t => {
     destroyed: destroyed2
   }
 
-  app('Bar', Bar)
-  app('Baz', Baz)
+  install('Bar', Bar)
+  install('Baz', Baz)
 
   const vm = Instance(Foo, el)
   vm.$destroy()
@@ -326,7 +326,7 @@ test('should remove a app in the loop', t => {
     destroyed
   }
 
-  app('Bar', Bar)
+  install('Bar', Bar)
 
   const vm = Instance(Foo, el)
   t.is(vm.$el.children.length, 2)
@@ -366,7 +366,7 @@ test('should add click listener', t => {
 //     template: `<article>{{msg}}</article>`,
 //     data: {}
 //   }
-//   app('Bar', Bar)
+//   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
 //   t.deepEqual(vm.$el.children[0].data., )
 //   document.body.removeChild(vm.$el)
@@ -376,11 +376,10 @@ test('should call parent method from child', t => {
   const el = document.createElement('div')
   el.innerHTML = `<div is="Bar" o-emit-increment="onIncrement"></div>`
   document.body.appendChild(el)
-  const onIncrement = sinon.spy()
   let sum = 0
   let args
   const Foo = {
-    onIncrement(a, b, c) {
+    onIncrement (a, b, c) {
       sum++
       args = [a, b, c]
     }
@@ -388,11 +387,11 @@ test('should call parent method from child', t => {
   const Bar = {
     template: `<article o-on-click="onClick">{{msg}}</article>`,
     data: {},
-    onClick() {
+    onClick () {
       this.$emit('increment', 1, 2, 'foo')
     }
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   fireEvent(vm.$el.firstChild, 'click')
   t.is(sum, 1)
@@ -459,7 +458,7 @@ test('should replace o-content with new html', t => {
 </article>`,
     data: {}
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   const childEl = vm.$el.querySelector('.bar')
   t.is(childEl.children.length, 1)
@@ -469,7 +468,6 @@ test('should replace o-content with new html', t => {
 
 test('should replace o-content with app', t => {
   const mounted = sinon.spy()
-  const destroyed = sinon.spy()
   const el = document.createElement('div')
   el.innerHTML = `<div is="Bar"></div>`
   document.body.appendChild(el)
@@ -486,7 +484,7 @@ test('should replace o-content with app', t => {
     data: {},
     mounted
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   t.is(mounted.callCount, 1)
   document.body.removeChild(vm.$el)
@@ -527,7 +525,7 @@ test('should add and remove apps with oIf', t => {
     mounted,
     destroyed
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   const falseExpected = `Hello, <!--${vm.$id}.show-->`
   const trueExpected = `Hello, <!--${vm.$id}.show--><article>World</article>`
@@ -560,7 +558,7 @@ test('should create a app reference with oRef', t => {
       barVm = this
     }
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   t.deepEqual(vm.$refs.bar, barVm)
   t.false(barVm.$el.hasAttribute('o-ref'))
@@ -572,7 +570,6 @@ test('should create a app reference with oRef', t => {
 test('should store a DOM element containing oRef', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  let barVm
   const Foo = {
     template: `<article>
   <span o-ref="bar"></span>
@@ -590,7 +587,6 @@ test('should store a DOM element containing oRef', t => {
 test('should create an array for each reference with oRef in a oFor', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  let barVm
   const Foo = {
     template: `<article>
   <span is="Bar" o-for="barData in barsData" o-ref="bars"></span>
@@ -604,7 +600,7 @@ test('should create an array for each reference with oRef in a oFor', t => {
     data: {},
     mounted () {}
   }
-  app('Bar', Bar)
+  install('Bar', Bar)
   const vm = Instance(Foo, el)
   t.is(vm.$refs.bars.length, 3)
   t.is(vm.$refs.bars[0].id, 1)
@@ -625,7 +621,6 @@ test('should create an array for each reference with oRef in a oFor', t => {
 test('moving around array values should update view', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  let barVm
   const Foo = {
     template: `<article>
   <span o-for="values in values">{{value}}</span>
@@ -671,7 +666,7 @@ test('moving around array values should update view', t => {
 //     },
 //     mounted () {}
 //   }
-//   app('Bar', Bar)
+//   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
 
 //   t.is(vm.$el.children[0].innerHTML, '1')
@@ -681,7 +676,6 @@ test('moving around array values should update view', t => {
 
 //   t.is(vm.$el.children[0].innerHTML, '3')
 //   t.is(vm.$el.children[2].innerHTML, '1')
-
 
 //   vm.$destroy()
 // })

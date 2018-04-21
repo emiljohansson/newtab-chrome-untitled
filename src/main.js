@@ -1,8 +1,8 @@
-import { forEach } from 'lodash'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import Instance from 'core/Instance'
-// import { compose, init } from 'core-dep/App'
+import install from 'core/install'
+import apps from 'core/apps'
 
 jss.setup(preset())
 
@@ -28,25 +28,22 @@ jss.setup(preset())
 
 // V2 test
 
-import app from 'core/app'
-import apps from 'core/apps'
-
-app('OS', require('apps/OS').default)
-app('Desktop', require('apps/Desktop').default)
-app('Window', require('apps/Window').default)
-app('TimeApp', require('apps/Time/TimeApp').default)
-app('Time', require('apps/Time/Time').default)
-app('WeatherApp', require('apps/Weather/WeatherApp').default)
-app('Weather', require('apps/Weather').default)
-app('Todo', require('apps/Todos/Todo').default)
-app('Todos', require('apps/Todos/Todos').default)
-app('Playground', require('apps/Playground').Playground)
-app('PlaygroundItem', require('apps/Playground').PlaygroundItem)
-app('PlaygroundIfItem', require('apps/Playground').PlaygroundIfItem)
-app('StatusBar', require('apps/StatusBar').default)
-app('Puzzle', require('apps/Puzzle/Puzzle').default)
-app('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
-app('Terminal', require('apps/Terminal/Terminal').default)
+install('OS', require('apps/OS').default)
+install('Desktop', require('apps/Desktop').default)
+install('Window', require('apps/Window').default)
+install('TimeApp', require('apps/Time/TimeApp').default)
+install('Time', require('apps/Time/Time').default)
+install('WeatherApp', require('apps/Weather/WeatherApp').default)
+install('Weather', require('apps/Weather').default)
+install('Todo', require('apps/Todos/Todo').default)
+install('Todos', require('apps/Todos/Todos').default)
+install('Playground', require('apps/Playground').Playground)
+install('PlaygroundItem', require('apps/Playground').PlaygroundItem)
+install('PlaygroundIfItem', require('apps/Playground').PlaygroundIfItem)
+install('StatusBar', require('apps/StatusBar').default)
+install('Puzzle', require('apps/Puzzle/Puzzle').default)
+install('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
+install('Terminal', require('apps/Terminal/Terminal').default)
 
 Instance(apps('OS'), document.querySelector(`[is=OS]`))
 

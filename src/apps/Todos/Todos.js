@@ -1,24 +1,41 @@
 import { forEach, reduce } from 'lodash'
 import jss from 'jss'
 import extendWindowApp from 'apps/WindowApp'
+import * as spacing from 'style/spacing'
+
+const baseStyle = {
+  fontFamily: `'Montserrat', sans-serif`
+}
 
 const { classes } = jss.createStyleSheet({
   todos: {
-    fontWeight: '200'
+    extend: baseStyle,
+    fontWeight: '200',
+    padding: spacing.inset.squish.m
+  },
+  header: {
+    fontSize: '1.6rem',
+    margin: spacing.stack.m,
+    textAlign: 'center'
   },
   input: {
-    fontSize: '1.2rem',
-    fontWeight: '200',
-    padding: '10px',
+    extend: baseStyle,
+    border: '1px solid #e2e2e2',
+    borderRadius: '50px',
+    fontSize: '0.8rem',
+    // fontWeight: '200',
+    padding: spacing.inset.squish.m,
     width: '100%'
   },
   list: {
+    extend: baseStyle,
     padding: '0'
   }
 }).attach()
 
 const template = `
 <article class="${classes.todos}">
+  <h1 class="${classes.header}">todo</h1>
   <input
     class="${classes.input}"
     autocomplete="off"
@@ -38,6 +55,9 @@ const Todos = extendWindowApp('Todos', {
   template,
   data: {
     todos: []
+  },
+  windowSettings: {
+    background: 'white'
   }
 })
 

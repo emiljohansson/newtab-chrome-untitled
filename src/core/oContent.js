@@ -1,6 +1,5 @@
 import { filter } from 'lodash'
 import getAllTextNodes from 'lib/getAllTextNodes'
-import replaceBracketContent from 'lib/replaceBracketContent'
 
 export const contentSelector = '{{o-content}}'
 

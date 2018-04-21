@@ -4,9 +4,10 @@ import { Subject } from 'rxjs/Subject'
 const updateSubject = new Subject()
 
 const getWeather = unit => {
-  const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="denver, co") and u="${unit}"`
+  // const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="denver, co") and u="${unit}"`
+  const query = `select item.condition from weather.forecast where woeid = 2391279 and u="${unit}"`
   const url = `https://query.yahooapis.com/v1/public/yql?q=${encodeURI(query)}&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`
-  const httpRequest = new XMLHttpRequest()
+  const httpRequest = new window.XMLHttpRequest()
   let resolved = false
   httpRequest.onreadystatechange = () => {
     if (!httpRequest.response || resolved) {
@@ -20,13 +21,10 @@ const getWeather = unit => {
       return
     }
     const channel = data.query.results.channel
-    const location = data.query.results.channel.location
     const condition = data.query.results.channel.item.condition
 
     updateSubject.next({
       channel,
-      city: location.city,
-      region: location.region,
       temp: condition.temp,
       unit: unit.toUpperCase()
     })
@@ -51,7 +49,7 @@ export const { classes } = jss.createStyleSheet({
       top: '21px',
       border: '1px solid',
       borderRadius: '50%',
-      padding: '4px',
+      padding: '4px'
     }
   },
   f: {
