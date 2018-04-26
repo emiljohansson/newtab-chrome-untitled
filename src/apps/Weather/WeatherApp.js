@@ -50,6 +50,7 @@ const getStyleByCondition = condition => {
       break
     case 'Rainy':
     case 'Showers':
+    case 'Scattered Thunderstorms':
       style.background = 'linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)'
       style.icon = 'tint'
       break
@@ -58,6 +59,7 @@ const getStyleByCondition = condition => {
     case 'Clear':
     case 'Cloudy':
     case 'Mostly Cloudy':
+    case 'Mostly Clear':
       style.background = 'linear-gradient(rgb(147, 206, 222) 0%, rgb(117, 189, 209) 41%, rgb(118, 191, 73) 100%)'
       style.icon = 'cloud'
   }
