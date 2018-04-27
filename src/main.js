@@ -4,7 +4,9 @@ import Instance from 'core/Instance'
 import install from 'core/install'
 import apps from 'core/apps'
 
-jss.setup(preset())
+const x = preset()
+console.log(x)
+jss.setup(x)
 
 // const composeElements = (App, elements) => {
 //   elements = toArray(elements)

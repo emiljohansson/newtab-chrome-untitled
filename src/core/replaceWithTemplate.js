@@ -22,7 +22,6 @@ const replaceWithTemplate = vm => {
   if (vm.template != null && vm.template !== '') {
     vm.$el = getElFromTemplate(vm.template)
   }
-
   const forElements = getElsByAttr(vm.$el, forSelector)
   forEach(forElements, element => {
     oFor(vm, element)
@@ -48,7 +47,18 @@ const replaceWithTemplate = vm => {
   })
 
   if (oldEl.parentElement != null) {
-    oldEl.parentElement.replaceChild(vm.$el, oldEl)
+    if (vm.useShadow) {
+      const parentEl = oldEl.parentElement
+      const shadow = parentEl.attachShadow({
+        mode: 'open'
+      })
+      parentEl.removeChild(oldEl)
+      shadow.appendChild(vm.$el)
+      vm.styleSheet.options.insertionPoint = vm.$el
+      vm.styleSheet.attach()
+    } else {
+      oldEl.parentElement.replaceChild(vm.$el, oldEl)
+    }
   }
 
   oOn(vm)
