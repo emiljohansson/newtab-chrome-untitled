@@ -29,6 +29,7 @@ const template = classes => `
     o-emit-channel-retrieved="onChannelRetrieved"></div>
   <div class="${classes.condition}">{{condition}}</div>
 </article>
+<link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
 `
 
 const getStyleByCondition = condition => {
@@ -66,6 +67,7 @@ const getStyleByCondition = condition => {
 }
 
 const WeatherApp = extendWindowApp('WeatherApp', {
+  debug: true,
   useShadow: true,
   styles,
   template,

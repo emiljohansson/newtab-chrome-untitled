@@ -5,6 +5,7 @@ const { classes } = jss.createStyleSheet({
   statusBar: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
     display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
     fontSize: '0.8rem',
     height: '20px'

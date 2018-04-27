@@ -1,4 +1,4 @@
-import { forEach, isFunction, reduce } from 'lodash'
+import { forEach, isFunction, reduce, slice } from 'lodash'
 import { create } from 'jss'
 import preset from 'jss-preset-default'
 import watch from 'core/watch'
@@ -26,6 +26,7 @@ const replaceWithTemplate = vm => {
   const oldEl = vm.$el
   const parentEl = oldEl.parentElement
   const shadowContainer = document.createElement('div')
+  let depEls
   let styleSheet
   if (vm.useShadow) {
     // parentEl.appendChild(shadowContainer)
@@ -41,9 +42,13 @@ const replaceWithTemplate = vm => {
 
   if (vm.template != null && vm.template !== '') {
     if (isFunction(vm.template)) {
-      vm.$el = getElFromTemplate(vm.template(styleSheet.classes))
+      const elements = getElFromTemplate(vm.template(styleSheet.classes))
+      vm.$el = elements[0]
+      // console.log(vm.$el)
+      // console.log(elements)
+      depEls = slice(elements, 1)
     } else {
-      vm.$el = getElFromTemplate(vm.template)
+      vm.$el = getElFromTemplate(vm.template)[0]
     }
   }
   const forElements = getElsByAttr(vm.$el, forSelector)
@@ -73,6 +78,9 @@ const replaceWithTemplate = vm => {
   if (parentEl != null) {
     if (vm.useShadow) {
       shadowContainer.shadowRoot.appendChild(vm.$el)
+      forEach(depEls, el => {
+        shadowContainer.shadowRoot.appendChild(el)
+      })
       parentEl.replaceChild(shadowContainer, oldEl)
       styleSheet.options.insertionPoint = vm.$el
       styleSheet.attach()
@@ -88,7 +96,7 @@ const replaceWithTemplate = vm => {
 const getElFromTemplate = template => {
   let tempEl = document.createElement('div')
   tempEl.innerHTML = template
-  return tempEl.firstElementChild
+  return tempEl.children
 }
 
 const updateWithNewValue = (vm, historyNodes) => newValue => {
