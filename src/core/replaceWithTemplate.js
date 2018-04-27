@@ -1,4 +1,6 @@
-import { forEach, reduce } from 'lodash'
+import { forEach, isFunction, reduce } from 'lodash'
+import { create } from 'jss'
+import preset from 'jss-preset-default'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oClass from 'core/oClass'
@@ -11,16 +13,38 @@ import getAllTextNodes from 'lib/getAllTextNodes'
 import replaceBracketContent from 'lib/replaceBracketContent'
 import getElsByAttr from 'lib/getElsByAttr'
 
+const StyleSheet = styles => {
+  const jss = create()
+  jss.setup(preset())
+  return jss.createStyleSheet(styles)
+}
+
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {
     return
   }
   const oldEl = vm.$el
+  const parentEl = oldEl.parentElement
+  const shadowContainer = document.createElement('div')
+  let styleSheet
+  if (vm.useShadow) {
+    // parentEl.appendChild(shadowContainer)
+    shadowContainer.attachShadow({
+      mode: 'open'
+    })
+    styleSheet = vm.styles
+      ? StyleSheet(vm.styles)
+      : vm.styleSheet
+  }
 
   oEmit(vm)
 
   if (vm.template != null && vm.template !== '') {
-    vm.$el = getElFromTemplate(vm.template)
+    if (isFunction(vm.template)) {
+      vm.$el = getElFromTemplate(vm.template(styleSheet.classes))
+    } else {
+      vm.$el = getElFromTemplate(vm.template)
+    }
   }
   const forElements = getElsByAttr(vm.$el, forSelector)
   forEach(forElements, element => {
@@ -46,18 +70,14 @@ const replaceWithTemplate = vm => {
     }
   })
 
-  if (oldEl.parentElement != null) {
+  if (parentEl != null) {
     if (vm.useShadow) {
-      const parentEl = oldEl.parentElement
-      const shadow = parentEl.attachShadow({
-        mode: 'open'
-      })
-      parentEl.removeChild(oldEl)
-      shadow.appendChild(vm.$el)
-      vm.styleSheet.options.insertionPoint = vm.$el
-      vm.styleSheet.attach()
+      shadowContainer.shadowRoot.appendChild(vm.$el)
+      parentEl.replaceChild(shadowContainer, oldEl)
+      styleSheet.options.insertionPoint = vm.$el
+      styleSheet.attach()
     } else {
-      oldEl.parentElement.replaceChild(vm.$el, oldEl)
+      parentEl.replaceChild(vm.$el, oldEl)
     }
   }
 

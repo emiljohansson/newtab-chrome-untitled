@@ -1,4 +1,3 @@
-import jss from 'jss'
 import { Subject } from 'rxjs/Subject'
 
 const updateSubject = new Subject()
@@ -34,12 +33,12 @@ const getWeather = unit => {
   httpRequest.send()
 }
 
-export const { classes } = jss.createStyleSheet({
+const styles = {
   weather: {
     cursor: 'pointer',
     userSelect: 'none'
   },
-  temp: {
+  'temp': {
     display: 'inline-block',
     position: 'relative',
 
@@ -70,9 +69,9 @@ export const { classes } = jss.createStyleSheet({
       display: 'none'
     }
   }
-}).attach()
+}
 
-const template = `
+const template = classes => `
 <article class="${classes.weather}" o-class="{
   degree-sign: useDegreeSign,
   fahrenheit: isFahrenheit
@@ -83,6 +82,8 @@ const template = `
 `
 
 const Weather = {
+  useShadow: true,
+  styles,
   template,
   data: {
     useDegreeSign: false,

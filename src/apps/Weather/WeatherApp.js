@@ -1,12 +1,6 @@
-import {create} from 'jss'
-import camelCase from 'jss-camel-case'
 import extendWindowApp from 'apps/WindowApp'
 
-const jss = create({
-  insertionPoint: document.body
-})
-jss.use(camelCase())
-const styleSheet = jss.createStyleSheet({
+const styles = {
   root: {
     color: 'white',
     fontSize: '4rem',
@@ -23,17 +17,17 @@ const styleSheet = jss.createStyleSheet({
   condition: {
     fontSize: '1rem'
   }
-})
+}
 
-const template = `
-<article class="${styleSheet.classes.root}" o-class="{
+const template = classes => `
+<article class="${classes.root}" o-class="{
   ready: isReady
 }">
-  <i class="fas ${styleSheet.classes.icon}"></i>
+  <i class="fas ${classes.icon}"></i>
   <div is="Weather"
     use-degree-sign="true"
     o-emit-channel-retrieved="onChannelRetrieved"></div>
-  <div class="${styleSheet.classes.condition}">{{condition}}</div>
+  <div class="${classes.condition}">{{condition}}</div>
 </article>
 `
 
@@ -73,7 +67,7 @@ const getStyleByCondition = condition => {
 
 const WeatherApp = extendWindowApp('WeatherApp', {
   useShadow: true,
-  styleSheet,
+  styles,
   template,
   data: {
     condition: '',
