@@ -98,17 +98,18 @@ const replaceWithTemplate = vm => {
     } else {
       parentEl.replaceChild(vm.$el, oldEl)
     }
-  } else if (shadowContainer.shadowRoot != null) {
-    // shadowContainer.shadowRoot.appendChild(vm.$el)
-    // forEach(dependencyElements, el => {
-    //   shadowContainer.shadowRoot.appendChild(el)
-    // })
-    // // parentEl.replaceChild(shadowContainer, oldEl)
-    // styleSheet.options.insertionPoint = vm.$el
-    // styleSheet.attach()
-    // vm.styleSheet = styleSheet
-    // vm.$shadowContainer = shadowContainer
   }
+  // else if (shadowContainer.shadowRoot != null) {
+  //   shadowContainer.shadowRoot.appendChild(vm.$el)
+  //   forEach(dependencyElements, el => {
+  //     shadowContainer.shadowRoot.appendChild(el)
+  //   })
+  //   // parentEl.replaceChild(shadowContainer, oldEl)
+  //   styleSheet.options.insertionPoint = vm.$el
+  //   styleSheet.attach()
+  //   vm.styleSheet = styleSheet
+  //   vm.$shadowContainer = shadowContainer
+  // }
 
   oOn(vm)
   oClass(vm)

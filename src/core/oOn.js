@@ -11,27 +11,26 @@ const types = [
   'keyup'
 ]
 
-const ElementListener = el =>
-  filter(
-    map(types, type => {
-      const attribute = `${onSelector}${type}`
-      const elements = []
-      const childEls = el.querySelectorAll(`[${attribute}]`)
-      if (el.hasAttribute(attribute)) {
+const ElementListener = el => filter(
+  map(types, type => {
+    const attribute = `${onSelector}${type}`
+    const elements = []
+    const childEls = el.querySelectorAll(`[${attribute}]`)
+    if (el.hasAttribute != null && el.hasAttribute(attribute)) {
+      elements.push(el)
+    }
+    if (childEls.length) {
+      forEach(childEls, el => {
         elements.push(el)
-      }
-      if (childEls.length) {
-        forEach(childEls, el => {
-          elements.push(el)
-        })
-      }
-      return {
-        type,
-        elements
-      }
-    }),
-    elementListener => elementListener.elements.length
-  )
+      })
+    }
+    return {
+      type,
+      elements
+    }
+  }),
+  elementListener => elementListener.elements.length
+)
 
 const parse = vm => elementListener => {
   const { type, elements } = elementListener
@@ -68,7 +67,7 @@ export default (vm) => {
   if (vm.$el == null) {
     return
   }
-  const elementListeners = ElementListener(vm.$el)
+  const elementListeners = ElementListener(vm.$el.shadowRoot || vm.$el)
   const iteratee = parse(vm)
   vm.$removeDomHandlers = reduce(
     elementListeners,

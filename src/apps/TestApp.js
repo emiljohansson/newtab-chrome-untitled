@@ -21,7 +21,7 @@ const template = classes => `
 `
 
 const TestApp = {
-  debug: true,
+  debug: false,
   useShadow: true,
   styles,
   template,

@@ -6,7 +6,7 @@ const styles = {
 
 const template = classes => `
 <template>
-  <header>Header</header>
+  <header o-on-click="onClick">Header</header>
   <slot></slot>
 </template>
 `
@@ -21,6 +21,10 @@ const TestComponent = {
 
 TestComponent.mounted = function () {
   console.log('mounted')
+}
+
+TestComponent.onClick = function () {
+  console.log('click')
 }
 
 export default TestComponent
