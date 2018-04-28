@@ -53,13 +53,21 @@ const getChildElements = el => {
   if (el == null) {
     return []
   }
-  const children = el.children
-  let elements = filter(el.children, el => el.toString() !== '[object Text]')
+  const children = getChildren(el)
+  let elements = filter(children, el => el.toString() !== '[object Text]')
   let index = children.length
   while (index--) {
     elements = elements.concat(getChildElements(children[index]))
   }
   return elements
+}
+
+const getChildren = el => {
+  const base = el.children
+  const shadow = el.shadowRoot == null
+    ? []
+    : el.shadowRoot.children
+  return [...shadow, ...base]
 }
 
 export default (vm, el) => {

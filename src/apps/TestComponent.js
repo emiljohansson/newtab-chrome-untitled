@@ -1,4 +1,8 @@
-const styles = {}
+const styles = {
+  '@global :host': {
+    background: 'orange'
+  }
+}
 
 const template = classes => `
 <template>
@@ -8,7 +12,7 @@ const template = classes => `
 `
 
 const TestComponent = {
-  debug: false,
+  debug: true,
   useShadow: true,
   styles,
   template,

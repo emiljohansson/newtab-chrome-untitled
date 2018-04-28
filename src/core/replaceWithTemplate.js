@@ -24,7 +24,7 @@ const replaceWithTemplate = vm => {
     return
   }
   const oldEl = vm.$el
-  const parentEl = oldEl.parentElement
+  const parentEl = oldEl.parentElement || oldEl.parentNode
   const shadowContainer = document.createElement('div')
   let dependencyElements
   let styleSheet
@@ -91,10 +91,7 @@ const replaceWithTemplate = vm => {
       // forEach(dependencyElements, el => {
       //   shadowContainer.shadowRoot.appendChild(el)
       // })
-      parentEl.replaceChild(shadowContainer, oldEl)
-      // if (vm.debug) {
-      //   debugger
-      // }
+      parentEl.replaceChild(vm.$el, oldEl)
       styleSheet.options.insertionPoint = vm.$el.shadowRoot.lastElementChild
       styleSheet.attach()
       vm.styleSheet = styleSheet
@@ -102,15 +99,15 @@ const replaceWithTemplate = vm => {
       parentEl.replaceChild(vm.$el, oldEl)
     }
   } else if (shadowContainer.shadowRoot != null) {
-    shadowContainer.shadowRoot.appendChild(vm.$el)
-    forEach(dependencyElements, el => {
-      shadowContainer.shadowRoot.appendChild(el)
-    })
-    // parentEl.replaceChild(shadowContainer, oldEl)
-    styleSheet.options.insertionPoint = vm.$el
-    styleSheet.attach()
-    vm.styleSheet = styleSheet
-    vm.$shadowContainer = shadowContainer
+    // shadowContainer.shadowRoot.appendChild(vm.$el)
+    // forEach(dependencyElements, el => {
+    //   shadowContainer.shadowRoot.appendChild(el)
+    // })
+    // // parentEl.replaceChild(shadowContainer, oldEl)
+    // styleSheet.options.insertionPoint = vm.$el
+    // styleSheet.attach()
+    // vm.styleSheet = styleSheet
+    // vm.$shadowContainer = shadowContainer
   }
 
   oOn(vm)
