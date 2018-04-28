@@ -1,6 +1,4 @@
-import jss from 'jss'
-
-const { classes } = jss.createStyleSheet({
+const styles = {
   puzzleItem: {
     border: '1px solid',
     cursor: 'pointer',
@@ -11,13 +9,22 @@ const { classes } = jss.createStyleSheet({
   blankColumn: {
     backgroundColor: '#e3e3e3'
   }
-}).attach()
+}
 
-const template = `<div
-  class="${classes.puzzleItem}"
-  o-on-click="onClick">{{value}}</div>`
+// {{value}}
+const template = classes => `
+<template>
+  <div class="${classes.puzzleItem}"
+    o-on-click="onClick">
+    <slot></slot>
+  </div>
+</template>
+`
 
 const PuzzleItem = {
+  debug: true,
+  useShadow: true,
+  styles,
   template,
   data: {
     value: ''
@@ -26,7 +33,7 @@ const PuzzleItem = {
 
 PuzzleItem.mounted = function () {
   if (this.value === '') {
-    this.$el.classList.add(classes.blankColumn)
+    this.$el.classList.add(this.styleSheet.classes.blankColumn)
   }
 }
 

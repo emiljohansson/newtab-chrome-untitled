@@ -67,7 +67,6 @@ const getStyleByCondition = condition => {
 }
 
 const WeatherApp = extendWindowApp('WeatherApp', {
-  debug: true,
   useShadow: true,
   styles,
   template,

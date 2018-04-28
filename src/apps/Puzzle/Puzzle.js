@@ -1,33 +1,33 @@
-import jss from 'jss'
 import { forEach, reduce } from 'lodash'
 import extendWindowApp from 'apps/WindowApp'
 
-const { classes } = jss.createStyleSheet({
+const styles = {
   puzzle: {
     fontSize: '2rem',
     textAlign: 'center',
     userSelect: 'none'
   },
-  column: {
-    border: '1px solid',
-    cursor: 'pointer',
+  item: {
     float: 'left',
     height: '45px',
     width: '45px'
   },
   blankColumn: {
-    extend: 'column',
     backgroundColor: '#e3e3e3'
   }
-}).attach()
+}
 
-const template = `
+const template = classes => `
 <article class="${classes.puzzle}">
   <div is="PuzzleItem"
+    class="${classes.item}"
     o-for="context in values"
     o-emit-click="onItemClick"></div>
   <div is="PuzzleItem"
-    o-ref="blankItem"></div>
+    class="${classes.item} ${classes.blankColumn}"
+    o-ref="blankItem">
+    42
+  </div>
 </article>
 `
 
@@ -42,6 +42,8 @@ const swapEl = (el1, el2) => {
 }
 
 const Puzzle = extendWindowApp('Puzzle', {
+  useShadow: false,
+  styles,
   template,
   data: {
     values: null

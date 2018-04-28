@@ -6,6 +6,17 @@ import apps from 'core/apps'
 
 jss.setup(preset())
 
+const sheet = jss.createStyleSheet({
+  '@global :host': {
+    background: 'green'
+  },
+  'body': {
+    background: 'yellow'
+  }
+})
+console.log(sheet)
+console.log(sheet.toString())
+
 // const composeElements = (App, elements) => {
 //   elements = toArray(elements)
 //   elements.forEach(initEl => {
@@ -44,6 +55,8 @@ install('StatusBar', require('apps/StatusBar').default)
 install('Puzzle', require('apps/Puzzle/Puzzle').default)
 install('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
 install('Terminal', require('apps/Terminal/Terminal').default)
+install('TestApp', require('apps/TestApp').default)
+install('TestComponent', require('apps/TestComponent').default)
 
 Instance(apps('OS'), document.querySelector(`[is=OS]`))
 

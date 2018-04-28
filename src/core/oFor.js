@@ -1,13 +1,10 @@
-import { forEach, isElement, map, noop, reduce, uniqueId } from 'lodash'
+import { forEach, isElement, map, uniqueId } from 'lodash'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
-import replaceWithTemplate from 'core/replaceWithTemplate'
-import state from 'core/state'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'lib/getAllTextNodes'
-import getElsByAttr from 'lib/getElsByAttr'
 import replaceBracketContent from 'lib/replaceBracketContent'
 
 export const forSelector = 'o-for'
@@ -145,14 +142,23 @@ export default (vm, el) => {
     const definition = apps(el.getAttribute('is'))
     const newVm = Instance(definition, el, context)
     vm.$children.push(newVm)
+    const $currentEl = newVm.$shadowContainer == null
+      ? newVm.$el
+      : newVm.$shadowContainer
     if (appendFirst && parent.children.length > 0) {
-      parent.insertBefore(newVm.$el, parent.firstChild)
+      // parent.insertBefore(newVm.$el, parent.firstChild)
+      parent.insertBefore($currentEl, parent.firstChild)
     } else {
       const length = cache.length
       if (length > 0 && parent.childNodes.length > 0) {
-        parent.insertBefore(newVm.$el, cache[length - 1].vm.$el.nextSibling)
+        if (newVm.$shadowContainer == null) {
+          parent.insertBefore(newVm.$el, cache[length - 1].vm.$el.nextSibling)
+        } else {
+          parent.insertBefore($currentEl, cache[length - 1].vm.$shadowContainer.nextSibling)
+        }
       } else {
-        parent.appendChild(newVm.$el)
+        // parent.appendChild(newVm.$el)
+        parent.appendChild($currentEl)
       }
     }
     return newVm

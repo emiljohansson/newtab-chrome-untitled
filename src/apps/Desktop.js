@@ -38,30 +38,41 @@ const { classes } = jss.createStyleSheet(styles).attach()
 
 const template = `
 <article class="${classes.desktop}">
-  <div class="${classes.timeCenter}">
-    <div is="Time" timezone="America/Denver"></div>
-  </div>
-  <div o-for="index in windows"
-    is="Window"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow"></div>
-  <div is="Window"
-    title=""
-    width="218"
-    height="300"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="WeatherApp"></div>
-  </div>
-  <div is="Window"
-    title=""
-    height="300"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Todos"></div>
+  <div is="TestApp">
+    <b>Content</b>
   </div>
 </article>
 `
+
+// <div class="${classes.timeCenter}">
+//   <div is="Time" timezone="America/Denver"></div>
+// </div>
+// <div o-for="index in windows"
+//   is="Window"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow"></div>
+// <div is="Window"
+//   title=""
+//   width="218"
+//   height="300"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="WeatherApp"></div>
+// </div>
+// <div is="Window"
+//   title=""
+//   height="300"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Todos"></div>
+// </div>
+// <div is="Window"
+//   title="Puzzle"
+//   width="190"
+//   o-emit-focus="onFocusWindow"
+//   o-emit-close="onCloseWindow">
+//   <div is="Puzzle"></div>
+// </div>
 
 // <div is="Window"
 //   title=""
@@ -74,13 +85,6 @@ const template = `
 //   o-emit-focus="onFocusWindow"
 //   o-emit-close="onCloseWindow">
 //   <div is="Playground"></div>
-// </div>
-// <div is="Window"
-//   title="Puzzle"
-//   width="190"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Puzzle"></div>
 // </div>
 // <div o-if="testShow">Hello</div>
 // <div is="Window"
