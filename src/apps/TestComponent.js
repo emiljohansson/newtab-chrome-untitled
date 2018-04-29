@@ -12,7 +12,7 @@ const template = classes => `
 `
 
 const TestComponent = {
-  debug: true,
+  debug: false,
   useShadow: true,
   styles,
   template,

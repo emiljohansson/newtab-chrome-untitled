@@ -1,6 +1,6 @@
 const styles = {
   '@global :host': {
-    background: 'yellow'
+    background: 'blue'
   },
   a: {
     background: 'red'

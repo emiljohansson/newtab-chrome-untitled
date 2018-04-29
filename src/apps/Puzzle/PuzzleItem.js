@@ -1,28 +1,22 @@
 const styles = {
-  puzzleItem: {
+  '@global :host': {
     border: '1px solid',
     cursor: 'pointer',
     float: 'left',
     height: '45px',
     width: '45px'
-  },
-  blankColumn: {
-    backgroundColor: '#e3e3e3'
   }
 }
 
 // {{value}}
 const template = classes => `
 <template>
-  <div class="${classes.puzzleItem}"
-    o-on-click="onClick">
-    <slot></slot>
-  </div>
+  <div o-on-click="onClick">4</div>
 </template>
 `
 
 const PuzzleItem = {
-  debug: true,
+  debug: false,
   useShadow: true,
   styles,
   template,
@@ -32,9 +26,9 @@ const PuzzleItem = {
 }
 
 PuzzleItem.mounted = function () {
-  if (this.value === '') {
-    this.$el.classList.add(this.styleSheet.classes.blankColumn)
-  }
+  // if (this.value === '') {
+  //   this.$el.classList.add(this.styleSheet.classes.blankColumn)
+  // }
 }
 
 PuzzleItem.onClick = function () {

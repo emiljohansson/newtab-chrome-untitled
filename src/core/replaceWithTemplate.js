@@ -32,7 +32,6 @@ const replaceWithTemplate = vm => {
     shadowContainer.attachShadow({
       mode: 'open'
     })
-    shadowContainer.className = oldEl.className
     styleSheet = vm.styles
       ? StyleSheet(vm.styles)
       : vm.styleSheet
@@ -43,10 +42,16 @@ const replaceWithTemplate = vm => {
   if (vm.template != null && vm.template !== '') {
     if (isFunction(vm.template)) {
       if (vm.useShadow) {
+        // if (oldEl.getAttribute('o-ref') == 'blankItem') {
+        //   debugger
+        //   console.log(oldEl)
+        // }
         const elements = getElFromTemplate(vm.template(styleSheet.classes)) // , oldEl.innerHTML)
         if (elements[0].tagName === 'TEMPLATE') {
           vm.$el = shadowContainer
-          vm.$el.className = oldEl.className
+          if (vm.data.class) {
+            vm.$el.className = vm.data.class
+          }
           vm.$el.innerHTML = oldEl.innerHTML
           vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
           dependencyElements = slice(elements, 1)
@@ -61,7 +66,7 @@ const replaceWithTemplate = vm => {
       vm.$el = getElFromTemplate(vm.template)[0]
     }
   }
-  const forElements = getElsByAttr(vm.$el, forSelector)
+  const forElements = getElsByAttr(vm.$el.shadowRoot || vm.$el, forSelector)
   forEach(forElements, element => {
     oFor(vm, element)
   })
@@ -87,10 +92,6 @@ const replaceWithTemplate = vm => {
 
   if (parentEl != null) {
     if (vm.useShadow) {
-      // shadowContainer.shadowRoot.appendChild(vm.$el)
-      // forEach(dependencyElements, el => {
-      //   shadowContainer.shadowRoot.appendChild(el)
-      // })
       parentEl.replaceChild(vm.$el, oldEl)
       styleSheet.options.insertionPoint = vm.$el.shadowRoot.lastElementChild
       styleSheet.attach()

@@ -2,7 +2,7 @@ import { forEach, reduce } from 'lodash'
 import extendWindowApp from 'apps/WindowApp'
 
 const styles = {
-  puzzle: {
+  '@global :host': {
     fontSize: '2rem',
     textAlign: 'center',
     userSelect: 'none'
@@ -18,17 +18,16 @@ const styles = {
 }
 
 const template = classes => `
-<article class="${classes.puzzle}">
+<template>
   <div is="PuzzleItem"
-    class="${classes.item}"
     o-for="context in values"
     o-emit-click="onItemClick"></div>
   <div is="PuzzleItem"
-    class="${classes.item} ${classes.blankColumn}"
+    class="hello ${classes.blankColumn}"
     o-ref="blankItem">
     42
   </div>
-</article>
+</template>
 `
 
 const numberOfValues = 15
@@ -42,7 +41,8 @@ const swapEl = (el1, el2) => {
 }
 
 const Puzzle = extendWindowApp('Puzzle', {
-  useShadow: false,
+  debug: true,
+  useShadow: true,
   styles,
   template,
   data: {
@@ -68,8 +68,8 @@ Puzzle.mounted = function () {
   while (++index < 20) {
     const r1 = parseInt(Math.random() * length, 10)
     const r2 = parseInt(Math.random() * length, 10)
-    const el1 = this.$el.children[r1]
-    const el2 = this.$el.children[r2]
+    const el1 = this.$el.shadowRoot.children[r1]
+    const el2 = this.$el.shadowRoot.children[r2]
     swapEl(el1, el2)
   }
 }

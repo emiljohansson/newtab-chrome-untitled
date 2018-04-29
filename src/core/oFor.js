@@ -1,4 +1,6 @@
 import { forEach, isElement, map, uniqueId } from 'lodash'
+import { create } from 'jss'
+import preset from 'jss-preset-default'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
 import watch from 'core/watch'
@@ -41,7 +43,7 @@ export default (vm, el) => {
   if (el == null) {
     return
   }
-  const parentEl = el.parentElement
+  const parentEl = el.parentElement || el.parentNode.host
   const id = uniqueId('oFor_')
   const template = el.outerHTML
   const keys = findKeysInTemplate(template)
@@ -138,33 +140,43 @@ export default (vm, el) => {
     container.appendChild(cloneNode)
   }
 
+  // TODO remove
+  const StyleSheet = styles => {
+    const jss = create()
+    jss.setup(preset())
+    return jss.createStyleSheet(styles)
+  }
+
   const App = (el, parent, context, appendFirst) => {
     const definition = apps(el.getAttribute('is'))
     const newVm = Instance(definition, el, context)
+    const styleSheet = newVm.styles
+      ? StyleSheet(newVm.styles)
+      : newVm.styleSheet
     vm.$children.push(newVm)
-    const $currentEl = newVm.$shadowContainer == null
-      ? newVm.$el
-      : newVm.$shadowContainer
     if (appendFirst && parent.children.length > 0) {
-      // parent.insertBefore(newVm.$el, parent.firstChild)
-      parent.insertBefore($currentEl, parent.firstChild)
+      parent.insertBefore(newVm.$el, parent.firstChild)
     } else {
       const length = cache.length
       if (length > 0 && parent.childNodes.length > 0) {
-        if (newVm.$shadowContainer == null) {
-          parent.insertBefore(newVm.$el, cache[length - 1].vm.$el.nextSibling)
-        } else {
-          parent.insertBefore($currentEl, cache[length - 1].vm.$shadowContainer.nextSibling)
-        }
+        parent.insertBefore(newVm.$el, cache[length - 1].vm.$el.nextSibling)
       } else {
-        // parent.appendChild(newVm.$el)
-        parent.appendChild($currentEl)
+        parent.appendChild(newVm.$el)
       }
+    }
+    if (newVm.$el.shadowRoot) {
+      styleSheet.options.insertionPoint = newVm.$el.shadowRoot.lastElementChild
+      styleSheet.attach()
+      newVm.styleSheet = styleSheet
     }
     return newVm
   }
 
   forEach(dataItems, insertNode)
 
-  parentEl.replaceChild(tempContainer, el)
+  if (parentEl.shadowRoot != null) {
+    parentEl.shadowRoot.replaceChild(tempContainer, el)
+  } else {
+    parentEl.replaceChild(tempContainer, el)
+  }
 }

@@ -41,6 +41,16 @@ const template = `
   <div is="TestApp">
     <b>Content</b>
   </div>
+  <div is="TestApp">
+    <b>Content2</b>
+  </div>
+  <div is="Window"
+    title="Puzzle"
+    width="190"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="Puzzle"></div>
+  </div>
 </article>
 `
 
@@ -65,13 +75,6 @@ const template = `
 //   o-emit-focus="onFocusWindow"
 //   o-emit-close="onCloseWindow">
 //   <div is="Todos"></div>
-// </div>
-// <div is="Window"
-//   title="Puzzle"
-//   width="190"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Puzzle"></div>
 // </div>
 
 // <div is="Window"
