@@ -36,7 +36,7 @@ const template = `
     </div>
   </div>
   <div class="${classes.rightCol}">
-    <div xxis="Weather"></div>
+    <div is="Weather"></div>
     <div xxis="Time" timezone="America/Denver"></div>
   </div>
 </article>

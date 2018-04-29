@@ -1,4 +1,4 @@
-import { forEach, toArray } from 'lodash'
+import { forEach } from 'lodash'
 import watch from 'core/watch'
 
 const classSelector = 'o-class'
@@ -11,7 +11,10 @@ export default vm => {
   if (vm.$el.hasAttribute(`${classSelector}`)) {
     elements.push(vm.$el)
   }
-  elements = elements.concat(toArray(vm.$el.querySelectorAll(`[${classSelector}]`)))
+  elements = elements.concat(...vm.$el.querySelectorAll(`[${classSelector}]`))
+  if (vm.$el.shadowRoot != null) {
+    elements = elements.concat(...vm.$el.shadowRoot.querySelectorAll(`[${classSelector}]`))
+  }
   if (elements.length < 1) {
     return
   }

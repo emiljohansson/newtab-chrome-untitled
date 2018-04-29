@@ -72,13 +72,15 @@ const styles = {
 }
 
 const template = classes => `
-<article class="${classes.weather}" o-class="{
-  degree-sign: useDegreeSign,
-  fahrenheit: isFahrenheit
-}" o-on-click="onClick">
-  <div class="${classes.f}">{{fahrenheit}}<span class="${classes.unit}">F</span></div>
-  <div class="${classes.c}">{{celsius}}<span class="${classes.unit}">C</span></div>
-</article>
+<template>
+  <article class="${classes.weather}" o-class="{
+    degree-sign: useDegreeSign,
+    fahrenheit: isFahrenheit
+  }" o-on-click="onClick">
+    <div class="${classes.f}">{{fahrenheit}}<span class="${classes.unit}">F</span></div>
+    <div class="${classes.c}">{{celsius}}<span class="${classes.unit}">C</span></div>
+  </article>
+</template>
 `
 
 const Weather = {

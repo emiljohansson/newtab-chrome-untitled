@@ -16,7 +16,6 @@ const template = classes => `
 `
 
 const PuzzleItem = {
-  debug: true,
   useShadow: true,
   styles,
   template,
