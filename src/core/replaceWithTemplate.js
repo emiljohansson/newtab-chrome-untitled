@@ -42,11 +42,7 @@ const replaceWithTemplate = vm => {
   if (vm.template != null && vm.template !== '') {
     if (isFunction(vm.template)) {
       if (vm.useShadow) {
-        // if (oldEl.getAttribute('o-ref') == 'blankItem') {
-        //   debugger
-        //   console.log(oldEl)
-        // }
-        const elements = getElFromTemplate(vm.template(styleSheet.classes)) // , oldEl.innerHTML)
+        const elements = getElFromTemplate(vm.template(styleSheet.classes))
         if (elements[0].tagName === 'TEMPLATE') {
           vm.$el = shadowContainer
           if (vm.data.class) {

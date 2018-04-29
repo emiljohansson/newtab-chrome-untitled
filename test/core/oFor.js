@@ -39,3 +39,28 @@ test('should update view when item in list changes', t => {
   t.is(firstChild.innerHTML, 'Hello')
   t.is(secondChild.innerHTML, 'World')
 })
+
+// test('should update shadow root view when item in list changes', t => {
+//   const el = document.createElement('div')
+//   const childEl = document.createElement('div')
+//   el.attachShadow({
+//     mode: 'open'
+//   })
+//   childEl.innerHTML = `<div o-for="value in list">{{value}}</div>`
+//   el.shadowRoot.appendChild(childEl)
+//   const array = ['foo', 'bar']
+//   const App = {
+//     data: {
+//       list: array
+//     }
+//   }
+//   const vm = Instance(App, el)
+//   oFor(vm, childEl.firstChild)
+//   t.is(childEl.children.length, 2)
+//   vm.data.list[0] = 'Hello'
+//   vm.data.list[1] = 'World'
+//   const firstChild = childEl.children[0]
+//   const secondChild = childEl.children[1]
+//   t.is(firstChild.innerHTML, 'Hello')
+//   t.is(secondChild.innerHTML, 'World')
+// })

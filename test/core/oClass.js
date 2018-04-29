@@ -1,6 +1,5 @@
 import test from 'ava'
 import oClass from 'core/oClass'
-import { log } from 'util';
 
 test('should do nothing', t => {
   const vm = {}
@@ -32,4 +31,22 @@ test('should remove o-class attribute', t => {
   }
   oClass(vm)
   t.false(vm.$el.hasAttribute('o-class'))
+})
+
+test('should add class to shadow root element', t => {
+  const el = document.createElement('div')
+  el.attachShadow({
+    mode: 'open'
+  })
+  const childEl = document.createElement('div')
+  childEl.setAttribute('o-class', '{my-class: showMyClass}')
+  el.shadowRoot.appendChild(childEl)
+  const vm = {
+    $el: el,
+    data: {
+      showMyClass: true
+    }
+  }
+  oClass(vm)
+  t.true(childEl.classList.contains('my-class'))
 })
