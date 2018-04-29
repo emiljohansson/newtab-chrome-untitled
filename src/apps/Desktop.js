@@ -63,6 +63,25 @@ const template = `
     o-emit-close="onCloseWindow">
     <div is="Todos"></div>
   </div>
+  <div is="Window"
+    title=""
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="TimeApp"></div>
+  </div>
+  <div is="Window"
+    title="Playground"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="Playground"></div>
+  </div>
+  <div is="Window"
+    title="Terminal"
+    height="200"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="Terminal"></div>
+  </div>
 
   <div o-for="index in windows"
     is="Window"
@@ -70,34 +89,6 @@ const template = `
     o-emit-close="onCloseWindow"></div>
 </article>
 `
-
-// <div is="TestApp">
-//   <b>Content</b>
-// </div>
-// <div is="TestApp">
-//   <b>Content2</b>
-// </div>
-
-// <div is="Window"
-//   title=""
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="TimeApp"></div>
-// </div>
-// <div is="Window"
-//   title="Playground"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Playground"></div>
-// </div>
-// <div o-if="testShow">Hello</div>
-// <div is="Window"
-//   title="Terminal"
-//   height="200"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Terminal"></div>
-// </div>
 
 const zIndexList = []
 let activeWindow
@@ -125,8 +116,7 @@ const Desktop = {
   template,
   data: {
     isActive: true,
-    windows: [],
-    testShow: false
+    windows: []
   }
 }
 
