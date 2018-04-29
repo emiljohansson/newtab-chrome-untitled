@@ -37,7 +37,7 @@ const template = `
   </div>
   <div class="${classes.rightCol}">
     <div is="Weather"></div>
-    <div xxis="Time" timezone="America/Denver"></div>
+    <div is="Time" timezone="America/Denver"></div>
   </div>
 </article>
 `
@@ -49,9 +49,7 @@ const StatusBar = {
   }
 }
 
-StatusBar.mounted = function () {
-  // this.element is ready
-}
+StatusBar.mounted = function () {}
 
 StatusBar.onAppMenuClick = function () {
   console.log('click')

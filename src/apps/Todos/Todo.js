@@ -11,8 +11,8 @@ const { classes } = jss.createStyleSheet({
     position: 'relative',
 
     '&:hover $removeBtn': {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   },
   label: {
     padding: `0 ${spacing.space.l}`,
@@ -55,7 +55,7 @@ const { classes } = jss.createStyleSheet({
     right: 0,
 
     '&::before': {
-      content: '"×"',
+      content: '"×"'
     }
   }
 }).attach()
@@ -81,7 +81,9 @@ const Todo = {
 
 Todo.onCompleteClick = function () {
   this.completed = !this.completed
-  this.$emit('complete', this.id, this.completed)
+  setTimeout(() => {
+    this.$emit('complete', this.id, this.completed)
+  })
 }
 
 Todo.onRemoveClick = function () {

@@ -20,16 +20,18 @@ const styles = {
 }
 
 const template = classes => `
-<article class="${classes.root}" o-class="{
-  ready: isReady
-}">
-  <i class="fas ${classes.icon}"></i>
-  <div is="Weather"
-    use-degree-sign="true"
-    o-emit-channel-retrieved="onChannelRetrieved"></div>
-  <div class="${classes.condition}">{{condition}}</div>
-</article>
-<link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
+<template>
+  <article class="${classes.root}" o-class="{
+    ready: isReady
+  }">
+    <i class="fas ${classes.icon}"></i>
+    <div is="Weather"
+      use-degree-sign="true"
+      o-emit-channel-retrieved="onChannelRetrieved"></div>
+    <div class="${classes.condition}">{{condition}}</div>
+  </article>
+  <link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
+</template>
 `
 
 const getStyleByCondition = condition => {
@@ -91,7 +93,7 @@ WeatherApp.mounted = function () {
 WeatherApp.onChannelRetrieved = function (channelData) {
   const condition = channelData.item.condition.text
   console.log(condition)
-  const iconEl = this.$el.querySelector('.svg-inline--fa') || this.$el.querySelector('.fas')
+  const iconEl = this.$el.shadowRoot.querySelector('.svg-inline--fa') || this.$el.shadowRoot.querySelector('.fas')
   const style = getStyleByCondition(condition)
   iconEl.classList.add(`fa-${style.icon}`)
 

@@ -45,6 +45,29 @@ const template = `
     o-emit-close="onCloseWindow">
     <div is="Puzzle"></div>
   </div>
+  <div class="${classes.timeCenter}">
+    <div is="Time" timezone="America/Denver"></div>
+  </div>
+  <div is="Window"
+    title=""
+    width="218"
+    height="300"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="WeatherApp"></div>
+  </div>
+  <div is="Window"
+    title=""
+    height="300"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow">
+    <div is="Todos"></div>
+  </div>
+
+  <div o-for="index in windows"
+    is="Window"
+    o-emit-focus="onFocusWindow"
+    o-emit-close="onCloseWindow"></div>
 </article>
 `
 
@@ -53,29 +76,6 @@ const template = `
 // </div>
 // <div is="TestApp">
 //   <b>Content2</b>
-// </div>
-
-// <div class="${classes.timeCenter}">
-//   <div is="Time" timezone="America/Denver"></div>
-// </div>
-// <div o-for="index in windows"
-//   is="Window"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow"></div>
-// <div is="Window"
-//   title=""
-//   width="218"
-//   height="300"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="WeatherApp"></div>
-// </div>
-// <div is="Window"
-//   title=""
-//   height="300"
-//   o-emit-focus="onFocusWindow"
-//   o-emit-close="onCloseWindow">
-//   <div is="Todos"></div>
 // </div>
 
 // <div is="Window"

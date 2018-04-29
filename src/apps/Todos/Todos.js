@@ -42,7 +42,7 @@ const template = `
     placeholder="What needs to be done?"
     o-on-keyup="onKeyUp($event)"
   />
-  <ul class="${ classes.list }">
+  <ul class="${classes.list}">
     <li o-for="todo in todos"
       is="Todo"
       o-emit-remove="onRemoveTodo"
@@ -62,8 +62,8 @@ const Todos = extendWindowApp('Todos', {
 })
 
 Todos.beforeCreate = function () {
-  this.data.todos = localStorage.todos
-    ? JSON.parse(localStorage.todos)
+  this.data.todos = window.localStorage.todos
+    ? JSON.parse(window.localStorage.todos)
     : []
 }
 
@@ -103,7 +103,7 @@ Todos.onToggleCompleteTodo = function (id, value) {
 const randomId = () => Math.floor(Math.random() * 10000).toString()
 
 const updateDb = todos => {
-  localStorage.todos = JSON.stringify(todos)
+  window.localStorage.todos = JSON.stringify(todos)
 }
 
 export default Todos

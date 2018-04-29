@@ -21,7 +21,7 @@ const Template = {
 }
 
 Template.mounted = function () {
-  // this.element is ready
+  // this.$el is ready
 }
 
 export default Template
