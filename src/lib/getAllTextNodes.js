@@ -3,8 +3,23 @@ import { filter } from 'lodash'
 const textTag = '[object Text]'
 
 const getAllTextNodes = el => {
-  let nodes = filter(el.childNodes, node => node.toString() === textTag)
-  const children = el.children
+  const childNodes = el.childNodes
+  let shadowNodes = []
+  if (el.shadowRoot != null) {
+    shadowNodes = [...el.shadowRoot.childNodes]
+  }
+  let nodes = filter([
+    ...childNodes,
+    ...shadowNodes
+  ], node => node.toString() === textTag)
+  nodes = nodesFromChildren(nodes, el.children)
+  if (el.shadowRoot != null) {
+    nodes = nodesFromChildren(nodes, el.shadowRoot.children)
+  }
+  return nodes
+}
+
+const nodesFromChildren = (nodes, children) => {
   let index = children.length
   while (index--) {
     nodes = nodes.concat(getAllTextNodes(children[index]))

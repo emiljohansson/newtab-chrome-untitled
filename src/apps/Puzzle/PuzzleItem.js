@@ -11,12 +11,12 @@ const styles = {
 // {{value}}
 const template = classes => `
 <template>
-  <div o-on-click="onClick">4</div>
+  <div o-on-click="onClick">{{value}}</div>
 </template>
 `
 
 const PuzzleItem = {
-  debug: false,
+  debug: true,
   useShadow: true,
   styles,
   template,

@@ -22,13 +22,12 @@ function ObserverArray (vm, key, array, viewSubject) {
     'sort',
     'reverse'
   ], function (method) {
-    array[method] = function(...args) {
+    array[method] = function (...args) {
       const data = {
         arg: args,
         method,
         inserted: []
       }
-      let inserted
       switch (method) {
         case 'push':
         case 'unshift':

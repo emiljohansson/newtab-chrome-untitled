@@ -25,7 +25,6 @@ const template = classes => `
   <div is="PuzzleItem"
     class="hello ${classes.blankColumn}"
     o-ref="blankItem">
-    42
   </div>
 </template>
 `
