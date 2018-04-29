@@ -25,11 +25,7 @@ const PuzzleItem = {
   }
 }
 
-PuzzleItem.mounted = function () {
-  // if (this.value === '') {
-  //   this.$el.classList.add(this.styleSheet.classes.blankColumn)
-  // }
-}
+PuzzleItem.mounted = function () {}
 
 PuzzleItem.onClick = function () {
   this.$emit('click', this.$el)

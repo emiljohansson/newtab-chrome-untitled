@@ -38,21 +38,22 @@ const { classes } = jss.createStyleSheet(styles).attach()
 
 const template = `
 <article class="${classes.desktop}">
-  <div is="TestApp">
-    <b>Content</b>
-  </div>
-  <div is="TestApp">
-    <b>Content2</b>
-  </div>
   <div is="Window"
     title="Puzzle"
-    width="190"
+    width="198"
     o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow">
     <div is="Puzzle"></div>
   </div>
 </article>
 `
+
+// <div is="TestApp">
+//   <b>Content</b>
+// </div>
+// <div is="TestApp">
+//   <b>Content2</b>
+// </div>
 
 // <div class="${classes.timeCenter}">
 //   <div is="Time" timezone="America/Denver"></div>

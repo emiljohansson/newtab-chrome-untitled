@@ -77,7 +77,7 @@ Puzzle.onItemClick = function (el) {
   let blankIndex = 0
   let selectedIndex = 0
   const blankEl = this.$refs.blankItem.$el
-  forEach(this.$el.children, (childEl, index) => {
+  forEach(this.$el.shadowRoot.children, (childEl, index) => {
     if (childEl === blankEl) {
       blankIndex = index
     }
@@ -98,7 +98,7 @@ Puzzle.onItemClick = function (el) {
     return
   }
   let winner = true
-  reduce(this.$el.children, (value, childEl) => {
+  reduce(this.$el.shadowRoot.children, (value, childEl) => {
     const elValue = parseInt(childEl.innerHTML, 10)
     if (!winner) {
       return -1
@@ -108,7 +108,7 @@ Puzzle.onItemClick = function (el) {
     }
     return elValue
   }, -1)
-  console.log(winner ? 'WINNER' : 'not yet...')
+  console.log(winner ? 'winner winner chicken dinner' : 'not yet...')
 }
 
 export default Puzzle
