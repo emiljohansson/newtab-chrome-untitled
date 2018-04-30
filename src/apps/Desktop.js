@@ -1,12 +1,11 @@
 import { forEach, isFunction } from 'lodash'
-import jss from 'jss'
 import keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
 import * as spacing from 'style/spacing'
 
 const styles = {
-  desktop: {
+  '@global :host': {
     height: 'auto',
     position: 'absolute',
     bottom: '0',
@@ -34,10 +33,8 @@ const styles = {
 //   top: '0'
 // }
 
-const { classes } = jss.createStyleSheet(styles).attach()
-
-const template = `
-<article class="${classes.desktop}">
+const template = classes => `
+<template>
   <div is="Window"
     title="Puzzle"
     width="198"
@@ -87,7 +84,7 @@ const template = `
     is="Window"
     o-emit-focus="onFocusWindow"
     o-emit-close="onCloseWindow"></div>
-</article>
+</template>
 `
 
 const zIndexList = []
@@ -113,6 +110,8 @@ const removeFromZIndex = desktopWindow => {
 }
 
 const Desktop = {
+  useShadow: true,
+  styles,
   template,
   data: {
     isActive: true,
