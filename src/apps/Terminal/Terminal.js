@@ -1,16 +1,15 @@
-import jss from 'jss'
 import { isFunction } from 'lodash'
 import * as keyCode from 'keyboard-key-code'
 import { keyboard } from 'apps/Desktop'
 import extendWindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
 
-const { classes } = jss.createStyleSheet({
-  root: {
+const styles = {
+  '@global :host': {
     fontSize: '0.7rem'
   },
-  fieldContainer: {
-    position: 'relative',
+  field: {
+    display: 'flex',
     fontSize: '1.2rem',
 
     '&:before': {
@@ -18,11 +17,10 @@ const { classes } = jss.createStyleSheet({
       paddingRight: '7px'
     }
   },
-  field: {
+  input: {
     border: '0',
     outline: 'none',
     padding: '10px 0',
-    position: 'absolute',
     width: '100%'
   },
   outputCmd: {
@@ -32,27 +30,29 @@ const { classes } = jss.createStyleSheet({
       paddingRight: '7px'
     }
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.root}">
-<div>
-  <div o-for="output in outputs">
-    <div class="${classes.outputCmd}">{{output.cmd}}</div>
-    <div>{{output.out}}</div>
+const template = classes => `
+<template>
+  <div>
+    <div o-for="output in outputs">
+      <div class="${classes.outputCmd}">{{output.cmd}}</div>
+      <div>{{output.out}}</div>
+    </div>
   </div>
-</div>
-<div class="${classes.fieldContainer}">
-  <input
-    class="${classes.field}"
-    o-ref="field"
-    o-on-keydown="onKeyDown($event)"
-  />
-</div>
-</article>
+  <div class="${classes.field}">
+    <input
+      class="${classes.input}"
+      o-ref="field"
+      o-on-keydown="onKeyDown($event)"
+    />
+  </div>
+</template>
 `
 
 const Terminal = extendWindowApp('Terminal', {
+  useShadow: true,
+  styles,
   template,
   data: {
     outputs: []
@@ -80,7 +80,7 @@ Terminal.onKeyDown = function (event) {
     })
     fieldEl.value = ''
     this.focusField()
-    return
+    // return
   }
 }
 

@@ -72,7 +72,6 @@ const template = classes => `
 `
 
 const Todo = {
-  debug:true,
   useShadow: true,
   styles,
   template,
