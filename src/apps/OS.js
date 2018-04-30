@@ -1,23 +1,23 @@
-import jss from 'jss'
-
-const { classes } = jss.createStyleSheet({
-  os: {
+const styles = {
+  '@global :host': {
     background: 'linear-gradient(to bottom, #ffffff 0%,#f6f6fa 100%)',
     height: '100%',
     width: '100%',
     position: 'absolute',
     overflow: 'hidden'
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.os}">
+const template = classes => `
+<template>
   <div is="StatusBar"></div>
   <div is="Desktop"></div>
-</article>
+</template>
 `
 
 const OS = {
+  useShadow: true,
+  styles,
   template,
   data: {}
 }
