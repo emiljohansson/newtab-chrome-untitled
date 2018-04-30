@@ -1,14 +1,14 @@
-import jss from 'jss'
 import * as spacing from 'style/spacing'
 
-const { classes } = jss.createStyleSheet({
-  statusBar: {
+const styles = {
+  '@global :host': {
     backgroundColor: 'rgba(0, 0, 0, 0)',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
     fontSize: '0.8rem',
-    height: '20px'
+    height: '20px',
+    padding: `0 ${spacing.space.m}`
   },
   col: {
     flex: '1',
@@ -25,10 +25,10 @@ const { classes } = jss.createStyleSheet({
   },
   appMenu: {
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.statusBar} ${spacing.classes.px_m}">
+const template = classes => `
+<template>
   <div class="${classes.leftCol}">
     <div class="${classes.appMenu}"
      o-on-click="onAppMenuClick()">
@@ -39,10 +39,13 @@ const template = `
     <div is="Weather"></div>
     <div is="Time" timezone="America/Denver"></div>
   </div>
-</article>
+  <link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
+</template>
 `
 
 const StatusBar = {
+  useShadow: true,
+  styles,
   template,
   data: {
     isActive: true
