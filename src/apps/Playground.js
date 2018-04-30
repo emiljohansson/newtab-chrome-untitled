@@ -1,24 +1,30 @@
-import jss from 'jss'
 import extendWindowApp from 'apps/WindowApp'
 
-const { classes } = jss.createStyleSheet({
+const styles = {
   playground: {
     fontSize: '60%'
   }
-}).attach()
+}
+
+const template = classes => `
+<template>
+  <article class="${classes.playground}">
+    <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
+    <div>Sum: {{sum}}</div>
+    <div o-for="item in testArr"
+      is="PlaygroundItem"
+      o-emit-increment="onIncrement"></div>
+    <button o-on-click="onToggleClicked">show/hide</button>
+    <div o-if="show">Hello</div>
+    <div o-if="show" is="PlaygroundIfItem"></div>
+  </article>
+</template>
+`
 
 export const Playground = extendWindowApp('Playground', {
-  template: `
-<article class="${classes.playground}">
-  <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
-  <div>Sum: {{sum}}</div>
-  <div o-for="item in testArr"
-    is="PlaygroundItem"
-    o-emit-increment="onIncrement"></div>
-  <button o-on-click="onToggleClicked">show/hide</button>
-  <div o-if="show">Hello</div>
-  <div o-if="show" is="PlaygroundIfItem"></div>
-</article>`,
+  useShadow: true,
+  styles,
+  template,
   data: {
     testVar: 1,
     testArr: [
@@ -56,10 +62,14 @@ Playground.onIncrement = function () {
 }
 
 export const PlaygroundItem = {
-  template: `
-<div class="playground-item">
-  {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
-</div>`,
+  useShadow: true,
+  styles: {},
+  template: classes => `
+<template>
+  <div class="playground-item">
+    {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
+  </div>
+</template>`,
   data: {
     text: '',
     counter: 0
@@ -72,9 +82,13 @@ PlaygroundItem.onIncrementClick = function () {
 }
 
 export const PlaygroundIfItem = {
-  template: `
-<div class="playground-ifitem">
-  World
-</div>`,
+  useShadow: true,
+  styles: {},
+  template: classes => `
+<template>
+  <div class="playground-ifitem">
+    World
+  </div>
+</template>`,
   data: {}
 }

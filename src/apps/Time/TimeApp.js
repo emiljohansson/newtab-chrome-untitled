@@ -1,12 +1,6 @@
 import extendWindowApp from 'apps/WindowApp'
 
 const styles = {
-  app: {
-    '& .time-time': {
-      extend: 'column',
-      textAlign: 'right'
-    }
-  },
   time: {
     display: 'flex',
     color: 'white'
@@ -21,17 +15,15 @@ const styles = {
 
 const template = classes => `
 <template>
-  <article class="${classes.app}">
-    <div is="Time" class="${classes.time}" timezone="Europe/Stockholm">
-      <span class="${classes.title}">Sweden</span>
-    </div>
-    <div is="Time" class="${classes.time}" timezone="Asia/Shanghai">
-      <span class="${classes.title}">Shanghai</span>
-    </div>
-    <div is="Time" class="${classes.time}"  timezone="America/Los_Angeles">
-      <span class="${classes.title}">Los Angeles</span>
-    </div>
-  </article>
+  <div is="Time" class="${classes.time}" timezone="Europe/Stockholm">
+    <span class="${classes.title}">Sweden</span>
+  </div>
+  <div is="Time" class="${classes.time}" timezone="Asia/Shanghai">
+    <span class="${classes.title}">Shanghai</span>
+  </div>
+  <div is="Time" class="${classes.time}"  timezone="America/Los_Angeles">
+    <span class="${classes.title}">Los Angeles</span>
+  </div>
 </template>
 `
 

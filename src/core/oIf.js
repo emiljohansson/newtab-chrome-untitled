@@ -9,7 +9,10 @@ export default vm => {
   if (vm.$el == null) {
     return
   }
-  const elements = vm.$el.querySelectorAll(`[${ifSelector}]`)
+  let elements = [...vm.$el.querySelectorAll(`[${ifSelector}]`)]
+  if (vm.$el.shadowRoot != null) {
+    elements = elements.concat(...vm.$el.shadowRoot.querySelectorAll(`[${ifSelector}]`))
+  }
   forEach(elements, el => {
     const key = el.getAttribute(ifSelector)
     el.removeAttribute(ifSelector)

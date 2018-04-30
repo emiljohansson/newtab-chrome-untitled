@@ -1,5 +1,4 @@
 import test from 'ava'
-import sinon from 'sinon'
 import oIf from 'core/oIf'
 
 test('should do nothing if $el is undefined', t => {
@@ -36,4 +35,21 @@ test('should remove element', t => {
   }
   oIf(vm)
   t.is(vm.$el.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+})
+
+test('should handle shadow root', t => {
+  const el = document.createElement('div')
+  el.attachShadow({
+    mode: 'open'
+  }).innerHTML = `Hello, <span o-if="show">World</span>`
+  const vm = {
+    $id: 'abc',
+    $el: el,
+    data: {
+      show: 0
+    },
+    show: 0
+  }
+  oIf(vm)
+  t.is(vm.$el.shadowRoot.innerHTML, `Hello, <span>World</span>`)
 })
