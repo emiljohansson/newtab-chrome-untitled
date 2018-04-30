@@ -1,14 +1,14 @@
 import { forEach, reduce } from 'lodash'
-import jss from 'jss'
 import extendWindowApp from 'apps/WindowApp'
 import * as spacing from 'style/spacing'
 
 const baseStyle = {
+  boxSizing: 'border-box',
   fontFamily: `'Montserrat', sans-serif`
 }
 
-const { classes } = jss.createStyleSheet({
-  todos: {
+const styles = {
+  '@global :host': {
     extend: baseStyle,
     fontWeight: '200',
     padding: spacing.inset.squish.m
@@ -23,7 +23,7 @@ const { classes } = jss.createStyleSheet({
     border: '1px solid #e2e2e2',
     borderRadius: '50px',
     fontSize: '0.8rem',
-    // fontWeight: '200',
+    margin: spacing.stack.m,
     padding: spacing.inset.squish.m,
     width: '100%'
   },
@@ -31,27 +31,31 @@ const { classes } = jss.createStyleSheet({
     extend: baseStyle,
     padding: '0'
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.todos}">
-  <h1 class="${classes.header}">todo</h1>
+const template = classes => `
+<template>
+  <header>
+    <h1 class="${classes.header}">todo</h1>
+  </header>
   <input
     class="${classes.input}"
     autocomplete="off"
     placeholder="What needs to be done?"
     o-on-keyup="onKeyUp($event)"
   />
-  <ul class="${classes.list}">
-    <li o-for="todo in todos"
+  <div class="${classes.list}">
+    <div o-for="todo in todos"
       is="Todo"
       o-emit-remove="onRemoveTodo"
-      o-emit-complete="onToggleCompleteTodo"></li>
-  </ul>
-</article>
+      o-emit-complete="onToggleCompleteTodo"></div>
+  </div>
+</template>
 `
 
 const Todos = extendWindowApp('Todos', {
+  useShadow: true,
+  styles,
   template,
   data: {
     todos: []

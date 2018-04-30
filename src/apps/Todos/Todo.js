@@ -1,7 +1,6 @@
-import jss from 'jss'
 import * as spacing from 'style/spacing'
 
-const { classes } = jss.createStyleSheet({
+const styles = {
   todo: {
     display: 'flex',
     alignItems: 'center',
@@ -58,19 +57,24 @@ const { classes } = jss.createStyleSheet({
       content: '"×"'
     }
   }
-}).attach()
+}
 
-const template = `
-<li class="${classes.todo}" o-class="{
-  completed: completed
-}">
-  <button class="${classes.checkBtn}" o-on-click="onCompleteClick()"></button>
-  <label class="${classes.label}">{{text}}</label>
-  <button class="${classes.removeBtn}" o-on-click="onRemoveClick()"></button>
-</li>
+const template = classes => `
+<template>
+  <div class="${classes.todo}" o-class="{
+    completed: completed
+  }">
+    <button class="${classes.checkBtn}" o-on-click="onCompleteClick()"></button>
+    <label class="${classes.label}">{{text}}</label>
+    <button class="${classes.removeBtn}" o-on-click="onRemoveClick()"></button>
+  </div>
+</template>
 `
 
 const Todo = {
+  debug:true,
+  useShadow: true,
+  styles,
   template,
   data: {
     id: null,
