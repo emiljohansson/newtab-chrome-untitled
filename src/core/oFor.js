@@ -1,6 +1,5 @@
 import { forEach, isElement, map, uniqueId } from 'lodash'
-import { create } from 'jss'
-import preset from 'jss-preset-default'
+import StyleSheet from 'stylesheet'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
 import watch from 'core/watch'
@@ -138,13 +137,6 @@ export default (vm, el) => {
 
     cloneNode.removeAttribute(forSelector)
     container.appendChild(cloneNode)
-  }
-
-  // TODO remove
-  const StyleSheet = styles => {
-    const jss = create()
-    jss.setup(preset())
-    return jss.createStyleSheet(styles)
   }
 
   const App = (el, parent, context, appendFirst) => {

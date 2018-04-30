@@ -66,7 +66,7 @@ const getChildren = el => {
   const base = el.children
   const shadow = el.shadowRoot == null
     ? []
-    : el.shadowRoot.children
+    : filter(el.shadowRoot.children, childEl => childEl !== el) // fixes bug in tests where extra shadowRoot is added within it-self
   return [...shadow, ...base]
 }
 

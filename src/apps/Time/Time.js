@@ -12,11 +12,7 @@ setInterval(() => {
   }
 }, 1000)
 
-const template = classes => `
-<template>
-  <slot></slot><span>{{time}}</span>
-</template>
-`
+const template = `<slot></slot><span>{{time}}</span>`
 
 const Time = {
   useShadow: true,

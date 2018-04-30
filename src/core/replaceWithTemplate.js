@@ -1,6 +1,5 @@
 import { forEach, isFunction, reduce, slice } from 'lodash'
-import { create } from 'jss'
-import preset from 'jss-preset-default'
+import StyleSheet from 'stylesheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oClass from 'core/oClass'
@@ -13,12 +12,6 @@ import getAllTextNodes from 'lib/getAllTextNodes'
 import replaceBracketContent from 'lib/replaceBracketContent'
 import getElsByAttr from 'lib/getElsByAttr'
 
-const StyleSheet = styles => {
-  const jss = create()
-  jss.setup(preset())
-  return jss.createStyleSheet(styles)
-}
-
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {
     return
@@ -28,38 +21,29 @@ const replaceWithTemplate = vm => {
   const shadowContainer = document.createElement('div')
   let dependencyElements
   let styleSheet
-  if (vm.useShadow) {
-    shadowContainer.attachShadow({
-      mode: 'open'
-    })
-    styleSheet = vm.styles
-      ? StyleSheet(vm.styles)
-      : vm.styleSheet
-  }
+  shadowContainer.attachShadow({
+    mode: 'open'
+  })
+  styleSheet = StyleSheet(vm.styles)
+  const template = vm.template(styleSheet.classes)
 
   oEmit(vm)
+  vm.$el = shadowContainer
 
   if (vm.template != null && vm.template !== '') {
     if (isFunction(vm.template)) {
-      if (vm.useShadow) {
-        const elements = getElFromTemplate(vm.template(styleSheet.classes))
-        if (elements[0].tagName === 'TEMPLATE') {
-          vm.$el = shadowContainer
-          if (vm.data.class) {
-            vm.$el.className = vm.data.class
-          }
-          vm.$el.innerHTML = oldEl.innerHTML
-          vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
-          dependencyElements = slice(elements, 1)
-          forEach(dependencyElements, el => {
-            shadowContainer.shadowRoot.appendChild(el)
-          })
-        } else {
-          vm.$el = elements[0]
-        }
+      const elements = getElFromTemplate(template)
+      if (vm.data.class) {
+        vm.$el.className = vm.data.class
       }
+      vm.$el.innerHTML = oldEl.innerHTML
+      vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
+      dependencyElements = slice(elements, 1)
+      forEach(dependencyElements, el => {
+        shadowContainer.shadowRoot.appendChild(el)
+      })
     } else {
-      vm.$el = getElFromTemplate(vm.template)[0]
+      console.log('wrong implementation!')
     }
   }
   const forElements = getElsByAttr(vm.$el.shadowRoot || vm.$el, forSelector)
@@ -74,7 +58,7 @@ const replaceWithTemplate = vm => {
   delete vm.$tempContent
 
   const textNodes = getAllTextNodes(vm.$el)
-  const keys = findKeysInTemplate(vm.template)
+  const keys = findKeysInTemplate(template)
 
   forEach(keys, key => {
     const historyNodes = HistoryNodes(key, textNodes)
@@ -87,34 +71,22 @@ const replaceWithTemplate = vm => {
   })
 
   if (parentEl != null) {
-    if (vm.useShadow) {
-      parentEl.replaceChild(vm.$el, oldEl)
-      styleSheet.options.insertionPoint = vm.$el.shadowRoot.lastElementChild
-      styleSheet.attach()
-      vm.styleSheet = styleSheet
-    } else {
-      parentEl.replaceChild(vm.$el, oldEl)
-    }
+    parentEl.replaceChild(vm.$el, oldEl)
+    styleSheet.options.insertionPoint = vm.$el.shadowRoot.lastElementChild
+    styleSheet.attach()
+    vm.styleSheet = styleSheet
   }
-  // else if (shadowContainer.shadowRoot != null) {
-  //   shadowContainer.shadowRoot.appendChild(vm.$el)
-  //   forEach(dependencyElements, el => {
-  //     shadowContainer.shadowRoot.appendChild(el)
-  //   })
-  //   // parentEl.replaceChild(shadowContainer, oldEl)
-  //   styleSheet.options.insertionPoint = vm.$el
-  //   styleSheet.attach()
-  //   vm.styleSheet = styleSheet
-  //   vm.$shadowContainer = shadowContainer
-  // }
 
   oOn(vm)
   oClass(vm)
 }
 
 const getElFromTemplate = template => {
+  if (template.indexOf('<template') < 0) {
+    template = `<template>${template}</template>`
+  }
   let tempEl = document.createElement('div')
-  tempEl.innerHTML = template // .replace('<slot></slot>', content)
+  tempEl.innerHTML = template
   return tempEl.children
 }
 

@@ -86,7 +86,7 @@ const iterateData = vm => {
       fn()
     }
   }
-  const addWatch = (value, key, list) => {
+  const addWatch = (value, key) => {
     const subject = new Subject(value)
     const viewSubject = watch(vm, key)
     if (isArray(value)) {
@@ -113,7 +113,7 @@ const iterateData = vm => {
   return addWatch
 }
 
-export default (vm) => {
+export default vm => {
   vm.$data = vm.data
   const publicMethods = filter(
     keys(vm),
