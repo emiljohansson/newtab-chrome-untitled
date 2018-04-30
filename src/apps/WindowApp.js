@@ -1,5 +1,3 @@
-import { noop } from 'lodash'
-// import BaseApp from 'core/BaseApp'
 import { installApp } from 'apps/OS'
 
 const WindowApp = {

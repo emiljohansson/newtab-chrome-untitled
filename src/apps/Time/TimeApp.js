@@ -1,34 +1,43 @@
-import jss from 'jss'
 import extendWindowApp from 'apps/WindowApp'
 
-const { classes } = jss.createStyleSheet({
+const styles = {
   app: {
-    '& .time': {
-      display: 'flex',
-      color: 'white'
-    },
-    '& .time-title': {
-      extend: 'column'
-    },
     '& .time-time': {
       extend: 'column',
       textAlign: 'right'
     }
   },
+  time: {
+    display: 'flex',
+    color: 'white'
+  },
+  title: {
+    extend: 'column'
+  },
   column: {
     flex: 1
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.app}">
-  <div is="Time" title="Sweden" timezone="Europe/Stockholm"></div>
-  <div is="Time" title="Shanghai" timezone="Asia/Shanghai"></div>
-  <div is="Time" title="Los Angeles" timezone="America/Los_Angeles"></div>
-</article>
+const template = classes => `
+<template>
+  <article class="${classes.app}">
+    <div is="Time" class="${classes.time}" timezone="Europe/Stockholm">
+      <span class="${classes.title}">Sweden</span>
+    </div>
+    <div is="Time" class="${classes.time}" timezone="Asia/Shanghai">
+      <span class="${classes.title}">Shanghai</span>
+    </div>
+    <div is="Time" class="${classes.time}"  timezone="America/Los_Angeles">
+      <span class="${classes.title}">Los Angeles</span>
+    </div>
+  </article>
+</template>
 `
 
 const TimeApp = extendWindowApp('TimeApp', {
+  useShadow: true,
+  styles,
   template,
   data: {},
   windowSettings: {
