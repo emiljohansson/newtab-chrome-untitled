@@ -1,19 +1,20 @@
-import jss from 'jss'
-
-const { classes } = jss.createStyleSheet({
-  root: {
+const styles = {
+  '@global :host': {
     fontSize: '2rem'
   }
-}).attach()
+}
 
-const template = `
-<article class="${classes.root}" o-class="{
-  active: isActive
-}">
-</article>
+const template = classes => `
+<template>
+  <article o-class="{
+    active: isActive
+  }">
+  </article>
+</template>
 `
 
 const Template = {
+  styles,
   template,
   data: {
     isActive: true
