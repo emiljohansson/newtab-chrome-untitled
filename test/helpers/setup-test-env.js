@@ -1,5 +1,6 @@
 import browserEnv from 'browser-env'
 browserEnv(['window', 'document', 'navigator'])
+require('./webcomponents-lite')
 
 // window.Element.prototype.attachShadow = function () {
 //   var iframe = this.ownerDocument.createElement('iframe')
