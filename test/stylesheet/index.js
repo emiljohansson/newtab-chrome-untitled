@@ -1,22 +1,11 @@
 import test from 'ava'
-import * as styleSheet from 'stylesheet'
+import StyleSheet from 'stylesheet'
 
 test('should create a style sheet', t => {
-  const expected = {
-    red: {
-      backgroundColor: 'red'
-    },
-    blue: {
-      backgroundColor: 'blue'
-    }
-  }
-  const styles = styleSheet.create({
-    red: {
-      backgroundColor: 'red'
-    },
-    blue: {
-      backgroundColor: 'blue'
-    }
+  const expected = {'red': 'red-0-1', 'blue': 'blue-0-2'}
+  const styleSheet = StyleSheet({
+    red: {},
+    blue: {}
   })
-  t.deepEqual(styles, expected)
+  t.deepEqual(styleSheet.classes, expected)
 })
