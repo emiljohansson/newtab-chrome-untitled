@@ -1,4 +1,4 @@
-import { forEach, isFunction, reduce, slice } from 'lodash'
+import { forEach, reduce, slice } from 'lodash'
 import StyleSheet from 'stylesheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'

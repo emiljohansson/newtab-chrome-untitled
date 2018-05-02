@@ -51,7 +51,6 @@ test('should remove {{o-content}} if no content are passed', t => {
   <div></div>
 `
   document.body.appendChild(el)
-  const nodeLength = el.childNodes.length
   const vm = {
     $el: el
   }
