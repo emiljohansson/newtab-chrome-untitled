@@ -53,6 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   var DocumentFragment = window.DocumentFragment
   var Document = window.Document
   var Element = window.Element
+  var Event = window.Event
   var HTMLElement = window.HTMLElement
   var HTMLLinkElement = window.HTMLLinkElement
   var MutationObserver = window.MutationObserver
