@@ -3543,8 +3543,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       d !== e && a.attributeChangedCallback(this, c, d, e, b)
     });
     Te ?
-      c(HTMLElement.prototype, Te) : Je ? c(Element.prototype, Je) : console.warn("Custom Elements: `Element#insertAdjacentElement` was not patched.");
-    Ue ? d(HTMLElement.prototype, Ue) : Ke ? d(Element.prototype, Ke) : console.warn("Custom Elements: `Element#insertAdjacentHTML` was not patched.");
+      c(HTMLElement.prototype, Te) : Je ? c(Element.prototype, Je) : undefined; // : console.warn("Custom Elements: `Element#insertAdjacentElement` was not patched.");
+    Ue ? d(HTMLElement.prototype, Ue) : Ke ? d(Element.prototype, Ke) : undefined; // : console.warn("Custom Elements: `Element#insertAdjacentHTML` was not patched.");
     Ye(a, Element.prototype, {
       $: Le,
       append: Me

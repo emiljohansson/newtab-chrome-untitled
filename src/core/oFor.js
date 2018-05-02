@@ -90,16 +90,15 @@ export default (vm, el) => {
       ? container
       : tempContainer
     const cloneNode = el.cloneNode(true)
-    // if (cloneNode.hasAttribute('is')) {
-    const newVm = App(cloneNode, container, dataItem, index === 0)
-    // const method = index === 0
-    //   ? 'unshift'
-    //   : 'push'
-    cache[method]({
-      vm: newVm,
-      data: dataItem
-    })
-    if (el.hasAttribute('is')) {
+    if (cloneNode.hasAttribute('is')) {
+      const newVm = App(cloneNode, container, dataItem, index === 0)
+      // const method = index === 0
+      //   ? 'unshift'
+      //   : 'push'
+      cache[method]({
+        vm: newVm,
+        data: dataItem
+      })
       return
     }
     const textNodes = getAllTextNodes(cloneNode)

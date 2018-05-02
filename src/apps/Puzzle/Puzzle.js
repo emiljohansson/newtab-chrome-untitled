@@ -18,15 +18,13 @@ const styles = {
 }
 
 const template = classes => `
-<template>
-  <div is="PuzzleItem"
-    o-for="context in values"
-    o-emit-click="onItemClick"></div>
-  <div is="PuzzleItem"
-    class="hello ${classes.blankColumn}"
-    o-ref="blankItem">
-  </div>
-</template>
+<div is="PuzzleItem"
+  o-for="context in values"
+  o-emit-click="onItemClick"></div>
+<div is="PuzzleItem"
+  class="hello ${classes.blankColumn}"
+  o-ref="blankItem">
+</div>
 `
 
 const numberOfValues = 15
