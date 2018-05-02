@@ -30,22 +30,16 @@ const replaceWithTemplate = vm => {
   oEmit(vm)
   vm.$el = shadowContainer
 
-  if (vm.template != null && vm.template !== '') {
-    if (isFunction(vm.template)) {
-      const elements = getElFromTemplate(template)
-      if (vm.data.class) {
-        vm.$el.className = vm.data.class
-      }
-      vm.$el.innerHTML = oldEl.innerHTML
-      vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
-      dependencyElements = slice(elements, 1)
-      forEach(dependencyElements, el => {
-        shadowContainer.shadowRoot.appendChild(el)
-      })
-    } else {
-      console.log('wrong implementation!')
-    }
+  const elements = getElFromTemplate(template)
+  if (vm.data.class) {
+    vm.$el.className = vm.data.class
   }
+  vm.$el.innerHTML = oldEl.innerHTML
+  vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
+  dependencyElements = slice(elements, 1)
+  forEach(dependencyElements, el => {
+    shadowContainer.shadowRoot.appendChild(el)
+  })
   const forElements = getElsByAttr(vm.$el.shadowRoot || vm.$el, forSelector)
   forEach(forElements, element => {
     oFor(vm, element)
