@@ -38,7 +38,7 @@ const swapEl = (el1, el2) => {
 }
 
 const Puzzle = extendWindowApp('Puzzle', {
-  useShadow: true,
+  debug: true,
   styles,
   template,
   data: {

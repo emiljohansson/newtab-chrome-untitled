@@ -65,11 +65,9 @@ export const PlaygroundItem = {
   useShadow: true,
   styles: {},
   template: classes => `
-<template>
-  <div class="playground-item">
-    {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
-  </div>
-</template>`,
+<div class="playground-item">
+  {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
+</div>`,
   data: {
     text: '',
     counter: 0

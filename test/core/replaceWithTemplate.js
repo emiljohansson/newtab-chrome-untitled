@@ -15,6 +15,8 @@ test('should replace all text nodes with data from `vm`', t => {
   }
   replaceWithTemplate(vm)
   state(vm)
-  t.is(vm.$el.shadowRoot.innerHTML, 'Hello, World')
+  t.is(vm.$el.shadowRoot.childNodes.length, 2)
+  t.is(vm.$el.shadowRoot.childNodes[0].textContent, 'Hello, World')
+  t.is(vm.$el.shadowRoot.childNodes[1].tagName, 'STYLE')
   document.body.removeChild(vm.$el)
 })

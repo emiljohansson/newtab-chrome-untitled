@@ -68,7 +68,7 @@ export default (vm, el) => {
       } else if (data.method === 'push') {
         index = vm.data[dataKey].length - 1
       }
-      insertNode(vm.data[dataKey][index], index, parentEl, data.method)
+      insertNode(vm.data[dataKey][index], index, parentEl.shadowRoot || parentEl, data.method)
       return
     }
     const removedItems = []
@@ -86,7 +86,7 @@ export default (vm, el) => {
   })
 
   const insertNode = (dataItem, index, container, method = 'push') => {
-    container = isElement(container)
+    container = container != null && (isElement(container) || container.toString() === '[object ShadowRoot]' || container.toString() === '[object DocumentFragment]')
       ? container
       : tempContainer
     const cloneNode = el.cloneNode(true)

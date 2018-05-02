@@ -54,7 +54,7 @@ test('should add a click listener to child element', t => {
   const vm = {
     $el: el,
     onClick,
-    onClick2(event) {
+    onClick2 (event) {
       onClick2()
       event.stopPropagation()
       event.preventDefault()

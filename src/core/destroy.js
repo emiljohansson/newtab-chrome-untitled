@@ -1,4 +1,3 @@
-import { forEach, noop } from 'lodash'
 import callHook from 'core/callHook'
 import { destroy as destroyWatchers } from 'core/watch'
 
@@ -18,7 +17,11 @@ export default (vm) => {
       vm.$children.remove(childVm)
     }
     if (vm.$el != null) {
-      vm.$el.parentElement.removeChild(vm.$el)
+      if (vm.$el.parentElement == null) {
+        vm.$el.parentNode.removeChild(vm.$el)
+      } else {
+        vm.$el.parentElement.removeChild(vm.$el)
+      }
     }
     callHook(vm, vm.destroyed)
   }
