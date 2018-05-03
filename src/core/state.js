@@ -63,7 +63,7 @@ const bind = (vm, fn) => {
     dataWatcher[vm.$id].$functionInProgress = true
     orgFn.apply(vm, args)
     let update
-    while (update = dataWatcher[vm.$id].splice(0, 1)[0]) {
+    while ((update = dataWatcher[vm.$id].splice(0, 1)[0])) {
       update()
     }
     vm.$nextTick()
@@ -82,7 +82,7 @@ const iterateData = vm => {
       return
     }
     let fn
-    while (fn = tickCallbacks.splice(0, 1)[0]) {
+    while ((fn = tickCallbacks.splice(0, 1)[0])) {
       fn()
     }
   }

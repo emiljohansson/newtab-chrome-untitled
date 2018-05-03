@@ -15,7 +15,7 @@ test('should call methods in order', t => {
   destroy(vm)
   const order = [
     beforeDestroy,
-    destroyed,
+    destroyed
   ]
   vm.$destroy()
   sinon.assert.callOrder.apply(null, order)
@@ -25,7 +25,6 @@ test('should call methods in order', t => {
 test('should remove element', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  const options = {}
   const vm = {
     $children: [],
     $refs: {},
