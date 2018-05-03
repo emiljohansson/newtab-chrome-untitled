@@ -27,57 +27,55 @@ const styles = {
 }
 
 const template = classes => `
-<template>
-  <div is="Window"
-    title="Puzzle"
-    width="198"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Puzzle"></div>
-  </div>
-  <div class="${classes.timeCenter}">
-    <div is="Time" timezone="America/Denver"></div>
-  </div>
-  <div is="Window"
-    title=""
-    width="218"
-    height="300"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="WeatherApp"></div>
-  </div>
-  <div is="Window"
-    title=""
-    height="300"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Todos"></div>
-  </div>
-  <div is="Window"
-    title=""
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="TimeApp"></div>
-  </div>
-  <div is="Window"
-    title="Playground"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Playground"></div>
-  </div>
-  <div is="Window"
-    title="Terminal"
-    height="200"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow">
-    <div is="Terminal"></div>
-  </div>
+<div is="Window"
+  title="Puzzle"
+  width="198"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="Puzzle"></div>
+</div>
+<div class="${classes.timeCenter}">
+  <div is="Time" timezone="America/Denver"></div>
+</div>
+<div is="Window"
+  title=""
+  width="218"
+  height="300"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="WeatherApp"></div>
+</div>
+<div is="Window"
+  title=""
+  height="300"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="Todos"></div>
+</div>
+<div is="Window"
+  title=""
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="TimeApp"></div>
+</div>
+<div is="Window"
+  title="Playground"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="Playground"></div>
+</div>
+<div is="Window"
+  title="Terminal"
+  height="200"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow">
+  <div is="Terminal"></div>
+</div>
 
-  <div o-for="index in windows"
-    is="Window"
-    o-emit-focus="onFocusWindow"
-    o-emit-close="onCloseWindow"></div>
-</template>
+<div o-for="index in windows"
+  is="Window"
+  o-emit-focus="onFocusWindow"
+  o-emit-close="onCloseWindow"></div>
 `
 
 const zIndexList = []

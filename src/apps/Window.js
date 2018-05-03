@@ -38,15 +38,19 @@ document.body.addEventListener('mouseup', event => {
 })
 
 const styles = {
-  desktopWindow: {
+  '@global :host': {
     backgroundColor: '#f5f5f5',
     border: '1px solid #ccc',
     borderRadius: '3px',
     boxShadow: '0 2px 6px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.04)',
+    display: 'flex',
     minHeight: '200px',
     padding: spacing.inset.xs,
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 2
+  },
+  desktopWindow: {
+    flex: 1,
 
     '&:hover $closeButton': {
       opacity: 1
@@ -104,35 +108,30 @@ const styles = {
 }
 
 const template = classes => `
-<template>
-  <article class="${classes.desktopWindow}"
-    o-ref="rootEl"
-    o-class="{
-      isDragging: isDragging
-    }"
-    o-on-click="onWindowClick()"
-  >
-    <header class="${classes.header}"
-      o-on-mousedown="onMenuMouseDown($event)">
-      <div class="${classes.headerLeftButtons}">
-        <button class="${classes.closeButton}"
-          o-on-mousedown="onPreventMouseEvent($event)"
-          o-on-click="onMenuCloseClick($event)">
-        </button>
-      </div>
-      <div class="${classes.headerTitle}">
-        {{title}}
-      </div>
-    </header>
-    <main class="${classes.content}">
-      <slot></slot>
-    </main>
-  </article>
-</template>
-`
+<article class="${classes.desktopWindow}"
+  o-class="{
+    isDragging: isDragging
+  }"
+  o-on-click="onWindowClick()"
+>
+  <header class="${classes.header}"
+    o-on-mousedown="onMenuMouseDown($event)">
+    <div class="${classes.headerLeftButtons}">
+      <button class="${classes.closeButton}"
+        o-on-mousedown="onPreventMouseEvent($event)"
+        o-on-click="onMenuCloseClick($event)">
+      </button>
+    </div>
+    <div class="${classes.headerTitle}">
+      {{title}}
+    </div>
+  </header>
+  <main class="${classes.content}">
+    <slot></slot>
+  </main>
+</article>`
 
 const DesktopWindow = {
-  useShadow: true,
   styles,
   template,
   data: {
@@ -156,7 +155,7 @@ DesktopWindow.mounted = function () {
   const coor = getNewInitCoor(this.$id)
   this.setPosition(coor.x, coor.y)
   this.$el.shadowRoot.querySelector(`main`).style.height = `${this.height}px`
-  this.$refs.rootEl.style.width = `${this.width}px`
+  this.$el.style.width = `${this.width}px`
 
   forEach(this.$children, $child => {
     const settings = $child.windowSettings
@@ -165,13 +164,13 @@ DesktopWindow.mounted = function () {
     }
     const update = settings => {
       if (settings.transition) {
-        this.$refs.rootEl.style.transition = settings.transition
+        this.$el.style.transition = settings.transition
       }
       if (settings.background) {
-        this.$refs.rootEl.style.background = settings.background
+        this.$el.style.background = settings.background
       }
       if (settings.backgroundPositionX) {
-        this.$refs.rootEl.style.backgroundPositionX = settings.backgroundPositionX
+        this.$el.style.backgroundPositionX = settings.backgroundPositionX
       }
     }
     update(settings)
@@ -225,8 +224,8 @@ DesktopWindow.onWindowClick = function (event) {
 
 DesktopWindow.onMenuMouseDown = function (event) {
   this.isDragging = true
-  this.offsetCoor.x = this.$refs.rootEl.offsetLeft - event.x
-  this.offsetCoor.y = this.$refs.rootEl.offsetTop - event.y
+  this.offsetCoor.x = this.$el.offsetLeft - event.x
+  this.offsetCoor.y = this.$el.offsetTop - event.y
   document.body.style.userSelect = 'none'
   this.$emit('focus', this)
 }
@@ -250,9 +249,9 @@ DesktopWindow.setPosition = function (x, y) {
   const coor = {
     x
   }
-  this.$refs.rootEl.style.left = `${x}px`
+  this.$el.style.left = `${x}px`
   if (y >= 0) {
-    this.$refs.rootEl.style.top = `${y}px`
+    this.$el.style.top = `${y}px`
     coor.y = y
   }
   savedCoor[this.$id] = coor
