@@ -57,7 +57,7 @@ test('should not touch child elements when data changes', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const App = {
-    template: `{{foo}}
+    template: () => `{{foo}}
   <span>Hello</span>
   {{fooworld}}`,
     data: {
@@ -78,7 +78,7 @@ test('should update each data separately in single text node', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const App = {
-    template: `{{foo}} {{bar}}, {{ foo }}`,
+    template: `<template>{{foo}} {{bar}}, {{ foo }}</template>`,
     data: {
       foo: 'Hello',
       bar: 'World'
@@ -428,6 +428,20 @@ test('should toggle child classes', t => {
   t.false(childEl.classList.contains('my-class'))
   vm.showMyClass = !vm.showMyClass
   t.true(childEl.classList.contains('my-class'))
+  document.body.removeChild(vm.$el)
+})
+
+test('should append root class names to new shadow host', t => {
+  const expected = 'foo bar'
+  const el = document.createElement('div')
+  el.className = expected
+  document.body.appendChild(el)
+  const Foo = {
+    template: `<div></div>`,
+    $el: el
+  }
+  const vm = Instance(Foo, el)
+  t.is(vm.$el.className, expected)
   document.body.removeChild(vm.$el)
 })
 

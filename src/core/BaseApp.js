@@ -1,11 +1,20 @@
+import { merge, isString } from 'lodash'
+
 const styles = {}
 
 const template = ``
 
-const BaseApp = {
+const baseApp = {
   styles,
   template,
   data: {}
 }
 
-export default BaseApp
+export default definition => {
+  const vm = merge({}, baseApp, definition)
+  if (isString(vm.template)) {
+    const tempalteString = vm.template
+    vm.template = () => tempalteString
+  }
+  return vm
+}

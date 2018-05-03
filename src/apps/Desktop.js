@@ -25,13 +25,6 @@ const styles = {
     textAlign: 'center'
   }
 }
-// styles.desktop[`& .${weatherClasses.weather}`] = {
-//   fontSize: '3rem',
-//   fontWeight: '300',
-//   position: 'absolute',
-//   right: '0',
-//   top: '0'
-// }
 
 const template = classes => `
 <template>

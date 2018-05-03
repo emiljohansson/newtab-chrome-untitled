@@ -141,9 +141,7 @@ export default (vm, el) => {
   const App = (el, parent, context, appendFirst) => {
     const definition = apps(el.getAttribute('is'))
     const newVm = Instance(definition, el, context)
-    const styleSheet = newVm.styles
-      ? StyleSheet(newVm.styles)
-      : newVm.styleSheet
+    const styleSheet = StyleSheet(newVm.styles)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {
       parent.insertBefore(newVm.$el, parent.firstChild)
@@ -155,11 +153,9 @@ export default (vm, el) => {
         parent.appendChild(newVm.$el)
       }
     }
-    if (newVm.$el.shadowRoot) {
-      styleSheet.options.insertionPoint = newVm.$el.shadowRoot.lastElementChild
-      styleSheet.attach()
-      newVm.styleSheet = styleSheet
-    }
+    styleSheet.options.insertionPoint = newVm.$el.shadowRoot.lastElementChild
+    styleSheet.attach()
+    newVm.styleSheet = styleSheet
     return newVm
   }
 

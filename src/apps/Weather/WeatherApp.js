@@ -53,6 +53,7 @@ const getStyleByCondition = condition => {
     case 'Rainy':
     case 'Showers':
     case 'Scattered Thunderstorms':
+    case 'Scattered Showers':
       style.background = 'linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)'
       style.icon = 'tint'
       break

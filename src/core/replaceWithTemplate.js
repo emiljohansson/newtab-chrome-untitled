@@ -19,7 +19,6 @@ const replaceWithTemplate = vm => {
   const oldEl = vm.$el
   const parentEl = oldEl.parentElement || oldEl.parentNode
   const shadowContainer = document.createElement('div')
-  let dependencyElements
   let styleSheet
   shadowContainer.attachShadow({
     mode: 'open'
@@ -36,11 +35,7 @@ const replaceWithTemplate = vm => {
   }
   vm.$el.innerHTML = oldEl.innerHTML
   vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
-  dependencyElements = slice(elements, 1)
-  forEach(dependencyElements, el => {
-    shadowContainer.shadowRoot.appendChild(el)
-  })
-  const forElements = getElsByAttr(vm.$el.shadowRoot || vm.$el, forSelector)
+  const forElements = getElsByAttr(vm.$el.shadowRoot, forSelector)
   forEach(forElements, element => {
     oFor(vm, element)
   })

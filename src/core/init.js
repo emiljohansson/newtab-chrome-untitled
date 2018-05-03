@@ -41,11 +41,8 @@ const findChildComponents = vm => {
       }
       return
     }
-    if (ref != null) {
-      el.removeAttribute('o-ref')
-      vm.$refs[ref] = el
-      // return
-    }
+    el.removeAttribute('o-ref')
+    vm.$refs[ref] = el
   })
 }
 
