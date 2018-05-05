@@ -1,13 +1,17 @@
-import { camelCase, filter, forEach, toArray } from 'lodash'
+import { camelCase, filter, forEach } from 'lodash'
+import { getDirectiveAttributes } from 'core/directives'
 
 export default (vm, el) => {
   if (el == null) {
     return
   }
   el.removeAttribute('is')
+  const directives = getDirectiveAttributes()
   const attributes = filter(
-    toArray(el.attributes),
-    item => item.name.indexOf('o-') < 0
+    [...el.attributes],
+    item => {
+      return item.name.slice(0, 2) !== 'o-' && directives.indexOf(item.name) < 0
+    }
   )
   forEach(attributes, item => {
     vm.data[camelCase(item.name)] = item.value

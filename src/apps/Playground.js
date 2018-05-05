@@ -1,4 +1,9 @@
 import extendWindowApp from 'apps/WindowApp'
+import directive from 'core/directive'
+
+directive('playground-foo-bar', el => {
+  console.log(el)
+})
 
 const styles = {
   playground: {
@@ -8,7 +13,7 @@ const styles = {
 
 const template = classes => `
 <template>
-  <article class="${classes.playground}">
+  <article class="${classes.playground}" playground-foo-bar>
     <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
     <div>Sum: {{sum}}</div>
     <div o-for="item in testArr"
@@ -62,7 +67,7 @@ Playground.onIncrement = function () {
 }
 
 export const PlaygroundItem = {
-  useShadow: true,
+  debug: false,
   styles: {},
   template: classes => `
 <div class="playground-item">

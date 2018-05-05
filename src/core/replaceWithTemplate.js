@@ -2,11 +2,9 @@ import { forEach, reduce } from 'lodash'
 import StyleSheet from 'stylesheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
-import oClass from 'core/oClass'
 import oEmit from 'core/oEmit'
 import oContent from 'core/oContent'
 import oFor, { forSelector } from 'core/oFor'
-import oOn from 'core/oOn'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'lib/getAllTextNodes'
 import replaceBracketContent from 'lib/replaceBracketContent'
@@ -65,9 +63,6 @@ const replaceWithTemplate = vm => {
     styleSheet.attach()
     vm.styleSheet = styleSheet
   }
-
-  oOn(vm)
-  oClass(vm)
 }
 
 const getElFromTemplate = template => {

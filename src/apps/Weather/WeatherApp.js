@@ -50,6 +50,7 @@ const getStyleByCondition = condition => {
       style.background = 'linear-gradient(to bottom, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%)'
       style.icon = 'snowflake'
       break
+    case 'Rain':
     case 'Rainy':
     case 'Showers':
     case 'Scattered Thunderstorms':

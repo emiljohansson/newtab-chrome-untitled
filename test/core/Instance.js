@@ -401,11 +401,12 @@ test('should toggle class', t => {
     }
   }
   const vm = Instance(Foo, el)
-  t.true(vm.$el.shadowRoot.children[0].classList.contains('my-class'))
+  const className = 'my-class'
+  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
   vm.showMyClass = !vm.showMyClass
-  t.false(vm.$el.shadowRoot.children[0].classList.contains('my-class'))
+  t.false(vm.$el.shadowRoot.children[0].classList.contains(className))
   vm.showMyClass = !vm.showMyClass
-  t.true(vm.$el.shadowRoot.children[0].classList.contains('my-class'))
+  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
   document.body.removeChild(vm.$el)
 })
 

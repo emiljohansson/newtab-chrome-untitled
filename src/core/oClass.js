@@ -1,41 +1,15 @@
-import { forEach } from 'lodash'
-import watch from 'core/watch'
+import { forEach, keys } from 'lodash'
 
-const classSelector = 'o-class'
-
-export default vm => {
-  if (vm.$el == null) {
-    return
-  }
-  let elements = []
-  if (vm.$el.hasAttribute(`${classSelector}`)) {
-    elements.push(vm.$el)
-  }
-  elements = elements.concat(...vm.$el.querySelectorAll(`[${classSelector}]`))
-  if (vm.$el.shadowRoot != null) {
-    elements = elements.concat(...vm.$el.shadowRoot.querySelectorAll(`[${classSelector}]`))
-  }
-  if (elements.length < 1) {
-    return
-  }
-  forEach(elements, el => {
-    const separation = el.getAttribute(`${classSelector}`)
-      .replace(/ /g, '')
-      .replace(/\r?\n|\r/g, '')
-      .replace('{', '')
-      .replace('}', '')
-      .split(',')
-    const groups = separation.map(s => s.split(':'))
-    forEach(groups, group => {
-      const className = group[0]
-      const key = group[1]
-      const toggle = () => {
-        el.classList.toggle(className, vm[key])
-      }
-      const subject = watch(vm, key)
-      subject.subscribe(toggle)
-      toggle(className, vm[key])
-    })
-    el.removeAttribute(`${classSelector}`)
+function update (el, binding) {
+  const classNames = keys(binding.value)
+  forEach(classNames, className => {
+    el.classList.toggle(className, binding.value[className])
   })
+}
+
+export default {
+  bind (el, binding) {
+    update.call(this, el, binding)
+  },
+  update
 }
