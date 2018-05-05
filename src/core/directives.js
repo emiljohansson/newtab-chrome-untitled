@@ -6,10 +6,11 @@ const list = {}
 const defaultDirective = directive => {
   if (isFunction(directive)) {
     directive.bind = directive
+    directive.update = directive
   } else {
     directive.bind = directive.bind || noop
+    directive.update = directive.update || noop
   }
-  directive.update = directive.update || noop
 }
 
 const getObjectLiteralValue = (vm, el, selector, onUpdate, binding) => {

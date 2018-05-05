@@ -5,7 +5,7 @@ import directive from 'core/directive'
 import { remove } from 'core/directives'
 import Instance from 'core/Instance'
 
-test('bind: should do nothing', t => {
+test('should do nothing', t => {
   const callback = sinon.spy()
   const el = document.createElement('div')
   el.innerHTML = `<span bar>Bar</span>`
@@ -19,7 +19,7 @@ test('bind: should do nothing', t => {
   remove('bar')
 })
 
-test('bind: should call when found', t => {
+test('should call when found', t => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
@@ -32,7 +32,7 @@ test('bind: should call when found', t => {
   remove('foo-bar')
 })
 
-test('bind: should throw error when already defined', t => {
+test('should throw error when already defined', t => {
   directive('foo-bar', noop)
   const error = t.throws(() => {
     directive('foo-bar', noop)
@@ -41,7 +41,7 @@ test('bind: should throw error when already defined', t => {
   remove('foo-bar')
 })
 
-test('bind: should call each element found', t => {
+test('should call each element found', t => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span><span foo-bar>Bar</span>`
@@ -57,7 +57,7 @@ test('bind: should call each element found', t => {
   remove('foo-bar')
 })
 
-test('bind: should call all directives', t => {
+test('should call all directives', t => {
   const fooCallback = sinon.spy()
   const barCallback = sinon.spy()
   let vm
@@ -74,7 +74,7 @@ test('bind: should call all directives', t => {
   remove('bar')
 })
 
-test('bind: should link this to vm', t => {
+test('should link this to vm', t => {
   let vm
   let context
   const el = document.createElement('div')
@@ -93,7 +93,7 @@ test('bind: should link this to vm', t => {
   remove('foo-bar')
 })
 
-test('bind: should bind binding.value to a data variable', t => {
+test('should bind binding.value to a data variable', t => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="message">Foo</span>`
@@ -127,7 +127,7 @@ test('bind: should bind binding.value to a data variable', t => {
   remove('foo-bar')
 })
 
-test('bind: should convert object literal value to binding.value', t => {
+test('should convert object literal value to binding.value', t => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ border-color: 'white', text: 'hello!' }">Foo</span>`
@@ -142,7 +142,33 @@ test('bind: should convert object literal value to binding.value', t => {
   remove('foo-bar')
 })
 
-test('bind: should watch object literal values', t => {
+test('should call same function for both bind and update', t => {
+  let vm
+  const el = document.createElement('div')
+  el.innerHTML = `<span foo-bar="{ text: message }">Foo</span>`
+  document.body.appendChild(el)
+  let expected = 'hello 1'
+  let count = 0
+  let oldValue
+  directive('foo-bar', function (el, binding) {
+    t.is(binding.value.text, expected)
+    t.is(binding.oldValue, oldValue)
+    oldValue = binding.value
+    count++
+  })
+  vm = Instance({
+    data: {
+      message: 'hello 1'
+    }
+  }, el)
+  expected = 'hello 2'
+  vm.message = expected
+  t.is(count, 2)
+  vm.$destroy()
+  remove('foo-bar')
+})
+
+test('should watch object literal values', t => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ text: message }">Foo</span>`
