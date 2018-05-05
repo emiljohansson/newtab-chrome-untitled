@@ -89,6 +89,7 @@ export const directives = vm => {
       defaultDirective(directive)
       binding.value = getObjectLiteralValue(vm, el, selector, directive.update, binding)
       directive.bind.call(vm, el, binding)
+      el.removeAttribute(selector)
     })
   })
 }

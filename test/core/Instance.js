@@ -390,48 +390,6 @@ test('should call parent method from child', t => {
   document.body.removeChild(vm.$el)
 })
 
-test('should toggle class', t => {
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-  const Foo = {
-    template: `<div o-class="{my-class: showMyClass}"></div>`,
-    $el: el,
-    data: {
-      showMyClass: true
-    }
-  }
-  const vm = Instance(Foo, el)
-  const className = 'my-class'
-  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
-  vm.showMyClass = !vm.showMyClass
-  t.false(vm.$el.shadowRoot.children[0].classList.contains(className))
-  vm.showMyClass = !vm.showMyClass
-  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
-  document.body.removeChild(vm.$el)
-})
-
-test('should toggle child classes', t => {
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-  const Foo = {
-    template: `<article>
-    <div o-class="{my-class: showMyClass}"></div>
-</article>`,
-    $el: el,
-    data: {
-      showMyClass: true
-    }
-  }
-  const vm = Instance(Foo, el)
-  const childEl = vm.$el.shadowRoot.children[0].children[0]
-  t.true(childEl.classList.contains('my-class'))
-  vm.showMyClass = !vm.showMyClass
-  t.false(childEl.classList.contains('my-class'))
-  vm.showMyClass = !vm.showMyClass
-  t.true(childEl.classList.contains('my-class'))
-  document.body.removeChild(vm.$el)
-})
-
 test('should append root class names to new shadow host', t => {
   const expected = 'foo bar'
   const el = document.createElement('div')

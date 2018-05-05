@@ -60,19 +60,17 @@ const styles = {
 }
 
 const template = classes => `
-<template>
-  <div class="${classes.todo}" o-class="{
-    completed: completed
-  }">
-    <button class="${classes.checkBtn}" o-on-click="onCompleteClick()"></button>
-    <label class="${classes.label}">{{text}}</label>
-    <button class="${classes.removeBtn}" o-on-click="onRemoveClick()"></button>
-  </div>
-</template>
+<div class="${classes.todo}" o-class="{
+  completed: completed
+}">
+  <button class="${classes.checkBtn}" o-on-click="onCompleteClick()"></button>
+  <label class="${classes.label}">{{text}}</label>
+  <button class="${classes.removeBtn}" o-on-click="onRemoveClick()"></button>
+</div>
 `
 
 const Todo = {
-  useShadow: true,
+  debug: true,
   styles,
   template,
   data: {
