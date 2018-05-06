@@ -11,9 +11,10 @@ const defaultDirective = directive => {
     directive.bind = directive.bind || noop
     directive.update = directive.update || noop
   }
+  directive.unbind = directive.unbind || noop
 }
 
-const getObjectLiteralValue = (vm, el, selector, onUpdate, binding) => {
+const getObjectLiteralValue = (vm, el, expression, onUpdate, binding) => {
   const valueChanged = expression => newValue => {
     binding.oldValue = binding.value
     if (isPlainObject(binding.value)) {
@@ -23,7 +24,6 @@ const getObjectLiteralValue = (vm, el, selector, onUpdate, binding) => {
     }
     onUpdate.call(vm, el, binding)
   }
-  const expression = el.getAttribute(`${selector}`)
   binding.expression = expression
   if (expression[0] === '{') {
     return toObjectLiteral(vm, expression, valueChanged)
@@ -85,12 +85,19 @@ export const directives = vm => {
       ...vm.$el.querySelectorAll(`[${selector}]`),
       ...vm.$el.shadowRoot.querySelectorAll(`[${selector}]`)
     ]
-    const binding = {}
     forEach(elements, el => {
-      defaultDirective(directive)
-      binding.value = getObjectLiteralValue(vm, el, selector, directive.update, binding)
-      directive.bind.call(vm, el, binding)
+      const expression = el.getAttribute(`${selector}`)
+      const binding = {}
       el.removeAttribute(selector)
+      defaultDirective(directive)
+      binding.name = selector
+      binding.value = getObjectLiteralValue(vm, el, expression, directive.update, binding)
+      directive.bind.call(vm, el, binding)
+
+      const destroySubject = watch(vm, '$destroy')
+      destroySubject.subscribe(() => {
+        directive.unbind(el, binding)
+      })
     })
   })
 }

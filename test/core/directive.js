@@ -74,6 +74,24 @@ test('should call all directives', t => {
   remove('bar')
 })
 
+test('should not share bindings', t => {
+  let vm
+  const el = document.createElement('div')
+  el.innerHTML = `<span foo>Foo</span><span foo>Bar</span>`
+  document.body.appendChild(el)
+  const bindings = []
+  directive('foo', (el, binding) => {
+    binding.id = 'foo' + bindings.length
+    bindings.push(binding)
+  })
+  vm = Instance({}, el)
+  t.is(bindings[0].id, 'foo0')
+  t.is(bindings[1].id, 'foo1')
+  vm.$destroy()
+  remove('foo')
+  remove('bar')
+})
+
 test('should link this to vm', t => {
   let vm
   let context
@@ -151,6 +169,7 @@ test('should call same function for both bind and update', t => {
   let count = 0
   let oldValue
   directive('foo-bar', function (el, binding) {
+    t.is(binding.name, 'foo-bar')
     t.is(binding.value.text, expected)
     t.is(binding.oldValue, oldValue)
     oldValue = binding.value
@@ -196,5 +215,19 @@ test('should watch object literal values', t => {
   vm.message = expected
   t.is(count, 1)
   vm.$destroy()
+  remove('foo-bar')
+})
+
+test('should call unbind on destroy', t => {
+  const callback = sinon.spy()
+  const el = document.createElement('div')
+  el.innerHTML = `<span foo-bar>Foo</span>`
+  document.body.appendChild(el)
+  directive('foo-bar', {
+    unbind: callback
+  })
+  const vm = Instance({}, el)
+  vm.$destroy()
+  t.true(callback.called)
   remove('foo-bar')
 })

@@ -12,22 +12,21 @@ const styles = {
 }
 
 const template = classes => `
-<template>
-  <article class="${classes.playground}" playground-foo-bar>
-    <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
-    <div>Sum: {{sum}}</div>
-    <div o-for="item in testArr"
-      is="PlaygroundItem"
-      o-emit-increment="onIncrement"></div>
-    <button o-on-click="onToggleClicked">show/hide</button>
-    <div o-if="show">Hello</div>
-    <div o-if="show" is="PlaygroundIfItem"></div>
-  </article>
-</template>
+<article class="${classes.playground}" playground-foo-bar>
+  <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
+  <div>Sum: {{sum}}</div>
+  <div o-for="item in testArr"
+    is="PlaygroundItem"
+    o-emit-increment="onIncrement"></div>
+  <button o-on-click="onToggleClicked">show/hide</button>
+  <div o-if="show">Hello1</div>
+  <div o-if="show">Hello2</div>
+  <div o-if="show" is="PlaygroundIfItem"></div>
+</article>
 `
 
 export const Playground = extendWindowApp('Playground', {
-  useShadow: true,
+  debug: false,
   styles,
   template,
   data: {

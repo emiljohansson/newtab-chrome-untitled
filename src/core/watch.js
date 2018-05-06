@@ -5,6 +5,10 @@ const subjects = {}
 
 export const destroy = vm => {
   if (subjects[vm.$id]) {
+    const destroySubject = subjects[vm.$id]['$destroy']
+    if (destroySubject) {
+      destroySubject.next()
+    }
     forEach(subjects[vm.$id], (subject, key) => {
       subject.complete()
     })

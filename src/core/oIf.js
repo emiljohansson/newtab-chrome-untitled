@@ -1,57 +1,61 @@
-import { forEach, isBoolean } from 'lodash'
+import { uniqueId } from 'lodash'
 import Instance from 'core/Instance'
 import apps from 'core/apps'
-import watch from 'core/watch'
 
 export const ifSelector = 'o-if'
 
-export default vm => {
-  if (vm.$el == null) {
-    return
-  }
-  let elements = [...vm.$el.querySelectorAll(`[${ifSelector}]`)]
-  if (vm.$el.shadowRoot != null) {
-    elements = elements.concat(...vm.$el.shadowRoot.querySelectorAll(`[${ifSelector}]`))
-  }
-  forEach(elements, el => {
-    const key = el.getAttribute(ifSelector)
-    el.removeAttribute(ifSelector)
-    if (!isBoolean(vm[key])) {
+const dirs = {}
+
+function App (el, parent, comment) {
+  const definition = apps(el.getAttribute('is'))
+  const newVm = Instance(definition, el)
+  this.$children.push(newVm)
+  parent.insertBefore(newVm.$el, comment.nextSibling)
+  return newVm
+}
+
+function update (el, binding, initialTrue = false) {
+  const dir = dirs[binding.id]
+  if (!!binding.value === false) {
+    if (dir.cachedVm != null) {
+      this.$children.remove(dir.cachedVm)
+      delete dir.cachedVm
       return
     }
-    const cloneNode = el.cloneNode(true)
-    const parent = el.parentElement
-    const commentContent = `${vm.$id}.${key}`
-    const comment = document.createComment(commentContent)
-    let cachedVm
-    parent.insertBefore(comment, el)
-    const update = value => {
-      if (value === false) {
-        if (cachedVm != null) {
-          vm.$children.remove(cachedVm)
-          cachedVm = undefined
-          return
-        }
-        parent.removeChild(comment.nextSibling)
-        return
-      }
-      const newNode = cloneNode.cloneNode(true)
-      if (newNode.hasAttribute('is')) {
-        cachedVm = App(newNode, parent, comment, {})
-        return
-      }
-      parent.insertBefore(newNode, comment.nextSibling)
+    dir.parentEl.removeChild(dir.commentEl.nextSibling)
+    return
+  }
+  const newNode = dir.cloneNode.cloneNode(true)
+  if (newNode.hasAttribute('is')) {
+    if (initialTrue) {
+      dir.parentEl.removeChild(dir.commentEl.nextSibling)
     }
-    const subject = watch(vm, key)
-    subject.subscribe(update)
-    update(vm[key])
-  })
+    dir.cachedVm = App.call(this, newNode, dir.parentEl, dir.commentEl)
+    return
+  }
+  if (!initialTrue) {
+    dir.parentEl.insertBefore(newNode, dir.commentEl.nextSibling)
+  }
+}
 
-  const App = (el, parent, comment, context) => {
-    const definition = apps(el.getAttribute('is'))
-    const newVm = Instance(definition, el, context)
-    vm.$children.push(newVm)
-    parent.insertBefore(newVm.$el, comment.nextSibling)
-    return newVm
+export default {
+  bind (el, binding) {
+    binding.id = uniqueId(uniqueId('oIf_'))
+    const cloneNode = el.cloneNode(true)
+    const commentContent = `${this.$id}.${binding.expression}`
+    const commentEl = document.createComment(commentContent)
+    const parentEl = el.parentElement
+    parentEl.insertBefore(commentEl, el)
+    dirs[binding.id] = {
+      cloneNode,
+      commentContent,
+      commentEl,
+      parentEl
+    }
+    update.call(this, el, binding, !!binding.value)
+  },
+  update,
+  unbind (el, binding) {
+    delete dirs[binding.id]
   }
 }

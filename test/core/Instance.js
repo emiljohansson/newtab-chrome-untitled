@@ -454,57 +454,6 @@ test('should append root class names to new shadow host', t => {
 //   document.body.removeChild(vm.$el)
 // })
 
-test('should add and remove element with oIf', t => {
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-  const Foo = {
-    template: `<article>Hello, <span o-if="show">World</span></article>`,
-    data: {
-      show: false
-    }
-  }
-  const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, `Hello, <!--${vm.$id}.show-->`)
-  vm.show = true
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, `Hello, <!--${vm.$id}.show--><span>World</span>`)
-  vm.show = false
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, `Hello, <!--${vm.$id}.show-->`)
-  document.body.removeChild(vm.$el)
-})
-
-test('should add and remove apps with oIf', t => {
-  const mounted = sinon.spy()
-  const destroyed = sinon.spy()
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-  const Foo = {
-    template: `<article>Hello, <span o-if="show" is="Bar"></span></article>`,
-    data: {
-      show: false
-    }
-  }
-  const Bar = {
-    template: `World`,
-    data: {},
-    mounted,
-    destroyed
-  }
-  install('Bar', Bar)
-  const vm = Instance(Foo, el)
-  const falseExpected = `Hello, <!--${vm.$id}.show-->`
-  const trueExpected = `Hello, <!--${vm.$id}.show--><div>World</div>`
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, falseExpected)
-  vm.show = true
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, trueExpected)
-  vm.show = false
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, falseExpected)
-  vm.show = true
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, trueExpected)
-  t.is(mounted.callCount, 2)
-  t.is(destroyed.callCount, 1)
-  document.body.removeChild(vm.$el)
-})
-
 test('should create a app reference with oRef', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)

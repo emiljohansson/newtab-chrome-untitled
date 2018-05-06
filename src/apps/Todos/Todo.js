@@ -70,7 +70,6 @@ const template = classes => `
 `
 
 const Todo = {
-  debug: true,
   styles,
   template,
   data: {

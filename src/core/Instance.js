@@ -11,6 +11,7 @@ import directive from 'core/directive'
 import { directives } from 'core/directives'
 
 directive('o-class', oClass)
+directive('o-if', oIf)
 
 export default (definition, el, context) => {
   const vm = BaseApp(definition)
@@ -20,7 +21,6 @@ export default (definition, el, context) => {
   init(vm, el)
   oOn(vm)
   state(vm)
-  oIf(vm)
   oFor(vm)
   directives(vm)
   mount(vm)
