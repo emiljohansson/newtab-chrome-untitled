@@ -1,8 +1,6 @@
-import { filter, forEach, map, reduce } from 'lodash'
+export const onSelector = 'o-on-'
 
-const onSelector = 'o-on-'
-
-const types = [
+export const onTypes = [
   'click',
   'mousedown',
   'mousemove',
@@ -11,32 +9,11 @@ const types = [
   'keyup'
 ]
 
-const ElementListener = el => filter(
-  map(types, type => {
-    const attribute = `${onSelector}${type}`
-    const elements = []
-    const childEls = el.querySelectorAll(`[${attribute}]`)
-    if (el.hasAttribute != null && el.hasAttribute(attribute)) {
-      elements.push(el)
-    }
-    if (childEls.length) {
-      forEach(childEls, el => {
-        elements.push(el)
-      })
-    }
-    return {
-      type,
-      elements
-    }
-  }),
-  elementListener => elementListener.elements.length
-)
-
-const parse = vm => elementListener => {
-  const { type, elements } = elementListener
-  return map(elements, el => {
-    const attribute = `${onSelector}${type}`
-    const inlineFn = el.getAttribute(attribute)
+export default {
+  bind (el, binding) {
+    const attribute = binding.name
+    const type = binding.name.replace(onSelector, '')
+    const inlineFn = binding.expression
     const groups = inlineFn.split('(').join(' ').split(')').join('').split(' ')
     const fn = groups[0]
     const stringArgs = groups.slice(1)
@@ -53,25 +30,15 @@ const parse = vm => elementListener => {
           return event
         })
         : []
-      vm[fn].apply(vm, args)
+      this[fn].apply(this, args)
     }
     el.addEventListener(type, handler)
     el.removeAttribute(attribute)
-    return () => {
+    binding.removeListener = () => {
       el.removeEventListener(type, handler)
     }
-  })
-}
-
-export default (vm) => {
-  if (vm.$el == null) {
-    return
+  },
+  unbind (el, binding) {
+    binding.removeListener()
   }
-  const elementListeners = ElementListener(vm.$el.shadowRoot || vm.$el)
-  const iteratee = parse(vm)
-  vm.$removeDomHandlers = reduce(
-    elementListeners,
-    (array, elementListener) => array.concat(iteratee(elementListener)),
-    []
-  )
 }

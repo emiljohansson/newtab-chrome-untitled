@@ -328,22 +328,6 @@ test('should remove a app in the loop', t => {
   document.body.removeChild(vm.$el)
 })
 
-test('should add click listener', t => {
-  const el = document.createElement('div')
-  el.setAttribute('is', 'Foo')
-  document.body.appendChild(el)
-  const onClick = sinon.spy()
-  const Foo = {
-    template: `<div o-on-click="onClick"></div>`,
-    onClick
-  }
-
-  const vm = Instance(Foo, el)
-  fireEvent(vm.$el.shadowRoot.children[0], 'click')
-  t.true(onClick.called)
-  document.body.removeChild(vm.$el)
-})
-
 // test('should pass down props to child instance', t => {
 //   const el = document.createElement('div')
 //   el.innerHTML = `<div is="Bar" o-props="childProps"></div>`

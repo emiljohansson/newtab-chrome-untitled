@@ -1,58 +1,49 @@
 import test from 'ava'
 import sinon from 'sinon'
 import fireEvent from '../helpers/fireEvent'
-import oOn from 'core/oOn'
-
-test('should add a click listener', t => {
-  const el = document.createElement('div')
-  el.setAttribute('o-on-click', 'onClick')
-  const onClick = sinon.spy()
-  const vm = {
-    $el: el,
-    onClick
-  }
-  oOn(vm)
-  fireEvent(el, 'click')
-  t.true(onClick.called)
-})
-
-test('should remove attribute', t => {
-  const el = document.createElement('div')
-  el.setAttribute('o-on-click', 'onClick')
-  const vm = {
-    $el: el
-  }
-  oOn(vm)
-  t.false(vm.$el.hasAttribute('o-on-click'))
-})
-
-test('should do nothing', t => {
-  const vm = {}
-  oOn(vm)
-  t.pass()
-})
+import Instance from 'core/Instance'
 
 test('should add a keyup listener', t => {
   const el = document.createElement('div')
   el.setAttribute('o-on-keyup', 'onKeyUp')
+  document.body.appendChild(el)
   const onKeyUp = sinon.spy()
-  const vm = {
-    $el: el,
+  const Foo = {
+    template: `<div o-on-keyup="onKeyUp"></div>`,
     onKeyUp
   }
-  oOn(vm)
-  fireEvent(el, 'keyup')
+  const vm = Instance(Foo, el)
+  fireEvent(vm.$el.shadowRoot.children[0], 'keyup')
   t.true(onKeyUp.called)
+  vm.$destroy()
+})
+
+test('should add click listener', t => {
+  const el = document.createElement('div')
+  el.setAttribute('is', 'Foo')
+  document.body.appendChild(el)
+  const onClick = sinon.spy()
+  const Foo = {
+    template: `<div o-on-click="onClick"></div>`,
+    onClick
+  }
+
+  const vm = Instance(Foo, el)
+  fireEvent(vm.$el.shadowRoot.children[0], 'click')
+  t.true(onClick.called)
+  vm.$destroy()
 })
 
 test('should add a click listener to child element', t => {
   const el = document.createElement('div')
-  el.setAttribute('o-on-click', 'onClick')
-  el.innerHTML = `<div o-on-click="onClick2($event)"></div>`
+  el.innerHTML = ``
+  document.body.appendChild(el)
   const onClick = sinon.spy()
   const onClick2 = sinon.spy()
-  const vm = {
-    $el: el,
+  const Foo = {
+    template: `<div o-on-click="onClick($event)">
+  <div o-on-click="onClick2($event)"></div>
+</div>`,
     onClick,
     onClick2 (event) {
       onClick2()
@@ -60,9 +51,10 @@ test('should add a click listener to child element', t => {
       event.preventDefault()
     }
   }
-  oOn(vm)
-  fireEvent(el, 'click')
-  fireEvent(el.firstChild, 'click')
+  const vm = Instance(Foo, el)
+  fireEvent(vm.$el.shadowRoot.children[0], 'click')
+  fireEvent(vm.$el.shadowRoot.children[0].children[0], 'click')
   t.is(onClick.callCount, 1)
   t.is(onClick2.callCount, 1)
+  vm.$destroy()
 })

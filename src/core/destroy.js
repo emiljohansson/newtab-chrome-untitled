@@ -6,12 +6,12 @@ export default vm => {
     callHook(vm, vm.beforeDestroy)
     destroyWatchers(vm)
     delete vm.$refs
-    if (vm.$removeDomHandlers != null) {
-      while (vm.$removeDomHandlers.length) {
-        const handler = vm.$removeDomHandlers.splice(0, 1)[0]
-        handler()
-      }
-    }
+    // if (vm.$removeDomHandlers != null) {
+    //   while (vm.$removeDomHandlers.length) {
+    //     const handler = vm.$removeDomHandlers.splice(0, 1)[0]
+    //     handler()
+    //   }
+    // }
     while (vm.$children.length) {
       const childVm = vm.$children[0]
       vm.$children.remove(childVm)
