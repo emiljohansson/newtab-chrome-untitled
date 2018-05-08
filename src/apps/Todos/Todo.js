@@ -49,7 +49,7 @@ const styles = {
     cursor: 'pointer',
     fontSize: '2rem',
     fontWeight: '100',
-    marginTop: '-7px',
+    marginTop: '-13px',
     opacity: 0,
     right: 0,
 
