@@ -15,9 +15,11 @@ const template = classes => `
 <article class="${classes.playground}" playground-foo-bar>
   <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
   <div>Sum: {{sum}}</div>
+  <div o-for="value in testArr2">{{value}}</div>
   <div o-for="item in testArr"
     is="PlaygroundItem"
     o-emit-increment="onIncrement"></div>
+  <section o-for="value in fooArray">{{value}}</section>
   <button o-on-click="onToggleClicked">show/hide</button>
   <div o-if="show">Hello1</div>
   <div o-if="show">Hello2</div>
@@ -30,19 +32,21 @@ export const Playground = extendWindowApp('Playground', {
   styles,
   template,
   data: {
+    fooArray: ['foo', 'bar'],
     testVar: 1,
     testArr: [
       {text: 'Butter'},
       {text: 'Coffee'},
       {text: 'Carrots'}
     ],
+    testArr2: [1, 2, 3],
     sum: 0,
     show: false
   }
 })
 
 Playground.beforeCreate = function () {
-  window.Playground = this
+  window.playground = this
 }
 Playground.created = function () {}
 Playground.beforeMount = function () {}

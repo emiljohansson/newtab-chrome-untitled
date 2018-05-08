@@ -45,10 +45,10 @@ const styles = {
     '.degree-sign &::after': {
       content: '\'\'',
       position: 'absolute',
-      top: '21px',
+      top: '13px',
       border: '1px solid',
       borderRadius: '50%',
-      padding: '4px'
+      padding: '4.5px'
     }
   },
   f: {

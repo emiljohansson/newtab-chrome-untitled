@@ -4,11 +4,9 @@ import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oEmit from 'core/oEmit'
 import oContent from 'core/oContent'
-import oFor, { forSelector } from 'core/oFor'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'lib/getAllTextNodes'
 import replaceBracketContent from 'lib/replaceBracketContent'
-import getElsByAttr from 'lib/getElsByAttr'
 
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {
@@ -33,10 +31,6 @@ const replaceWithTemplate = vm => {
   }
   vm.$el.innerHTML = oldEl.innerHTML
   vm.$el.shadowRoot.appendChild(elements[0].content.cloneNode(true))
-  const forElements = getElsByAttr(vm.$el.shadowRoot, forSelector)
-  forEach(forElements, element => {
-    oFor(vm, element)
-  })
 
   const preTextNodes = getAllTextNodes(vm.$el)
   forEach(preTextNodes, node => {

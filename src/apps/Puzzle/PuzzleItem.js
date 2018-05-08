@@ -8,15 +8,9 @@ const styles = {
   }
 }
 
-// {{value}}
-const template = classes => `
-<template>
-  <div o-on-click="onClick">{{value}}</div>
-</template>
-`
+const template = classes => `<div o-on-click="onClick">{{value}}</div>`
 
 const PuzzleItem = {
-  useShadow: true,
   styles,
   template,
   data: {

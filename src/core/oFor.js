@@ -38,17 +38,15 @@ function CacheArray (vm, ref) {
   return array
 }
 
-export default (vm, el) => {
-  if (el == null) {
-    return
-  }
+export default function (el, binding) {
+  const vm = this
   const parentEl = el.parentElement || el.parentNode.host
   const id = uniqueId('oFor_')
   const template = el.outerHTML
   const keys = findKeysInTemplate(template)
   const tempContainer = document.createDocumentFragment()
   const ref = el.getAttribute('o-ref')
-  const forValues = el.getAttribute(forSelector).split(' ')
+  const forValues = binding.expression.split(' ')
   const valueString = forValues[0]
   const dataKey = forValues[2]
   const dataItems = vm.data[dataKey]
