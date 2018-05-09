@@ -1,5 +1,13 @@
+const colStyle = {
+  flex: '1',
+
+  '& > div': {
+    display: 'inline-block'
+  }
+}
+
 const styles = {
-  '@global :host': {
+  ':host': {
     backgroundColor: 'rgba(0, 0, 0, 0)',
     display: 'flex',
     alignItems: 'center',
@@ -8,42 +16,32 @@ const styles = {
     height: '20px',
     padding: `0 1rem`
   },
-  col: {
-    flex: '1',
-
-    '& > div': {
-      display: 'inline-block'
-    }
-  },
   leftCol: {
-    extend: 'col'
+    extend: colStyle
   },
   rightCol: {
-    extend: 'col',
+    extend: colStyle,
     textAlign: 'right'
   },
   appMenu: {
   }
 }
 
-const template = classes => `
-<template>
-  <div class="${classes.leftCol}">
-    <div class="${classes.appMenu}"
-     o-on-click="onAppMenuClick()">
-      <i class="fas fa-bars"></i>
-    </div>
+const template = `
+<div class="leftCol">
+  <div class="appMenu"
+   o-on-click="onAppMenuClick()">
+    <i class="fas fa-bars"></i>
   </div>
-  <div class="${classes.rightCol}">
-    <div is="Weather"></div>
-    <div is="Time" timezone="America/Denver"></div>
-  </div>
-  <link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
-</template>
+</div>
+<div class="rightCol">
+  <div is="Weather"></div>
+  <div is="Time" timezone="America/Denver"></div>
+</div>
+<link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
 `
 
 const StatusBar = {
-  useShadow: true,
   styles,
   template,
   data: {

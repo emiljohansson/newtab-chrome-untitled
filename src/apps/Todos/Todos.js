@@ -7,7 +7,7 @@ const baseStyle = {
 }
 
 const styles = {
-  '@global :host': {
+  ':host': {
     extend: baseStyle,
     fontWeight: '200',
     padding: '0.5rem 1rem'
@@ -32,28 +32,25 @@ const styles = {
   }
 }
 
-const template = classes => `
-<template>
-  <header>
-    <h1 class="${classes.header}">todo</h1>
-  </header>
-  <input
-    class="${classes.input}"
-    autocomplete="off"
-    placeholder="What needs to be done?"
-    o-on-keyup="onKeyUp($event)"
-  />
-  <div class="${classes.list}">
-    <div o-for="todo in todos"
-      is="Todo"
-      o-emit-remove="onRemoveTodo"
-      o-emit-complete="onToggleCompleteTodo"></div>
-  </div>
-</template>
+const template = `
+<header>
+  <h1 class="header">todo</h1>
+</header>
+<input
+  class="input"
+  autocomplete="off"
+  placeholder="What needs to be done?"
+  o-on-keyup="onKeyUp($event)"
+/>
+<div class="list">
+  <div o-for="todo in todos"
+    is="Todo"
+    o-emit-remove="onRemoveTodo"
+    o-emit-complete="onToggleCompleteTodo"></div>
+</div>
 `
 
 const Todos = extendWindowApp('Todos', {
-  useShadow: true,
   styles,
   template,
   data: {

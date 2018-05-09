@@ -4,7 +4,7 @@ import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
 
 const styles = {
-  '@global :host': {
+  ':host': {
     height: 'auto',
     position: 'absolute',
     bottom: '0',
@@ -24,7 +24,7 @@ const styles = {
   }
 }
 
-const template = classes => `
+const template = `
 <div is="Window"
   title="Puzzle"
   width="198"
@@ -32,7 +32,7 @@ const template = classes => `
   o-emit-close="onCloseWindow">
   <div is="Puzzle"></div>
 </div>
-<div class="${classes.timeCenter}">
+<div class="timeCenter">
   <div is="Time" timezone="America/Denver"></div>
 </div>
 <div is="Window"

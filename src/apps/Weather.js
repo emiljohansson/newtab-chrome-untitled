@@ -33,33 +33,34 @@ const getWeather = unit => {
   httpRequest.send()
 }
 
+const tempStyle = {
+  display: 'inline-block',
+  position: 'relative',
+
+  '.degree-sign &::after': {
+    content: '\'\'',
+    position: 'absolute',
+    top: '13px',
+    border: '1px solid',
+    borderRadius: '50%',
+    padding: '4.5px'
+  }
+}
+
 const styles = {
   weather: {
     cursor: 'pointer',
     userSelect: 'none'
   },
-  'temp': {
-    display: 'inline-block',
-    position: 'relative',
-
-    '.degree-sign &::after': {
-      content: '\'\'',
-      position: 'absolute',
-      top: '13px',
-      border: '1px solid',
-      borderRadius: '50%',
-      padding: '4.5px'
-    }
-  },
   f: {
-    extend: 'temp',
+    extend: tempStyle,
     display: 'none',
     '.fahrenheit &': {
       display: 'block'
     }
   },
   c: {
-    extend: 'temp',
+    extend: tempStyle,
     '.fahrenheit &': {
       display: 'none'
     }
@@ -71,16 +72,14 @@ const styles = {
   }
 }
 
-const template = classes => `
-<template>
-  <article class="${classes.weather}" o-class="{
-    degree-sign: useDegreeSign,
-    fahrenheit: isFahrenheit
-  }" o-on-click="onClick">
-    <div class="${classes.f}">{{fahrenheit}}<span class="${classes.unit}">F</span></div>
-    <div class="${classes.c}">{{celsius}}<span class="${classes.unit}">C</span></div>
-  </article>
-</template>
+const template = `
+<article class="weather" o-class="{
+  degree-sign: useDegreeSign,
+  fahrenheit: isFahrenheit
+}" o-on-click="onClick">
+  <div class="f">{{fahrenheit}}<span class="unit">F</span></div>
+  <div class="c">{{celsius}}<span class="unit">C</span></div>
+</article>
 `
 
 const Weather = {

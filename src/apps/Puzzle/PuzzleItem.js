@@ -11,7 +11,6 @@ const styles = {
 const template = `<div o-on-click="onClick">{{value}}</div>`
 
 const PuzzleItem = {
-  newStyle: true,
   styles,
   template,
   data: {

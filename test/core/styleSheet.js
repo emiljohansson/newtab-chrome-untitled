@@ -1,19 +1,12 @@
 import test from 'ava'
-import JssStyleSheet from 'stylesheet'
-import StyleSheet from 'stylesheet/s'
-
-test('should create a style sheet', t => {
-  const expected = {'red': 'red-0-1', 'blue': 'blue-0-2'}
-  const styleSheet = JssStyleSheet({
-    red: {},
-    blue: {}
-  })
-  t.deepEqual(styleSheet.classes, expected)
-})
+import StyleSheet from 'core/styleSheet'
 
 const attachStyle = styleSheet => {
   const el = document.createElement('div')
   styleSheet.attach(el)
+  if (el.firstChild == null) {
+    return null
+  }
   return el.firstChild.innerHTML
 }
 
@@ -31,6 +24,12 @@ test('attach: should attach a style element', t => {
   })
   const content = attachStyle(styleSheet)
   t.is(content, expected)
+})
+
+test('attach: should NOT attach when empty', t => {
+  const styleSheet = StyleSheet({})
+  const content = attachStyle(styleSheet)
+  t.is(content, null)
 })
 
 test('classes: should kebab case properties', t => {

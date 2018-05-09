@@ -6,25 +6,20 @@ const styles = {
     color: 'white'
   },
   title: {
-    extend: 'column'
-  },
-  column: {
     flex: 1
   }
 }
 
-const template = classes => `
-<template>
-  <div is="Time" class="${classes.time}" timezone="Europe/Stockholm">
-    <span class="${classes.title}">Sweden</span>
-  </div>
-  <div is="Time" class="${classes.time}" timezone="Asia/Shanghai">
-    <span class="${classes.title}">Shanghai</span>
-  </div>
-  <div is="Time" class="${classes.time}"  timezone="America/Los_Angeles">
-    <span class="${classes.title}">Los Angeles</span>
-  </div>
-</template>
+const template = `
+<div is="Time" class="time" timezone="Europe/Stockholm">
+  <span class="title">Sweden</span>
+</div>
+<div is="Time" class="time" timezone="Asia/Shanghai">
+  <span class="title">Shanghai</span>
+</div>
+<div is="Time" class="time"  timezone="America/Los_Angeles">
+  <span class="title">Los Angeles</span>
+</div>
 `
 
 const TimeApp = extendWindowApp('TimeApp', {

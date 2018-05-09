@@ -5,7 +5,7 @@ import extendWindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
 
 const styles = {
-  '@global :host': {
+  ':host': {
     fontSize: '0.7rem'
   },
   field: {
@@ -32,22 +32,20 @@ const styles = {
   }
 }
 
-const template = classes => `
-<template>
-  <div>
-    <div o-for="output in outputs">
-      <div class="${classes.outputCmd}">{{output.cmd}}</div>
-      <div>{{output.out}}</div>
-    </div>
+const template = `
+<div>
+  <div o-for="output in outputs">
+    <div class="outputCmd">{{output.cmd}}</div>
+    <div>{{output.out}}</div>
   </div>
-  <div class="${classes.field}">
-    <input
-      class="${classes.input}"
-      o-ref="field"
-      o-on-keydown="onKeyDown($event)"
-    />
-  </div>
-</template>
+</div>
+<div class="field">
+  <input
+    class="input"
+    o-ref="field"
+    o-on-keydown="onKeyDown($event)"
+  />
+</div>
 `
 
 const Terminal = extendWindowApp('Terminal', {

@@ -176,7 +176,7 @@ test('should create sub apps in for loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 3) // style element
+  t.is(vm.$el.shadowRoot.children.length, 2)
   t.is(vm.$children.length, 2)
   t.is(vm.$children[0].id, 1)
   t.is(vm.$children[1].id, 2)
@@ -206,12 +206,12 @@ test('should add an item to the view when calling unshift/push on an array', t =
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 3)
+  t.is(vm.$el.shadowRoot.children.length, 2)
   vm.list.push({index: 3})
-  t.is(vm.$el.shadowRoot.children.length, 4)
+  t.is(vm.$el.shadowRoot.children.length, 3)
   t.is(vm.$el.shadowRoot.children[2].shadowRoot.innerHTML, '3')
   vm.list.unshift({index: 4})
-  t.is(vm.$el.shadowRoot.children.length, 5)
+  t.is(vm.$el.shadowRoot.children.length, 4)
   t.is(vm.$el.shadowRoot.children[0].shadowRoot.innerHTML, '4')
   document.body.removeChild(vm.$el)
 })
@@ -320,10 +320,10 @@ test('should remove a app in the loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 3)
+  t.is(vm.$el.shadowRoot.children.length, 2)
   t.is(vm.$el.shadowRoot.children[1].shadowRoot.innerHTML, '2')
   vm.list.splice(1, 1)
-  t.is(vm.$el.shadowRoot.children.length, 2)
+  t.is(vm.$el.shadowRoot.children.length, 1)
   t.true(destroyed.called)
   document.body.removeChild(vm.$el)
 })

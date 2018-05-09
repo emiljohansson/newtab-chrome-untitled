@@ -60,9 +60,13 @@ export default (styles = {}) => {
   const styleSheet = {
     isNew: true,
     attach (el) {
+      const content = createClasses(styles)
+      if (content.trim().length < 1) {
+        return
+      }
       const styleEl = document.createElement('style')
       styleEl.setAttribute('type', 'text/css')
-      styleEl.innerHTML = createClasses(styles)
+      styleEl.innerHTML = content
       el.appendChild(styleEl)
     }
   }

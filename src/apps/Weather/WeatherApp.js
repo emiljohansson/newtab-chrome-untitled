@@ -19,19 +19,17 @@ const styles = {
   }
 }
 
-const template = classes => `
-<template>
-  <article class="${classes.root}" o-class="{
-    ready: isReady
-  }">
-    <i class="fas ${classes.icon}"></i>
-    <div is="Weather"
-      use-degree-sign="true"
-      o-emit-channel-retrieved="onChannelRetrieved"></div>
-    <div class="${classes.condition}">{{condition}}</div>
-  </article>
-  <link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
-</template>
+const template = `
+<article class="root" o-class="{
+  ready: isReady
+}">
+  <i class="fas icon"></i>
+  <div is="Weather"
+    use-degree-sign="true"
+    o-emit-channel-retrieved="onChannelRetrieved"></div>
+  <div class="condition">{{condition}}</div>
+</article>
+<link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
 `
 
 const getStyleByCondition = condition => {

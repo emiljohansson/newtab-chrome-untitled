@@ -11,8 +11,8 @@ const styles = {
   }
 }
 
-const template = classes => `
-<article class="${classes.playground}" playground-foo-bar>
+const template = `
+<article class="playground" playground-foo-bar>
   <div o-on-click="onClick">{{testVar}} {{ testVar }}</div>
   <div>Sum: {{sum}}</div>
   <div o-for="value in testArr2">{{value}}</div>
@@ -72,10 +72,11 @@ Playground.onIncrement = function () {
 export const PlaygroundItem = {
   debug: false,
   styles: {},
-  template: classes => `
+  template: `
 <div class="playground-item">
   {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
-</div>`,
+</div>
+`,
   data: {
     text: '',
     counter: 0
@@ -88,13 +89,11 @@ PlaygroundItem.onIncrementClick = function () {
 }
 
 export const PlaygroundIfItem = {
-  useShadow: true,
   styles: {},
-  template: classes => `
-<template>
-  <div class="playground-ifitem">
-    World
-  </div>
-</template>`,
+  template: `
+<div class="playground-ifitem">
+  World
+</div>
+`,
   data: {}
 }

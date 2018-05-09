@@ -69,7 +69,6 @@ const template = `
 `
 
 const Todo = {
-  newStyle: true,
   styles,
   template,
   data: {

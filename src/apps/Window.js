@@ -128,7 +128,6 @@ const template = `
 </article>`
 
 const DesktopWindow = {
-  newStyle: true,
   styles,
   template,
   data: {

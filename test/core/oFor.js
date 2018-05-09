@@ -13,7 +13,7 @@ test('should create an element for each item in the list', t => {
   }
   const vm = Instance(Foo, el)
   const rootEl = vm.$el.shadowRoot
-  t.is(rootEl.children.length, 3)
+  t.is(rootEl.children.length, 2)
   const firstChild = rootEl.children[0]
   const secondChild = rootEl.children[1]
   t.is(firstChild.innerHTML, array[0])
@@ -33,7 +33,7 @@ test('should update view when item in list changes', t => {
   }
   const vm = Instance(Foo, el)
   const rootEl = vm.$el.shadowRoot
-  t.is(rootEl.children.length, 3)
+  t.is(rootEl.children.length, 2)
   vm.list[0] = 'Hello'
   vm.list[1] = 'World'
   const firstChild = rootEl.children[0]

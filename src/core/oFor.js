@@ -1,6 +1,5 @@
 import { forEach, isElement, map, uniqueId } from 'lodash'
-import JssStyleSheet from 'stylesheet'
-import StyleSheet from 'stylesheet/s'
+import StyleSheet from 'core/styleSheet'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
 import watch from 'core/watch'
@@ -141,9 +140,7 @@ export default function (el, binding) {
     const definition = apps(el.getAttribute('is'))
     const newVm = Instance(definition, el, context)
     // const styleSheet = StyleSheet(newVm.styles)
-    const styleSheet = newVm.newStyle
-      ? StyleSheet(newVm.styles)
-      : JssStyleSheet(newVm.styles)
+    const styleSheet = StyleSheet(newVm.styles)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {
       parent.insertBefore(newVm.$el, parent.firstChild)
@@ -155,12 +152,7 @@ export default function (el, binding) {
         parent.appendChild(newVm.$el)
       }
     }
-    if (newVm.newStyle) {
-      styleSheet.attach(newVm.$el.shadowRoot)
-    } else {
-      styleSheet.options.insertionPoint = newVm.$el.shadowRoot.lastElementChild
-      styleSheet.attach()
-    }
+    styleSheet.attach(newVm.$el.shadowRoot)
     return newVm
   }
 
