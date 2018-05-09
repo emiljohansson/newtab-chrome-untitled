@@ -122,3 +122,28 @@ font-size: 1rem;
   const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
+
+test('classes: should not replace tag name selectors', t => {
+  const expected = `
+.bar {
+display: block;
+}
+.bar > div {
+font-size: 1rem;
+}
+`
+  const foo = {
+    display: 'block',
+
+    '& > div': {
+      fontSize: '1rem'
+    }
+  }
+  const styleSheet = StyleSheet({
+    bar: {
+      extend: foo
+    }
+  })
+  const content = attachStyle(styleSheet)
+  t.is(content, expected)
+})

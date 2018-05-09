@@ -1,4 +1,4 @@
-import { forEach, kebabCase, keys } from 'lodash'
+import { filter, forEach, kebabCase, keys } from 'lodash'
 
 const createClasses = (styles, rootClassName) => {
   const propKeys = keys(styles)
@@ -23,6 +23,14 @@ const extractSubScope = (scope, className) => {
   const propKeys = keys(scope)
   const subScope = {}
   forEach(propKeys, (key, index) => {
+    if (key === 'extend') {
+      const extendSubScope = extractSubScope(scope[key], className)
+      const selfKeys = getKeysWithSelfSelector(extendSubScope, className)
+      forEach(selfKeys, selfKey => {
+        subScope[selfKey] = extendSubScope[selfKey]
+      })
+      return
+    }
     if (key.indexOf('&') > -1) {
       subScope[key.replace(/&/g, `.${className}`)] = scope[key]
       delete scope[key]
@@ -30,6 +38,8 @@ const extractSubScope = (scope, className) => {
   })
   return subScope
 }
+
+const getKeysWithSelfSelector = (scope, className) => filter(keys(scope), key => key.indexOf(className) > -1)
 
 const createClassContent = style => {
   const propKeys = keys(style)
@@ -58,7 +68,6 @@ const getDot = (className, rootClassName) => {
 
 export default (styles = {}) => {
   const styleSheet = {
-    isNew: true,
     attach (el) {
       const content = createClasses(styles)
       if (content.trim().length < 1) {

@@ -42,6 +42,7 @@ const template = `
 `
 
 const StatusBar = {
+  debug: true,
   styles,
   template,
   data: {
