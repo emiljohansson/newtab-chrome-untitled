@@ -74,7 +74,6 @@
     "lodash": "4.17.4",
     "moment-timezone": "0.5.13",
     "rxjs": "5.4.3",
-    "uglify-js": "3.3.7",
     "weather": "git+https://github.com/emiljohansson/weather.git"
   }
 }
