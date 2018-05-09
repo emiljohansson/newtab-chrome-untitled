@@ -153,7 +153,6 @@ export default function (el, binding) {
     }
     styleSheet.options.insertionPoint = newVm.$el.shadowRoot.lastElementChild
     styleSheet.attach()
-    newVm.styleSheet = styleSheet
     return newVm
   }
 

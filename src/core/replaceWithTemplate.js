@@ -55,7 +55,6 @@ const replaceWithTemplate = vm => {
     parentEl.replaceChild(vm.$el, oldEl)
     styleSheet.options.insertionPoint = vm.$el.shadowRoot.lastChild
     styleSheet.attach()
-    vm.styleSheet = styleSheet
   }
 }
 
