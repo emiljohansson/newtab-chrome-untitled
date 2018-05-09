@@ -5,6 +5,9 @@ export default () => {
   let completed = false
 
   const subject = {
+    get numberOfSubscriptions () {
+      return subscriptions.length
+    },
     complete () {
       completed = true
       subscriptions.length = 0

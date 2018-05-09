@@ -1,5 +1,5 @@
 import { forEach } from 'lodash'
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 
 const subjects = {}
 
@@ -21,6 +21,6 @@ export default (vm, key) => {
     ? vm
     : vm.$id
   const scope = subjects[id] = subjects[id] || {}
-  scope[key] = scope[key] || new Subject()
+  scope[key] = scope[key] || Subject()
   return scope[key]
 }

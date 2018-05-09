@@ -293,9 +293,9 @@ test('should remove watchers', t => {
 
   const vm = Instance(Foo, el)
   const subject = watch(vm, 'value')
-  t.is(subject.observers.length, 1)
+  t.is(subject.numberOfSubscriptions, 1)
   vm.$destroy()
-  t.is(subject.observers.length, 0)
+  t.is(subject.numberOfSubscriptions, 0)
 })
 
 test('should remove a app in the loop', t => {

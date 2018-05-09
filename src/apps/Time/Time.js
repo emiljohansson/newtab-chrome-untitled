@@ -1,8 +1,8 @@
 import moment from 'moment-timezone'
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 import { date } from 'apps/Terminal/cmd'
 
-const updateSubject = new Subject()
+const updateSubject = Subject()
 let currentMin = -1
 setInterval(() => {
   const now = date()

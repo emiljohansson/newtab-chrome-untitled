@@ -9,6 +9,7 @@ test('next should trigger subscribers', t => {
   subject.subscribe(callback)
   subject.next()
   t.is(callback.callCount, 2)
+  t.is(subject.numberOfSubscriptions, 2)
 })
 
 test('complete should stop trigger subscribers', t => {
@@ -16,6 +17,9 @@ test('complete should stop trigger subscribers', t => {
   const subject = Subject()
   subject.subscribe(callback)
   subject.complete()
+  subject.next()
+  t.false(callback.called)
+  subject.subscribe(callback)
   subject.next()
   t.false(callback.called)
 })

@@ -1,5 +1,5 @@
 import { forEach, isFunction } from 'lodash'
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 
 const savedCoor = window.localStorage.savedWinPos == null
   ? {}
@@ -25,8 +25,8 @@ const getNewInitCoor = (id) => {
   return coor
 }
 
-const mouseMoveSubject = new Subject()
-const mouseUpSubject = new Subject()
+const mouseMoveSubject = Subject()
+const mouseUpSubject = Subject()
 
 document.body.addEventListener('mousemove', event => {
   mouseMoveSubject.next(event)

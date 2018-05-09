@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 import { camelCase, filter, forEach, noop } from 'lodash'
 
 const emitSelector = 'o-emit-'
@@ -17,7 +17,7 @@ export default vm => {
   vm.$listeners = {}
   forEach(attributes, attribute => {
     const name = camelCase(attribute.name.substr(emitSelector.length))
-    const subject = new Subject()
+    const subject = Subject()
     subject.subscribe((args) => {
       const callback = vm.$parent[attribute.value]
       if (callback == null) {

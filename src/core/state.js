@@ -1,5 +1,5 @@
 import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 import coreFunctions from 'core/coreFunctions'
 import callHook from 'core/callHook'
 import watch from 'core/watch'
@@ -7,7 +7,7 @@ import watch from 'core/watch'
 const dataWatcher = {}
 
 function ObserverArray (vm, key, array, viewSubject) {
-  const subject = new Subject()
+  const subject = Subject()
   subject.subscribe(inserted => {
     callHook(vm, vm.beforeUpdate)
     viewSubject.next(inserted)
@@ -87,7 +87,7 @@ const iterateData = vm => {
     }
   }
   const addWatch = (value, key) => {
-    const subject = new Subject(value)
+    const subject = Subject()
     const viewSubject = watch(vm, key)
     if (isArray(value)) {
       ObserverArray(vm, key, value, viewSubject)

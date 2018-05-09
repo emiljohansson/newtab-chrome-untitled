@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs/Subject'
+import Subject from 'core/Subject'
 
-const updateSubject = new Subject()
+const updateSubject = Subject()
 
 const getWeather = unit => {
   // const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="denver, co") and u="${unit}"`
