@@ -18,7 +18,7 @@ const styles = {
     margin: '0 0 1rem 0',
     position: 'relative',
 
-    '&:hover $removeBtn': {
+    '&:hover .removeBtn': {
       opacity: 1
     }
   },

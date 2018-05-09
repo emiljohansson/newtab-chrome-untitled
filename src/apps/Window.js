@@ -36,8 +36,13 @@ document.body.addEventListener('mouseup', event => {
   mouseUpSubject.next(event)
 })
 
+const headerCol = {
+  fontSize: '0.8rem',
+  zIndex: 2
+}
+
 const styles = {
-  '@global :host': {
+  ':host': {
     backgroundColor: '#f5f5f5',
     border: '1px solid #ccc',
     borderRadius: '3px',
@@ -51,7 +56,7 @@ const styles = {
   desktopWindow: {
     flex: 1,
 
-    '&:hover $closeButton': {
+    '&:hover .closeButton': {
       opacity: 1
     }
   },
@@ -64,28 +69,21 @@ const styles = {
     borderBottom: '1px solid transparent',
     borderTopLeftRadius: '1px',
     borderTopRightRadius: '1px',
+    display: 'flex',
+    alignItems: 'center',
     height: '19px',
     margin: '-4px',
     marginBottom: '4px',
     position: 'relative'
   },
-  headerCol: {
-    fontSize: '0.8rem',
-    position: 'absolute',
-    zIndex: 2
-  },
-  headerButtons: {
-    extend: 'headerCol',
-    lineHeight: 0
-  },
   headerLeftButtons: {
-    extend: 'headerButtons'
-  },
-  headerRightButtons: {
-    extend: 'headerButtons'
+    extend: headerCol,
+    lineHeight: 0,
+    marginLeft: '3px',
+    position: 'absolute'
   },
   headerTitle: {
-    extend: 'headerCol',
+    extend: headerCol,
     cursor: 'default',
     textAlign: 'center',
     width: '100%',
@@ -96,7 +94,6 @@ const styles = {
     backgroundColor: '#ff7868',
     borderRadius: '10px',
     padding: '6px',
-    margin: '3px 0 0 3px',
     opacity: 0,
     transition: 'opacity 0.3s ease-in-out',
 
@@ -106,31 +103,32 @@ const styles = {
   }
 }
 
-const template = classes => `
-<article class="${classes.desktopWindow}"
+const template = `
+<article class="desktopWindow"
   o-class="{
     isDragging: isDragging
   }"
   o-on-click="onWindowClick()"
 >
-  <header class="${classes.header}"
+  <header class="header"
     o-on-mousedown="onMenuMouseDown($event)">
-    <div class="${classes.headerLeftButtons}">
-      <button class="${classes.closeButton}"
+    <div class="headerLeftButtons">
+      <button class="closeButton"
         o-on-mousedown="onPreventMouseEvent($event)"
         o-on-click="onMenuCloseClick($event)">
       </button>
     </div>
-    <div class="${classes.headerTitle}">
+    <div class="headerTitle">
       {{title}}
     </div>
   </header>
-  <main class="${classes.content}">
+  <main class="content">
     <slot></slot>
   </main>
 </article>`
 
 const DesktopWindow = {
+  newStyle: true,
   styles,
   template,
   data: {
