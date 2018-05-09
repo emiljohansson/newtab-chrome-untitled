@@ -4,9 +4,7 @@ import Instance from 'core/Instance'
 import install from 'core/install'
 import apps from 'core/apps'
 
-const t0 = window.performance.now()
-
-jss.setup(preset())
+// jss.setup(preset())
 
 install('OS', require('apps/OS').default)
 install('Desktop', require('apps/Desktop').default)
@@ -26,6 +24,3 @@ install('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
 install('Terminal', require('apps/Terminal/Terminal').default)
 
 Instance(apps('OS'), document.querySelector(`[is=OS]`))
-
-const t1 = window.performance.now()
-console.log(`Call to doSomething took ${t1 - t0} milliseconds.`)
