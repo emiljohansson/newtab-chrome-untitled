@@ -4,6 +4,16 @@ export default () => {
   const subscriptions = []
   let completed = false
 
+  const unsubscribe = callback => () => {
+    let index = subscriptions.length
+    while (index--) {
+      if (callback === subscriptions[index]) {
+        subscriptions.splice(index, 1)
+        return
+      }
+    }
+  }
+
   const subject = {
     get numberOfSubscriptions () {
       return subscriptions.length
@@ -25,6 +35,7 @@ export default () => {
         return
       }
       subscriptions.push(callback)
+      return unsubscribe(callback)
     }
   }
   return subject

@@ -173,7 +173,7 @@ DesktopWindow.mounted = function () {
     settings.update = update
   })
 
-  this.mouseMoveSubscription = mouseMoveSubject.subscribe(event => {
+  this.mouseMoveUnsubscription = mouseMoveSubject.subscribe(event => {
     if (!this.isDragging) {
       return
     }
@@ -182,7 +182,7 @@ DesktopWindow.mounted = function () {
     this.setPosition(x, y)
   })
 
-  this.mouseUpSubscription = mouseUpSubject.subscribe(event => {
+  this.mouseUpUnsubscription = mouseUpSubject.subscribe(event => {
     if (!this.isDragging) {
       return
     }
@@ -194,8 +194,8 @@ DesktopWindow.mounted = function () {
 }
 
 DesktopWindow.destroyed = function () {
-  this.mouseMoveSubscription.unsubscribe()
-  this.mouseUpSubscription.unsubscribe()
+  this.mouseMoveUnsubscription()
+  this.mouseUpUnsubscription()
 }
 
 DesktopWindow.blurWindow = function () {
