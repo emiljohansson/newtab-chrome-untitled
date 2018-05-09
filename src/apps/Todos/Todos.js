@@ -1,6 +1,5 @@
 import { forEach, reduce } from 'lodash'
 import extendWindowApp from 'apps/WindowApp'
-import * as spacing from 'style/spacing'
 
 const baseStyle = {
   boxSizing: 'border-box',
@@ -11,11 +10,11 @@ const styles = {
   '@global :host': {
     extend: baseStyle,
     fontWeight: '200',
-    padding: spacing.inset.squish.m
+    padding: '0.5rem 1rem'
   },
   header: {
     fontSize: '1.6rem',
-    margin: spacing.stack.m,
+    margin: '1rem',
     textAlign: 'center'
   },
   input: {
@@ -23,8 +22,8 @@ const styles = {
     border: '1px solid #e2e2e2',
     borderRadius: '50px',
     fontSize: '0.8rem',
-    margin: spacing.stack.m,
-    padding: spacing.inset.squish.m,
+    margin: '1rem',
+    padding: '0.5rem 1rem',
     width: '100%'
   },
   list: {

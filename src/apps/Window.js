@@ -1,6 +1,5 @@
 import { forEach, isFunction } from 'lodash'
 import { Subject } from 'rxjs/Subject'
-import * as spacing from 'style/spacing'
 
 const savedCoor = window.localStorage.savedWinPos == null
   ? {}
@@ -45,7 +44,7 @@ const styles = {
     boxShadow: '0 2px 6px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.04)',
     display: 'flex',
     minHeight: '200px',
-    padding: spacing.inset.xs,
+    padding: '0.25rem',
     position: 'absolute',
     zIndex: 2
   },

@@ -2,7 +2,6 @@ import { forEach, isFunction } from 'lodash'
 import keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
-import * as spacing from 'style/spacing'
 
 const styles = {
   '@global :host': {
@@ -12,7 +11,7 @@ const styles = {
     top: '0',
     left: '0',
     right: '0',
-    margin: spacing.inset.m,
+    margin: '1rem',
     marginTop: '20px'
   },
   timeCenter: {

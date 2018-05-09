@@ -1,5 +1,3 @@
-import * as spacing from 'style/spacing'
-
 const styles = {
   '@global :host': {
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -8,7 +6,7 @@ const styles = {
     flexDirection: 'row',
     fontSize: '0.8rem',
     height: '20px',
-    padding: `0 ${spacing.space.m}`
+    padding: `0 1rem`
   },
   col: {
     flex: '1',

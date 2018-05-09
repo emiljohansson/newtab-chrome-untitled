@@ -1,12 +1,10 @@
-import * as spacing from 'style/spacing'
-
 const styles = {
   todo: {
     display: 'flex',
     alignItems: 'center',
     fontSize: '0.8rem',
     listStyle: 'none',
-    margin: spacing.stack.m,
+    margin: '1rem',
     position: 'relative',
 
     '&:hover $removeBtn': {
@@ -14,7 +12,7 @@ const styles = {
     }
   },
   label: {
-    padding: `0 ${spacing.space.l}`,
+    padding: `0 2rem`,
     flexGrow: 1,
 
     '.completed &': {
