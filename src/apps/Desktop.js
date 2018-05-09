@@ -15,7 +15,6 @@ const styles = {
     marginTop: '20px'
   },
   timeCenter: {
-    extend: 'time',
     fontSize: '4rem',
     position: 'absolute',
     marginTop: '-50px',

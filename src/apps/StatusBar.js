@@ -10,7 +10,8 @@ const styles = {
   },
   col: {
     flex: '1',
-    '& > *': {
+
+    '& > div': {
       display: 'inline-block'
     }
   },

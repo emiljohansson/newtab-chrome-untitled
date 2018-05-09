@@ -1,3 +1,14 @@
+const buttonStyle = {
+  backgroundColor: 'transparent',
+  border: '1px solid #ccc',
+  borderRadius: '50%',
+  height: '20px',
+  width: '20px',
+  padding: '0',
+  position: 'absolute',
+  outline: 'none'
+}
+
 const styles = {
   todo: {
     display: 'flex',
@@ -19,18 +30,8 @@ const styles = {
       textDecoration: 'line-through'
     }
   },
-  button: {
-    backgroundColor: 'transparent',
-    border: '1px solid #ccc',
-    borderRadius: '50%',
-    height: '20px',
-    width: '20px',
-    padding: '0',
-    position: 'absolute',
-    outline: 'none'
-  },
   checkBtn: {
-    extend: 'button',
+    extend: buttonStyle,
     color: 'lightseagreen',
 
     '&::before': {
@@ -42,7 +43,7 @@ const styles = {
     }
   },
   removeBtn: {
-    extend: 'button',
+    extend: buttonStyle,
     borderColor: 'transparent',
     cursor: 'pointer',
     fontSize: '2rem',
@@ -57,17 +58,18 @@ const styles = {
   }
 }
 
-const template = classes => `
-<div class="${classes.todo}" o-class="{
+const template = `
+<div class="todo" o-class="{
   completed: completed
 }">
-  <button class="${classes.checkBtn}" o-on-click="onCompleteClick()"></button>
-  <label class="${classes.label}">{{text}}</label>
-  <button class="${classes.removeBtn}" o-on-click="onRemoveClick()"></button>
+  <button class="checkBtn" o-on-click="onCompleteClick()"></button>
+  <label class="label">{{text}}</label>
+  <button class="removeBtn" o-on-click="onRemoveClick()"></button>
 </div>
 `
 
 const Todo = {
+  newStyle: true,
   styles,
   template,
   data: {

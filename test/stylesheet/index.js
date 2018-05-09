@@ -18,10 +18,13 @@ const attachStyle = styleSheet => {
 }
 
 test('attach: should attach a style element', t => {
-  const expected = `.blue {
+  const expected = `
+.blue {
 }
+
 .red {
-}`
+}
+`
   const styleSheet = StyleSheet({
     blue: {},
     red: {}
@@ -31,14 +34,17 @@ test('attach: should attach a style element', t => {
 })
 
 test('classes: should kebab case properties', t => {
-  const expected = `.blue {
+  const expected = `
+.blue {
 font-size: 1rem;
 }
+
 .red {
 border-color: red;
 height: 0;
 width: 100%;
-}`
+}
+`
   const styleSheet = StyleSheet({
     blue: {
       fontSize: '1rem'
@@ -54,9 +60,11 @@ width: 100%;
 })
 
 test('classes: should add pseudo', t => {
-  const expected = `:host {
+  const expected = `
+:host {
 font-size: 1rem;
-}`
+}
+`
   const styleSheet = StyleSheet({
     ':host': {
       fontSize: '1rem'
@@ -66,11 +74,43 @@ font-size: 1rem;
   t.is(content, expected)
 })
 
+test('classes: should replace & with current scope', t => {
+  const expected = `
+.foo {
+font-size: 1rem;
+}
+.foo:hover {
+background: blue;
+}
+
+.bar .foo {
+border: 1px;
+}
+`
+  const styleSheet = StyleSheet({
+    foo: {
+      fontSize: '1rem',
+
+      '&:hover': {
+        background: 'blue'
+      },
+
+      '.bar &': {
+        border: '1px'
+      }
+    }
+  })
+  const content = attachStyle(styleSheet)
+  t.is(content, expected)
+})
+
 test('classes: should extend style', t => {
-  const expected = `.bar {
+  const expected = `
+.bar {
 display: block;
 font-size: 1rem;
-}`
+}
+`
   const foo = {
     display: 'block'
   }
