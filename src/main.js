@@ -1,10 +1,6 @@
-import jss from 'jss'
-import preset from 'jss-preset-default'
 import Instance from 'core/Instance'
 import install from 'core/install'
 import apps from 'core/apps'
-
-// jss.setup(preset())
 
 install('OS', require('apps/OS').default)
 install('Desktop', require('apps/Desktop').default)

@@ -1,5 +1,5 @@
 const styles = {
-  '@global :host': {
+  ':host': {
     border: '1px solid',
     cursor: 'pointer',
     float: 'left',
@@ -8,9 +8,10 @@ const styles = {
   }
 }
 
-const template = classes => `<div o-on-click="onClick">{{value}}</div>`
+const template = `<div o-on-click="onClick">{{value}}</div>`
 
 const PuzzleItem = {
+  newStyle: true,
   styles,
   template,
   data: {
