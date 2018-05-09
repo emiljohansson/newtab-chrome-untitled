@@ -14,7 +14,7 @@ const styles = {
   },
   header: {
     fontSize: '1.6rem',
-    margin: '1rem',
+    margin: '0 0 1rem 0',
     textAlign: 'center'
   },
   input: {
@@ -22,7 +22,7 @@ const styles = {
     border: '1px solid #e2e2e2',
     borderRadius: '50px',
     fontSize: '0.8rem',
-    margin: '1rem',
+    margin: '0 0 1rem 0',
     padding: '0.5rem 1rem',
     width: '100%'
   },

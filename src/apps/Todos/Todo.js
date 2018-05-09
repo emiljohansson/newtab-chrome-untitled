@@ -4,7 +4,7 @@ const styles = {
     alignItems: 'center',
     fontSize: '0.8rem',
     listStyle: 'none',
-    margin: '1rem',
+    margin: '0 0 1rem 0',
     position: 'relative',
 
     '&:hover $removeBtn': {
