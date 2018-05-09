@@ -23,6 +23,10 @@ const createClassContent = style => {
   let result = ''
   forEach(propKeys, (key, index) => {
     const prop = kebabCase(key)
+    if (key === 'extend') {
+      result += createClassContent(style[key])
+      return
+    }
     const value = style[key]
     result += `${prop}: ${value};\n`
   })

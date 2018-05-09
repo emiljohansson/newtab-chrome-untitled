@@ -65,3 +65,21 @@ font-size: 1rem;
   const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
+
+test('classes: should extend style', t => {
+  const expected = `.bar {
+display: block;
+font-size: 1rem;
+}`
+  const foo = {
+    display: 'block'
+  }
+  const styleSheet = StyleSheet({
+    bar: {
+      extend: foo,
+      fontSize: '1rem'
+    }
+  })
+  const content = attachStyle(styleSheet)
+  t.is(content, expected)
+})
