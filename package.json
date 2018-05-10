@@ -24,6 +24,11 @@
       "!test/helpers/**/*.js",
       "test/**/*.js"
     ],
+    "source": [
+      "test/**/*.js",
+      "src/**/*.js",
+      "!dist/**/*"
+    ],
     "require": [
       "babel-core/register",
       "./test/helpers/setup-test-env.js"
