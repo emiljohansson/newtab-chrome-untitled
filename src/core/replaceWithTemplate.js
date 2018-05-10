@@ -3,7 +3,6 @@ import attachStyleSheet from 'core/styleSheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oEmit from 'core/oEmit'
-import oContent from 'core/oContent'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'core/getAllTextNodes'
 import replaceBracketContent from 'core/replaceBracketContent'
@@ -30,12 +29,6 @@ const replaceWithTemplate = vm => {
   }
   vm.$host.innerHTML = oldEl.innerHTML
   vm.$el.appendChild(elements[0].content.cloneNode(true))
-
-  const preTextNodes = getAllTextNodes(vm.$host)
-  forEach(preTextNodes, node => {
-    oContent(vm, vm.$tempContent)
-  })
-  delete vm.$tempContent
 
   const textNodes = getAllTextNodes(vm.$host)
   const keys = findKeysInTemplate(template)

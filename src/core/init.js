@@ -30,10 +30,6 @@ export default (vm, el) => {
   callHook(vm, vm.beforeMount)
   storeAttributes(vm, el)
   vm.$el = el
-  vm.$tempContent = (el || {}).innerHTML
-  if (vm.$tempContent != null && vm.$tempContent.length < 1) {
-    delete vm.$tempContent
-  }
   replaceWithTemplate(vm)
   return vm
 }

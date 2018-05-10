@@ -388,56 +388,6 @@ test('should append root class names to new shadow host', t => {
   vm.$destroy()
 })
 
-// test('should replace o-content with new html', t => {
-//   const el = document.createElement('div')
-//   document.body.appendChild(el)
-//   const Foo = {
-//     template: `<article>
-//   <div is="Bar">
-//     <span>Sneaky</span>
-//   </div>
-// </article>`,
-//     $el: el,
-//     data: {}
-//   }
-//   const Bar = {
-//     template: `<article class="bar">
-//     {{o-content}}
-// </article>`,
-//     data: {}
-//   }
-//   install('Bar', Bar)
-//   const vm = Instance(Foo, el)
-//   const childEl = vm.$host.querySelector('.bar')
-//   t.is(childEl.children.length, 1)
-//   t.is(childEl.children[0].innerHTML, 'Sneaky')
-//   vm.$destroy()
-// })
-
-// test('should replace o-content with app', t => {
-//   const mounted = sinon.spy()
-//   const el = document.createElement('div')
-//   el.innerHTML = `<div is="Bar"></div>`
-//   document.body.appendChild(el)
-//   const Foo = {
-//     template: `<article>
-//   {{o-content}}
-// </article>`,
-//     data: {}
-//   }
-//   const Bar = {
-//     template: `<article class="bar">
-//   Bar
-// </article>`,
-//     data: {},
-//     mounted
-//   }
-//   install('Bar', Bar)
-//   const vm = Instance(Foo, el)
-//   t.is(mounted.callCount, 1)
-//   vm.$destroy()
-// })
-
 test('should create a app reference with oRef', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
