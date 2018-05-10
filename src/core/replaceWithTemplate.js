@@ -1,5 +1,5 @@
 import { forEach, reduce } from 'lodash'
-import StyleSheet from 'core/styleSheet'
+import attachStyleSheet from 'core/styleSheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import oEmit from 'core/oEmit'
@@ -15,11 +15,9 @@ const replaceWithTemplate = vm => {
   const oldEl = vm.$el
   const parentEl = oldEl.parentElement || oldEl.parentNode
   const shadowContainer = document.createElement('div')
-  let styleSheet
   shadowContainer.attachShadow({
     mode: 'open'
   })
-  styleSheet = StyleSheet(vm.styles)
   const template = vm.template
 
   oEmit(vm)
@@ -53,7 +51,7 @@ const replaceWithTemplate = vm => {
 
   if (parentEl != null) {
     parentEl.replaceChild(vm.$el, oldEl)
-    styleSheet.attach(vm.$el.shadowRoot)
+    attachStyleSheet(vm.styles, vm.$el.shadowRoot)
   }
 }
 

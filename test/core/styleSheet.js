@@ -1,14 +1,21 @@
 import test from 'ava'
-import StyleSheet from 'core/styleSheet'
+import attachStyleSheet from 'core/styleSheet'
 
-const attachStyle = styleSheet => {
+const attachStyle = styles => {
   const el = document.createElement('div')
-  styleSheet.attach(el)
+  attachStyleSheet(styles, el)
   if (el.firstChild == null) {
     return null
   }
   return el.firstChild.innerHTML
 }
+
+test('should do nothing if el is null', t => {
+  attachStyleSheet({
+    blue: {}
+  })
+  t.pass()
+})
 
 test('attach: should attach a style element', t => {
   const expected = `
@@ -18,17 +25,15 @@ test('attach: should attach a style element', t => {
 .red {
 }
 `
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     blue: {},
     red: {}
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
 
 test('attach: should NOT attach when empty', t => {
-  const styleSheet = StyleSheet({})
-  const content = attachStyle(styleSheet)
+  const content = attachStyle()
   t.is(content, null)
 })
 
@@ -44,7 +49,7 @@ height: 0;
 width: 100%;
 }
 `
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     blue: {
       fontSize: '1rem'
     },
@@ -54,7 +59,6 @@ width: 100%;
       width: '100%'
     }
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
 
@@ -64,12 +68,11 @@ test('classes: should add pseudo', t => {
 font-size: 1rem;
 }
 `
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     ':host': {
       fontSize: '1rem'
     }
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
 
@@ -86,7 +89,7 @@ background: blue;
 border: 1px;
 }
 `
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     foo: {
       fontSize: '1rem',
 
@@ -99,7 +102,6 @@ border: 1px;
       }
     }
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
 
@@ -113,13 +115,12 @@ font-size: 1rem;
   const foo = {
     display: 'block'
   }
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     bar: {
       extend: foo,
       fontSize: '1rem'
     }
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })
 
@@ -139,11 +140,10 @@ font-size: 1rem;
       fontSize: '1rem'
     }
   }
-  const styleSheet = StyleSheet({
+  const content = attachStyle({
     bar: {
       extend: foo
     }
   })
-  const content = attachStyle(styleSheet)
   t.is(content, expected)
 })

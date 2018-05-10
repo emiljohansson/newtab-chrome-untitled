@@ -66,18 +66,16 @@ const getDot = (className, rootClassName) => {
   return '.'
 }
 
-export default (styles = {}) => {
-  const styleSheet = {
-    attach (el) {
-      const content = createClasses(styles)
-      if (content.trim().length < 1) {
-        return
-      }
-      const styleEl = document.createElement('style')
-      styleEl.setAttribute('type', 'text/css')
-      styleEl.innerHTML = content
-      el.appendChild(styleEl)
-    }
+export default (styles = {}, el = null) => {
+  if (el == null) {
+    return
   }
-  return styleSheet
+  const content = createClasses(styles)
+  if (content.trim().length < 1) {
+    return
+  }
+  const styleEl = document.createElement('style')
+  styleEl.setAttribute('type', 'text/css')
+  styleEl.innerHTML = content
+  el.appendChild(styleEl)
 }
