@@ -5,8 +5,8 @@ import Instance from 'core/Instance'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
 import findKeysInTemplate from 'core/findKeysInTemplate'
-import getAllTextNodes from 'lib/getAllTextNodes'
-import replaceBracketContent from 'lib/replaceBracketContent'
+import getAllTextNodes from 'core/getAllTextNodes'
+import replaceBracketContent from 'core/replaceBracketContent'
 
 export const forSelector = 'o-for'
 

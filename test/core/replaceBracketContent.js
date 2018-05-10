@@ -1,5 +1,5 @@
 import test from 'ava'
-import replaceBracketContent from 'lib/replaceBracketContent'
+import replaceBracketContent from 'core/replaceBracketContent'
 
 test('should do no-operations', t => {
   t.is(replaceBracketContent(`

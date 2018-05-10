@@ -1,5 +1,5 @@
 import test from 'ava'
-import getElsByAttr from 'lib/getElsByAttr'
+import getElsByAttr from 'core/getElsByAttr'
 
 test('should find all elements by attribute', t => {
   const el = document.createElement('div')

@@ -1,6 +1,6 @@
 import test from 'ava'
 import HistoryNodes from 'core/HistoryNodes'
-import getAllTextNodes from 'lib/getAllTextNodes'
+import getAllTextNodes from 'core/getAllTextNodes'
 
 test('should find all text nodes, matchin a key, and convert them to a HistoryNode', t => {
   const el = document.createElement('div')

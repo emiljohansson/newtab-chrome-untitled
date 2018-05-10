@@ -5,8 +5,8 @@ import HistoryNodes from 'core/HistoryNodes'
 import oEmit from 'core/oEmit'
 import oContent from 'core/oContent'
 import findKeysInTemplate from 'core/findKeysInTemplate'
-import getAllTextNodes from 'lib/getAllTextNodes'
-import replaceBracketContent from 'lib/replaceBracketContent'
+import getAllTextNodes from 'core/getAllTextNodes'
+import replaceBracketContent from 'core/replaceBracketContent'
 
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {

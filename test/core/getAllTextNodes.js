@@ -1,5 +1,5 @@
 import test from 'ava'
-import getAllTextNodes from 'lib/getAllTextNodes'
+import getAllTextNodes from 'core/getAllTextNodes'
 
 test('should find text nodes from element', t => {
   const el = document.createElement('div')

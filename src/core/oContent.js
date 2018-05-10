@@ -1,5 +1,5 @@
 import { filter } from 'lodash'
-import getAllTextNodes from 'lib/getAllTextNodes'
+import getAllTextNodes from 'core/getAllTextNodes'
 
 export const contentSelector = '{{o-content}}'
 
