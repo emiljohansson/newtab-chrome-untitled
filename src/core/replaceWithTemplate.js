@@ -23,7 +23,6 @@ const replaceWithTemplate = vm => {
   oEmit(vm)
   vm.$host = shadowContainer
   vm.$el = shadowContainer.shadowRoot
-  // vm.$el = shadowContainer
 
   const elements = getElFromTemplate(template)
   if (vm.data.class) {

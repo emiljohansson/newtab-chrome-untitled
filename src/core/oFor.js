@@ -150,7 +150,7 @@ export default function (el, binding) {
         parent.appendChild(newVm.$host)
       }
     }
-    attachStyleSheet(newVm.styles, newVm.$host.shadowRoot)
+    attachStyleSheet(newVm.styles, newVm.$el)
     return newVm
   }
 

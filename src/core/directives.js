@@ -83,7 +83,7 @@ export const directives = vm => {
     const directive = list[selector]
     const elements = [
       ...vm.$host.querySelectorAll(`[${selector}]`),
-      ...vm.$host.shadowRoot.querySelectorAll(`[${selector}]`)
+      ...vm.$el.querySelectorAll(`[${selector}]`)
     ]
     forEach(elements, el => {
       const expression = el.getAttribute(`${selector}`)
