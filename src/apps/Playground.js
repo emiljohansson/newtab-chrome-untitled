@@ -18,7 +18,9 @@ const template = `
   <div o-for="value in testArr2">{{value}}</div>
   <div o-for="item in testArr"
     is="PlaygroundItem"
-    o-emit-increment="onIncrement"></div>
+    o-emit-increment="onIncrement">
+    <b>Slot content</b>
+  </div>
   <section o-for="value in fooArray">{{value}}</section>
   <button o-on-click="onToggleClicked">show/hide</button>
   <div o-if="show">Hello1</div>
@@ -74,6 +76,7 @@ export const PlaygroundItem = {
   styles: {},
   template: `
 <div class="playground-item">
+  <slot></slot>
   {{text}} <button o-on-click="onIncrementClick()">{{counter}}</button>
 </div>
 `,
