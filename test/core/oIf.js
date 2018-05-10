@@ -13,7 +13,7 @@ test('should add and remove element', t => {
     }
   }
   const vm = Instance(Foo, el)
-  const rootEl = vm.$el.shadowRoot.firstChild
+  const rootEl = vm.$shadowRoot.firstChild
   t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show-->`)
   vm.show = true
   t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show--><span>World</span>`)
@@ -43,13 +43,13 @@ test('should add and remove apps', t => {
   const vm = Instance(Foo, el)
   const falseExpected = `Hello, <!--${vm.$id}.show-->`
   const trueExpected = `Hello, <!--${vm.$id}.show--><div>World</div>`
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, falseExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, falseExpected)
   vm.show = true
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, trueExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, trueExpected)
   vm.show = false
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, falseExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, falseExpected)
   vm.show = true
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, trueExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, trueExpected)
   t.is(mounted.callCount, 2)
   t.is(destroyed.callCount, 1)
   vm.$destroy()
@@ -65,7 +65,7 @@ test('should allow initial true value', t => {
     }
   }
   const vm = Instance(Foo, el)
-  const rootEl = vm.$el.shadowRoot.firstChild
+  const rootEl = vm.$shadowRoot.firstChild
   t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show--><span>World</span>`)
   vm.show = false
   t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show-->`)
@@ -93,8 +93,8 @@ test('should add child app with initial true value', t => {
   const vm = Instance(Foo, el)
   const falseExpected = `Hello, <!--${vm.$id}.show-->`
   const trueExpected = `Hello, <!--${vm.$id}.show--><div>World</div>`
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, trueExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, trueExpected)
   vm.show = false
-  t.is(vm.$el.shadowRoot.firstChild.innerHTML, falseExpected)
+  t.is(vm.$shadowRoot.firstChild.innerHTML, falseExpected)
   vm.$destroy()
 })

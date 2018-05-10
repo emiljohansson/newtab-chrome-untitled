@@ -17,11 +17,12 @@ test('should replce {{o-content}} with inner html', t => {
   document.body.appendChild(el)
   const nodeLength = el.childNodes.length
   const vm = {
-    $el: el
+    $el: el,
+    $host: el
   }
   oContent(vm, `<div>Hello</div>`)
-  t.is(vm.$el.children.length, 3)
-  t.is(vm.$el.childNodes.length, nodeLength)
+  t.is(vm.$host.children.length, 3)
+  t.is(vm.$host.childNodes.length, nodeLength)
   document.body.removeChild(el)
 })
 
@@ -35,11 +36,12 @@ test('should replce {{o-content}} placed in sub child', t => {
   document.body.appendChild(el)
   const nodeLength = el.childNodes.length
   const vm = {
-    $el: el
+    $el: el,
+    $host: el
   }
   oContent(vm, `<div>Hello</div>`)
-  t.is(vm.$el.children.length, 3)
-  t.is(vm.$el.childNodes.length, nodeLength)
+  t.is(vm.$host.children.length, 3)
+  t.is(vm.$host.childNodes.length, nodeLength)
   document.body.removeChild(el)
 })
 
@@ -52,9 +54,10 @@ test('should remove {{o-content}} if no content are passed', t => {
 `
   document.body.appendChild(el)
   const vm = {
-    $el: el
+    $el: el,
+    $host: el
   }
   oContent(vm)
-  t.true(vm.$el.innerHTML.indexOf('{{o-content}}') < 0)
+  t.true(vm.$host.innerHTML.indexOf('{{o-content}}') < 0)
   document.body.removeChild(el)
 })

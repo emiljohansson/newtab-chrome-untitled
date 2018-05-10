@@ -4,11 +4,11 @@ import getAllTextNodes from 'core/getAllTextNodes'
 export const contentSelector = '{{o-content}}'
 
 export default (vm, htmlContent) => {
-  if (vm.$el == null) {
+  if (vm.$host == null) {
     return
   }
   const node = filter(
-    getAllTextNodes(vm.$el),
+    getAllTextNodes(vm.$host),
     node => node.textContent
       .replace(/ /g, '')
       .trim()

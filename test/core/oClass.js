@@ -12,11 +12,11 @@ test('should toggle class', t => {
   }
   const vm = Instance(Foo, el)
   const className = 'my-class'
-  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
+  t.true(vm.$shadowRoot.children[0].classList.contains(className))
   vm.showMyClass = !vm.showMyClass
-  t.false(vm.$el.shadowRoot.children[0].classList.contains(className))
+  t.false(vm.$shadowRoot.children[0].classList.contains(className))
   vm.showMyClass = !vm.showMyClass
-  t.true(vm.$el.shadowRoot.children[0].classList.contains(className))
+  t.true(vm.$shadowRoot.children[0].classList.contains(className))
   vm.$destroy()
 })
 
@@ -32,7 +32,7 @@ test('should toggle child classes', t => {
     }
   }
   const vm = Instance(Foo, el)
-  const childEl = vm.$el.shadowRoot.children[0].children[0]
+  const childEl = vm.$shadowRoot.children[0].children[0]
   t.true(childEl.classList.contains('my-class'))
   vm.showMyClass = !vm.showMyClass
   t.false(childEl.classList.contains('my-class'))
@@ -51,6 +51,6 @@ test('should remove o-class attribute', t => {
     }
   }
   const vm = Instance(Foo, el)
-  t.false(vm.$el.shadowRoot.children[0].hasAttribute('o-class'))
+  t.false(vm.$shadowRoot.children[0].hasAttribute('o-class'))
   vm.$destroy()
 })

@@ -76,14 +76,14 @@ export const add = (name, definition) => {
 export const getDirectiveAttributes = () => keys(list)
 
 export const directives = vm => {
-  if (vm.$el == null) {
+  if (vm.$host == null) {
     return
   }
   forEach(getDirectiveAttributes(), selector => {
     const directive = list[selector]
     const elements = [
-      ...vm.$el.querySelectorAll(`[${selector}]`),
-      ...vm.$el.shadowRoot.querySelectorAll(`[${selector}]`)
+      ...vm.$host.querySelectorAll(`[${selector}]`),
+      ...vm.$host.shadowRoot.querySelectorAll(`[${selector}]`)
     ]
     forEach(elements, el => {
       const expression = el.getAttribute(`${selector}`)

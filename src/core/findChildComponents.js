@@ -26,7 +26,7 @@ const getChildren = el => {
 
 export default vm => {
   let children = filter(
-    getChildElements(vm.$el),
+    getChildElements(vm.$host),
     el => (el.hasAttribute('is') || el.hasAttribute('o-ref')) && !el.hasAttribute(ifSelector)
   )
   if (children.length < 1) {

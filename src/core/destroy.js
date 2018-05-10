@@ -10,11 +10,11 @@ export default vm => {
       const childVm = vm.$children[0]
       vm.$children.remove(childVm)
     }
-    if (vm.$el != null) {
-      if (vm.$el.parentElement == null) {
-        vm.$el.parentNode.removeChild(vm.$el)
+    if (vm.$host != null) {
+      if (vm.$host.parentElement == null) {
+        vm.$host.parentNode.removeChild(vm.$host)
       } else {
-        vm.$el.parentElement.removeChild(vm.$el)
+        vm.$host.parentElement.removeChild(vm.$host)
       }
     }
     callHook(vm, vm.destroyed)

@@ -66,12 +66,12 @@ test('should not touch child elements when data changes', t => {
     }
   }
   const vm = Instance(App, el)
-  const childNodes = vm.$el.shadowRoot.childNodes
+  const childNodes = vm.$shadowRoot.childNodes
   vm.foo = 'bas'
   t.is(childNodes[0].textContent.trim(), 'bas')
   t.is(childNodes[2].textContent.trim(), 'World')
-  t.is(vm.$el.shadowRoot.childNodes[1], childNodes[1])
-  document.body.removeChild(vm.$el)
+  t.is(vm.$shadowRoot.childNodes[1], childNodes[1])
+  vm.$destroy()
 })
 
 test('should update each data separately in single text node', t => {
@@ -85,8 +85,8 @@ test('should update each data separately in single text node', t => {
     }
   }
   const vm = Instance(App, el)
-  t.is(vm.$el.shadowRoot.childNodes[0].textContent, 'Hello World, Hello')
-  document.body.removeChild(vm.$el)
+  t.is(vm.$shadowRoot.childNodes[0].textContent, 'Hello World, Hello')
+  vm.$destroy()
 })
 
 test('should only update view after $nextTick been triggered', t => {
@@ -124,8 +124,8 @@ test('should replace empty values with an empty string', t => {
     }
   }
   const vm = Instance(App, el)
-  t.is(vm.$el.shadowRoot.children[0].innerHTML, ' World')
-  document.body.removeChild(vm.$el)
+  t.is(vm.$shadowRoot.children[0].innerHTML, ' World')
+  vm.$destroy()
 })
 
 test('should create sub apps', t => {
@@ -150,10 +150,10 @@ test('should create sub apps', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  const barEl = vm.$el.shadowRoot.children[0]
+  const barEl = vm.$shadowRoot.children[0]
   t.is(barEl.shadowRoot.childNodes[0].textContent, 'World')
   t.deepEqual(vm.$children[0].$parent, vm)
-  document.body.removeChild(vm.$el)
+  vm.$destroy()
 })
 
 test('should create sub apps in for loop', t => {
@@ -176,11 +176,11 @@ test('should create sub apps in for loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 2)
+  t.is(vm.$shadowRoot.children.length, 2)
   t.is(vm.$children.length, 2)
   t.is(vm.$children[0].id, 1)
   t.is(vm.$children[1].id, 2)
-  document.body.removeChild(vm.$el)
+  vm.$destroy()
 })
 
 test('should add an item to the view when calling unshift/push on an array', t => {
@@ -206,14 +206,14 @@ test('should add an item to the view when calling unshift/push on an array', t =
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 2)
+  t.is(vm.$shadowRoot.children.length, 2)
   vm.list.push({index: 3})
-  t.is(vm.$el.shadowRoot.children.length, 3)
-  t.is(vm.$el.shadowRoot.children[2].shadowRoot.innerHTML, '3')
+  t.is(vm.$shadowRoot.children.length, 3)
+  t.is(vm.$shadowRoot.children[2].shadowRoot.innerHTML, '3')
   vm.list.unshift({index: 4})
-  t.is(vm.$el.shadowRoot.children.length, 4)
-  t.is(vm.$el.shadowRoot.children[0].shadowRoot.innerHTML, '4')
-  document.body.removeChild(vm.$el)
+  t.is(vm.$shadowRoot.children.length, 4)
+  t.is(vm.$shadowRoot.children[0].shadowRoot.innerHTML, '4')
+  vm.$destroy()
 })
 
 test('should destroy child apps', t => {
@@ -273,10 +273,10 @@ test('should remove dom events', t => {
   }
 
   const vm = Instance(Foo, el)
-  fireEvent(vm.$el.shadowRoot.children[0], 'click')
+  fireEvent(vm.$shadowRoot.children[0], 'click')
   t.is(onClick.callCount, 1)
   vm.$destroy()
-  fireEvent(vm.$el.shadowRoot.children[0], 'click')
+  fireEvent(vm.$shadowRoot.children[0], 'click')
   t.is(onClick.callCount, 1)
 })
 
@@ -320,12 +320,12 @@ test('should remove a app in the loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$el.shadowRoot.children.length, 2)
-  t.is(vm.$el.shadowRoot.children[1].shadowRoot.innerHTML, '2')
+  t.is(vm.$shadowRoot.children.length, 2)
+  t.is(vm.$shadowRoot.children[1].shadowRoot.innerHTML, '2')
   vm.list.splice(1, 1)
-  t.is(vm.$el.shadowRoot.children.length, 1)
+  t.is(vm.$shadowRoot.children.length, 1)
   t.true(destroyed.called)
-  document.body.removeChild(vm.$el)
+  vm.$destroy()
 })
 
 // test('should pass down props to child instance', t => {
@@ -343,8 +343,8 @@ test('should remove a app in the loop', t => {
 //   }
 //   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
-//   t.deepEqual(vm.$el.children[0].data., )
-//   document.body.removeChild(vm.$el)
+//   t.deepEqual(vm.$host.children[0].data., )
+//   vm.$destroy()
 // })
 
 test('should call parent method from child', t => {
@@ -368,10 +368,10 @@ test('should call parent method from child', t => {
   }
   install('Bar', Bar)
   const vm = Instance(Foo, el)
-  fireEvent(vm.$el.children[0].shadowRoot.children[0], 'click')
+  fireEvent(vm.$host.children[0].shadowRoot.children[0], 'click')
   t.is(sum, 1)
   t.deepEqual(args, [1, 2, 'foo'])
-  document.body.removeChild(vm.$el)
+  vm.$destroy()
 })
 
 test('should append root class names to new shadow host', t => {
@@ -384,8 +384,8 @@ test('should append root class names to new shadow host', t => {
     $el: el
   }
   const vm = Instance(Foo, el)
-  t.is(vm.$el.className, expected)
-  document.body.removeChild(vm.$el)
+  t.is(vm.$host.className, expected)
+  vm.$destroy()
 })
 
 // test('should replace o-content with new html', t => {
@@ -408,10 +408,10 @@ test('should append root class names to new shadow host', t => {
 //   }
 //   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
-//   const childEl = vm.$el.querySelector('.bar')
+//   const childEl = vm.$host.querySelector('.bar')
 //   t.is(childEl.children.length, 1)
 //   t.is(childEl.children[0].innerHTML, 'Sneaky')
-//   document.body.removeChild(vm.$el)
+//   vm.$destroy()
 // })
 
 // test('should replace o-content with app', t => {
@@ -435,7 +435,7 @@ test('should append root class names to new shadow host', t => {
 //   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
 //   t.is(mounted.callCount, 1)
-//   document.body.removeChild(vm.$el)
+//   vm.$destroy()
 // })
 
 test('should create a app reference with oRef', t => {
@@ -458,7 +458,7 @@ test('should create a app reference with oRef', t => {
   install('Bar', Bar)
   const vm = Instance(Foo, el)
   t.deepEqual(vm.$refs.bar, barVm)
-  t.false(barVm.$el.hasAttribute('o-ref'))
+  t.false(barVm.$host.hasAttribute('o-ref'))
 
   vm.$destroy()
   t.is(vm.$refs, undefined)
@@ -474,7 +474,7 @@ test('should store a DOM element containing oRef', t => {
     data: {}
   }
   const vm = Instance(Foo, el)
-  t.deepEqual(vm.$refs.bar, vm.$el.shadowRoot.querySelector('span'))
+  t.deepEqual(vm.$refs.bar, vm.$shadowRoot.querySelector('span'))
   t.false(vm.$refs.bar.hasAttribute('o-ref'))
 
   vm.$destroy()
@@ -526,13 +526,13 @@ test('moving around array values should update view', t => {
   }
   const vm = Instance(Foo, el)
 
-  t.is(vm.$el.shadowRoot.children[0].innerHTML, '1')
-  t.is(vm.$el.shadowRoot.children[2].innerHTML, '3')
+  t.is(vm.$shadowRoot.children[0].innerHTML, '1')
+  t.is(vm.$shadowRoot.children[2].innerHTML, '3')
 
   vm.values[2] = vm.values.splice(0, 1, vm.values[2])[0]
 
-  t.is(vm.$el.shadowRoot.children[0].innerHTML, '3')
-  t.is(vm.$el.shadowRoot.children[2].innerHTML, '1')
+  t.is(vm.$shadowRoot.children[0].innerHTML, '3')
+  t.is(vm.$shadowRoot.children[2].innerHTML, '1')
 
   vm.$destroy()
 })
@@ -564,13 +564,13 @@ test('moving around array values should update view', t => {
 //   install('Bar', Bar)
 //   const vm = Instance(Foo, el)
 
-//   t.is(vm.$el.children[0].innerHTML, '1')
-//   t.is(vm.$el.children[2].innerHTML, '3')
+//   t.is(vm.$host.children[0].innerHTML, '1')
+//   t.is(vm.$host.children[2].innerHTML, '3')
 
 //   vm.values[2] = vm.values.splice(0, 1, vm.values[2])[0]
 
-//   t.is(vm.$el.children[0].innerHTML, '3')
-//   t.is(vm.$el.children[2].innerHTML, '1')
+//   t.is(vm.$host.children[0].innerHTML, '3')
+//   t.is(vm.$host.children[2].innerHTML, '1')
 
 //   vm.$destroy()
 // })

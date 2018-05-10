@@ -141,16 +141,16 @@ export default function (el, binding) {
     const newVm = Instance(definition, el, context)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {
-      parent.insertBefore(newVm.$el, parent.firstChild)
+      parent.insertBefore(newVm.$host, parent.firstChild)
     } else {
       const length = cache.length
       if (length > 0 && parent.childNodes.length > 0) {
-        parent.insertBefore(newVm.$el, cache[length - 1].vm.$el.nextSibling)
+        parent.insertBefore(newVm.$host, cache[length - 1].vm.$host.nextSibling)
       } else {
-        parent.appendChild(newVm.$el)
+        parent.appendChild(newVm.$host)
       }
     }
-    attachStyleSheet(newVm.styles, newVm.$el.shadowRoot)
+    attachStyleSheet(newVm.styles, newVm.$host.shadowRoot)
     return newVm
   }
 

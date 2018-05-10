@@ -10,7 +10,7 @@ function App (el, parent, comment) {
   const definition = apps(el.getAttribute('is'))
   const newVm = Instance(definition, el)
   this.$children.push(newVm)
-  parent.insertBefore(newVm.$el, comment.nextSibling)
+  parent.insertBefore(newVm.$host, comment.nextSibling)
   return newVm
 }
 

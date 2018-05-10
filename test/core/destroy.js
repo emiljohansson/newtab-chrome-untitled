@@ -28,7 +28,7 @@ test('should remove element', t => {
   const vm = {
     $children: [],
     $refs: {},
-    $el: el
+    $host: el
   }
   destroy(vm)
   vm.$destroy()
