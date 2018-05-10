@@ -83,7 +83,7 @@ let highestZIndex = 2
 const updateZIndex = desktopWindow => {
   const index = zIndexList.indexOf(desktopWindow)
   highestZIndex++
-  desktopWindow.$el.style.zIndex = highestZIndex
+  desktopWindow.$host.style.zIndex = highestZIndex
   if (index < 0) {
     zIndexList.push(desktopWindow)
   } else {

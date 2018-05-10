@@ -22,15 +22,15 @@ const replaceWithTemplate = vm => {
 
   oEmit(vm)
   vm.$host = shadowContainer
-  vm.$shadowRoot = shadowContainer.shadowRoot
-  vm.$el = shadowContainer
+  vm.$el = shadowContainer.shadowRoot
+  // vm.$el = shadowContainer
 
   const elements = getElFromTemplate(template)
   if (vm.data.class) {
     vm.$host.className = vm.data.class
   }
   vm.$host.innerHTML = oldEl.innerHTML
-  vm.$shadowRoot.appendChild(elements[0].content.cloneNode(true))
+  vm.$el.appendChild(elements[0].content.cloneNode(true))
 
   const preTextNodes = getAllTextNodes(vm.$host)
   forEach(preTextNodes, node => {
@@ -53,7 +53,7 @@ const replaceWithTemplate = vm => {
 
   if (parentEl != null) {
     parentEl.replaceChild(vm.$host, oldEl)
-    attachStyleSheet(vm.styles, vm.$shadowRoot)
+    attachStyleSheet(vm.styles, vm.$el)
   }
 }
 

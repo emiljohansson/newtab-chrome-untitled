@@ -66,11 +66,11 @@ test('should not touch child elements when data changes', t => {
     }
   }
   const vm = Instance(App, el)
-  const childNodes = vm.$shadowRoot.childNodes
+  const childNodes = vm.$el.childNodes
   vm.foo = 'bas'
   t.is(childNodes[0].textContent.trim(), 'bas')
   t.is(childNodes[2].textContent.trim(), 'World')
-  t.is(vm.$shadowRoot.childNodes[1], childNodes[1])
+  t.is(vm.$el.childNodes[1], childNodes[1])
   vm.$destroy()
 })
 
@@ -85,7 +85,7 @@ test('should update each data separately in single text node', t => {
     }
   }
   const vm = Instance(App, el)
-  t.is(vm.$shadowRoot.childNodes[0].textContent, 'Hello World, Hello')
+  t.is(vm.$el.childNodes[0].textContent, 'Hello World, Hello')
   vm.$destroy()
 })
 
@@ -102,9 +102,9 @@ test('should only update view after $nextTick been triggered', t => {
     triggerUpdate () {
       this.foo = 'updated'
       this.bar = 2
-      t.is(this.$el.shadowRoot.childNodes[0].textContent, 'not updated-1')
+      t.is(this.$el.childNodes[0].textContent, 'not updated-1')
       this.$nextTick(() => {
-        t.is(this.$el.shadowRoot.childNodes[0].textContent, 'updated-2')
+        t.is(this.$el.childNodes[0].textContent, 'updated-2')
         this.$destroy()
       })
     }
@@ -124,7 +124,7 @@ test('should replace empty values with an empty string', t => {
     }
   }
   const vm = Instance(App, el)
-  t.is(vm.$shadowRoot.children[0].innerHTML, ' World')
+  t.is(vm.$el.children[0].innerHTML, ' World')
   vm.$destroy()
 })
 
@@ -150,7 +150,7 @@ test('should create sub apps', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  const barEl = vm.$shadowRoot.children[0]
+  const barEl = vm.$el.children[0]
   t.is(barEl.shadowRoot.childNodes[0].textContent, 'World')
   t.deepEqual(vm.$children[0].$parent, vm)
   vm.$destroy()
@@ -176,7 +176,7 @@ test('should create sub apps in for loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$shadowRoot.children.length, 2)
+  t.is(vm.$el.children.length, 2)
   t.is(vm.$children.length, 2)
   t.is(vm.$children[0].id, 1)
   t.is(vm.$children[1].id, 2)
@@ -206,13 +206,13 @@ test('should add an item to the view when calling unshift/push on an array', t =
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$shadowRoot.children.length, 2)
+  t.is(vm.$el.children.length, 2)
   vm.list.push({index: 3})
-  t.is(vm.$shadowRoot.children.length, 3)
-  t.is(vm.$shadowRoot.children[2].shadowRoot.innerHTML, '3')
+  t.is(vm.$el.children.length, 3)
+  t.is(vm.$el.children[2].shadowRoot.innerHTML, '3')
   vm.list.unshift({index: 4})
-  t.is(vm.$shadowRoot.children.length, 4)
-  t.is(vm.$shadowRoot.children[0].shadowRoot.innerHTML, '4')
+  t.is(vm.$el.children.length, 4)
+  t.is(vm.$el.children[0].shadowRoot.innerHTML, '4')
   vm.$destroy()
 })
 
@@ -273,10 +273,10 @@ test('should remove dom events', t => {
   }
 
   const vm = Instance(Foo, el)
-  fireEvent(vm.$shadowRoot.children[0], 'click')
+  fireEvent(vm.$el.children[0], 'click')
   t.is(onClick.callCount, 1)
   vm.$destroy()
-  fireEvent(vm.$shadowRoot.children[0], 'click')
+  fireEvent(vm.$el.children[0], 'click')
   t.is(onClick.callCount, 1)
 })
 
@@ -320,10 +320,10 @@ test('should remove a app in the loop', t => {
   install('Bar', Bar)
 
   const vm = Instance(Foo, el)
-  t.is(vm.$shadowRoot.children.length, 2)
-  t.is(vm.$shadowRoot.children[1].shadowRoot.innerHTML, '2')
+  t.is(vm.$el.children.length, 2)
+  t.is(vm.$el.children[1].shadowRoot.innerHTML, '2')
   vm.list.splice(1, 1)
-  t.is(vm.$shadowRoot.children.length, 1)
+  t.is(vm.$el.children.length, 1)
   t.true(destroyed.called)
   vm.$destroy()
 })
@@ -474,7 +474,7 @@ test('should store a DOM element containing oRef', t => {
     data: {}
   }
   const vm = Instance(Foo, el)
-  t.deepEqual(vm.$refs.bar, vm.$shadowRoot.querySelector('span'))
+  t.deepEqual(vm.$refs.bar, vm.$el.querySelector('span'))
   t.false(vm.$refs.bar.hasAttribute('o-ref'))
 
   vm.$destroy()
@@ -526,13 +526,13 @@ test('moving around array values should update view', t => {
   }
   const vm = Instance(Foo, el)
 
-  t.is(vm.$shadowRoot.children[0].innerHTML, '1')
-  t.is(vm.$shadowRoot.children[2].innerHTML, '3')
+  t.is(vm.$el.children[0].innerHTML, '1')
+  t.is(vm.$el.children[2].innerHTML, '3')
 
   vm.values[2] = vm.values.splice(0, 1, vm.values[2])[0]
 
-  t.is(vm.$shadowRoot.children[0].innerHTML, '3')
-  t.is(vm.$shadowRoot.children[2].innerHTML, '1')
+  t.is(vm.$el.children[0].innerHTML, '3')
+  t.is(vm.$el.children[2].innerHTML, '1')
 
   vm.$destroy()
 })

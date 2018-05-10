@@ -92,7 +92,7 @@ WeatherApp.mounted = function () {
 WeatherApp.onChannelRetrieved = function (channelData) {
   const condition = channelData.item.condition.text
   console.log(condition)
-  const iconEl = this.$el.shadowRoot.querySelector('.svg-inline--fa') || this.$el.shadowRoot.querySelector('.fas')
+  const iconEl = this.$el.querySelector('.svg-inline--fa') || this.$el.querySelector('.fas')
   const style = getStyleByCondition(condition)
   iconEl.classList.add(`fa-${style.icon}`)
 

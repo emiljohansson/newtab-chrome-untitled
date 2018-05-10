@@ -150,8 +150,8 @@ DesktopWindow.created = function () {}
 DesktopWindow.mounted = function () {
   const coor = getNewInitCoor(this.$id)
   this.setPosition(coor.x, coor.y)
-  this.$el.shadowRoot.querySelector(`main`).style.height = `${this.height}px`
-  this.$el.style.width = `${this.width}px`
+  this.$el.querySelector(`main`).style.height = `${this.height}px`
+  this.$host.style.width = `${this.width}px`
 
   forEach(this.$children, $child => {
     const settings = $child.windowSettings
@@ -160,13 +160,13 @@ DesktopWindow.mounted = function () {
     }
     const update = settings => {
       if (settings.transition) {
-        this.$el.style.transition = settings.transition
+        this.$host.style.transition = settings.transition
       }
       if (settings.background) {
-        this.$el.style.background = settings.background
+        this.$host.style.background = settings.background
       }
       if (settings.backgroundPositionX) {
-        this.$el.style.backgroundPositionX = settings.backgroundPositionX
+        this.$host.style.backgroundPositionX = settings.backgroundPositionX
       }
     }
     update(settings)
@@ -220,8 +220,8 @@ DesktopWindow.onWindowClick = function (event) {
 
 DesktopWindow.onMenuMouseDown = function (event) {
   this.isDragging = true
-  this.offsetCoor.x = this.$el.offsetLeft - event.x
-  this.offsetCoor.y = this.$el.offsetTop - event.y
+  this.offsetCoor.x = this.$host.offsetLeft - event.x
+  this.offsetCoor.y = this.$host.offsetTop - event.y
   document.body.style.userSelect = 'none'
   this.$emit('focus', this)
 }
@@ -245,9 +245,9 @@ DesktopWindow.setPosition = function (x, y) {
   const coor = {
     x
   }
-  this.$el.style.left = `${x}px`
+  this.$host.style.left = `${x}px`
   if (y >= 0) {
-    this.$el.style.top = `${y}px`
+    this.$host.style.top = `${y}px`
     coor.y = y
   }
   savedCoor[this.$id] = coor
