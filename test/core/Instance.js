@@ -57,7 +57,7 @@ test('should not touch child elements when data changes', t => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const App = {
-    template: () => `{{foo}}
+    template: `{{foo}}
   <span>Hello</span>
   {{fooworld}}`,
     data: {

@@ -20,7 +20,7 @@ const replaceWithTemplate = vm => {
     mode: 'open'
   })
   styleSheet = StyleSheet(vm.styles)
-  const template = vm.template(styleSheet.classes)
+  const template = vm.template
 
   oEmit(vm)
   vm.$el = shadowContainer

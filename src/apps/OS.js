@@ -8,15 +8,12 @@ const styles = {
   }
 }
 
-const template = classes => `
-<template>
-  <div is="StatusBar"></div>
-  <div is="Desktop"></div>
-</template>
+const template = `
+<div is="StatusBar"></div>
+<div is="Desktop"></div>
 `
 
 const OS = {
-  useShadow: true,
   styles,
   template,
   data: {}

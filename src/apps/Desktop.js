@@ -99,7 +99,6 @@ const removeFromZIndex = desktopWindow => {
 }
 
 const Desktop = {
-  useShadow: true,
   styles,
   template,
   data: {

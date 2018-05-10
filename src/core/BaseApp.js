@@ -1,4 +1,4 @@
-import { merge, isString } from 'lodash'
+import { merge } from 'lodash'
 
 const styles = {}
 
@@ -12,9 +12,5 @@ const baseApp = {
 
 export default definition => {
   const vm = merge({}, baseApp, definition)
-  if (isString(vm.template)) {
-    const tempalteString = vm.template
-    vm.template = () => tempalteString
-  }
   return vm
 }

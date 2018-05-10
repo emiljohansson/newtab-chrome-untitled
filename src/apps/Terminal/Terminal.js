@@ -49,7 +49,6 @@ const template = `
 `
 
 const Terminal = extendWindowApp('Terminal', {
-  useShadow: true,
   styles,
   template,
   data: {

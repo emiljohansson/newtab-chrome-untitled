@@ -23,7 +23,6 @@ const template = `
 `
 
 const TimeApp = extendWindowApp('TimeApp', {
-  useShadow: true,
   styles,
   template,
   data: {},

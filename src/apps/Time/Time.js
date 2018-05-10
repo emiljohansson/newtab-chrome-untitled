@@ -15,7 +15,6 @@ setInterval(() => {
 const template = `<slot></slot><span>{{time}}</span>`
 
 const Time = {
-  useShadow: true,
   styles: {},
   template,
   data: {

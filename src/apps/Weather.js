@@ -83,7 +83,6 @@ const template = `
 `
 
 const Weather = {
-  useShadow: true,
   styles,
   template,
   data: {
