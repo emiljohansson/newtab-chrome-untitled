@@ -1,4 +1,4 @@
-import { forEach, reduce } from 'lodash'
+import { filter, forEach, reduce } from 'lodash'
 import extendWindowApp from 'apps/WindowApp'
 
 const styles = {
@@ -72,7 +72,7 @@ Puzzle.mounted = function () {
 Puzzle.onItemClick = function (el) {
   let blankIndex = 0
   let selectedIndex = 0
-  const blankEl = this.$refs.blankItem.$el
+  const blankEl = this.$refs.blankItem.$host
   forEach(this.$el.children, (childEl, index) => {
     if (childEl === blankEl) {
       blankIndex = index
@@ -94,8 +94,9 @@ Puzzle.onItemClick = function (el) {
     return
   }
   let winner = true
-  reduce(this.$el.children, (value, childEl) => {
-    const elValue = parseInt(childEl.innerHTML, 10)
+  const children = filter(this.$el.children, el => el.tagName !== 'STYLE')
+  reduce(children, (value, childEl) => {
+    const elValue = parseInt(childEl.shadowRoot.firstChild.innerHTML, 10)
     if (!winner) {
       return -1
     }

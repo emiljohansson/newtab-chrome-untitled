@@ -21,7 +21,7 @@ const PuzzleItem = {
 PuzzleItem.mounted = function () {}
 
 PuzzleItem.onClick = function () {
-  this.$emit('click', this.$el)
+  this.$emit('click', this.$host)
 }
 
 export default PuzzleItem
