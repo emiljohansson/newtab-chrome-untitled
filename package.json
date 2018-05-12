@@ -56,7 +56,6 @@
   },
   "devDependencies": {
     "ava": "0.24.0",
-    "babel-core": "6.26.0",
     "babel-preset-env": "1.6.0",
     "browser-env": "3.2.0",
     "nyc": "11.4.1",
