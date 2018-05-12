@@ -8,7 +8,7 @@ export default (vm, el) => {
   el.removeAttribute('is')
   const directives = getDirectiveAttributes()
   const attributes = filter(
-    [...el.attributes],
+    el.attributes,
     item => {
       return item.name.slice(0, 2) !== 'o-' && directives.indexOf(item.name) < 0
     }

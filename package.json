@@ -24,30 +24,18 @@
       "!test/helpers/**/*.js",
       "test/**/*.js"
     ],
-    "source": [
+    "sources": [
       "test/**/*.js",
       "src/**/*.js",
       "!dist/**/*"
     ],
     "require": [
-      "babel-core/register",
+      "esm",
       "./test/helpers/setup-test-env.js"
     ]
   },
   "nyc": {
     "reporter": "html"
-  },
-  "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [],
-    "ignore": "test.js",
-    "env": {
-      "development": {
-        "sourceMaps": "inline"
-      }
-    }
   },
   "standard": {
     "ignore": [
@@ -55,9 +43,9 @@
     ]
   },
   "devDependencies": {
-    "ava": "0.24.0",
-    "babel-preset-env": "1.6.0",
+    "ava": "1.0.0-beta.4",
     "browser-env": "3.2.0",
+    "esm": "^3.0.34",
     "nyc": "11.4.1",
     "qs": "^6.5.2",
     "sinon": "^5.0.7",
