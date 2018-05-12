@@ -1,4 +1,5 @@
 import { uniqueId } from 'lodash'
+import oEmit from 'core/oEmit'
 import replaceWithTemplate from 'core/replaceWithTemplate'
 import storeAttributes from 'core/storeAttributes'
 import callHook from 'core/callHook'
@@ -30,6 +31,7 @@ export default (vm, el) => {
   callHook(vm, vm.beforeMount)
   storeAttributes(vm, el)
   vm.$el = el
+  oEmit(vm)
   replaceWithTemplate(vm)
   return vm
 }

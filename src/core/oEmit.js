@@ -8,9 +8,7 @@ export default vm => {
   if (vm.$el == null) {
     return
   }
-  const attributes = filter(vm.$el.attributes, attribute => {
-    return attribute.name.indexOf(emitSelector) > -1
-  })
+  const attributes = filter(vm.$el.attributes, attribute => attribute.name.indexOf(emitSelector) > -1)
   if (!attributes.length) {
     return
   }

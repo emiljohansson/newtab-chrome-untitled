@@ -2,7 +2,6 @@ import { forEach, reduce } from 'lodash'
 import attachStyleSheet from 'core/styleSheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'
-import oEmit from 'core/oEmit'
 import findKeysInTemplate from 'core/findKeysInTemplate'
 import getAllTextNodes from 'core/getAllTextNodes'
 import replaceBracketContent from 'core/replaceBracketContent'
@@ -19,7 +18,6 @@ const replaceWithTemplate = vm => {
   })
   const template = vm.template
 
-  oEmit(vm)
   vm.$host = shadowContainer
   vm.$el = shadowContainer.shadowRoot
 
