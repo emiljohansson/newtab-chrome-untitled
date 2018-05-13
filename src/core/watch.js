@@ -1,5 +1,5 @@
-import { forEach } from 'lodash-es'
-import Subject from 'core/Subject'
+import { forEach } from '../../node_modules/lodash-es/lodash.js'
+import Subject from './Subject.js'
 
 const subjects = {}
 

@@ -1,4 +1,4 @@
-import Subject from 'core/Subject'
+import Subject from '../core/Subject.js'
 
 const updateSubject = Subject()
 

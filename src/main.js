@@ -1,22 +1,37 @@
-import Instance from 'core/Instance'
-import install from 'core/install'
-import apps from 'core/apps'
+import Instance from './core/Instance.js'
+import install from './core/install.js'
+import apps from './core/apps.js'
 
-install('OS', require('apps/OS').default)
-install('Desktop', require('apps/Desktop').default)
-install('Window', require('apps/Window').default)
-install('TimeApp', require('apps/Time/TimeApp').default)
-install('Time', require('apps/Time/Time').default)
-install('WeatherApp', require('apps/Weather/WeatherApp').default)
-install('Weather', require('apps/Weather').default)
-install('Todo', require('apps/Todos/Todo').default)
-install('Todos', require('apps/Todos/Todos').default)
-install('Playground', require('apps/Playground').Playground)
-install('PlaygroundItem', require('apps/Playground').PlaygroundItem)
-install('PlaygroundIfItem', require('apps/Playground').PlaygroundIfItem)
-install('StatusBar', require('apps/StatusBar').default)
-install('Puzzle', require('apps/Puzzle/Puzzle').default)
-install('PuzzleItem', require('apps/Puzzle/PuzzleItem').default)
-install('Terminal', require('apps/Terminal/Terminal').default)
+import OS from './apps/OS.js'
+import Desktop from './apps/Desktop.js'
+import Window from './apps/Window.js'
+import TimeApp from './apps/Time/TimeApp.js'
+import Time from './apps/Time/Time.js'
+import WeatherApp from './apps/Weather/WeatherApp.js'
+import Weather from './apps/Weather.js'
+import Todo from './apps/Todos/Todo.js'
+import Todos from './apps/Todos/Todos.js'
+import { Playground, PlaygroundItem, PlaygroundIfItem } from './apps/Playground.js'
+import StatusBar from './apps/StatusBar.js'
+import Puzzle from './apps/Puzzle/Puzzle.js'
+import PuzzleItem from './apps/Puzzle/PuzzleItem.js'
+import Terminal from './apps/Terminal/Terminal.js'
+
+install('OS', OS)
+install('Desktop', Desktop)
+install('Window', Window)
+install('TimeApp', TimeApp)
+install('Time', Time)
+install('WeatherApp', WeatherApp)
+install('Weather', Weather)
+install('Todo', Todo)
+install('Todos', Todos)
+install('Playground', Playground)
+install('PlaygroundItem', PlaygroundItem)
+install('PlaygroundIfItem', PlaygroundIfItem)
+install('StatusBar', StatusBar)
+install('Puzzle', Puzzle)
+install('PuzzleItem', PuzzleItem)
+install('Terminal', Terminal)
 
 Instance(apps('OS'), document.querySelector(`[is=OS]`))

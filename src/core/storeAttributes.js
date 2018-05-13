@@ -1,5 +1,5 @@
-import { camelCase, filter, forEach } from 'lodash-es'
-import { getDirectiveAttributes } from 'core/directives'
+import { camelCase, filter, forEach } from '../../node_modules/lodash-es/lodash.js'
+import { getDirectiveAttributes } from './directives.js'
 
 export default (vm, el) => {
   if (el == null) {

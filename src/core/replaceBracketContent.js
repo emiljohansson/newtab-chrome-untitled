@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash-es'
+import { isPlainObject } from '../../node_modules/lodash-es/lodash.js'
 
 export default (string, value, key, objectAsString = '') => {
   if (isPlainObject(value)) {

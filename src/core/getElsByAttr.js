@@ -1,4 +1,4 @@
-import { toArray } from 'lodash-es'
+import { toArray } from '../../node_modules/lodash-es/lodash.js'
 
 export default (element, selector) => {
   if (element == null) {

@@ -1,5 +1,5 @@
-import callHook from 'core/callHook'
-import { destroy as destroyWatchers } from 'core/watch'
+import callHook from './callHook.js'
+import { destroy as destroyWatchers } from './watch.js'
 
 export default vm => {
   vm.$destroy = () => {

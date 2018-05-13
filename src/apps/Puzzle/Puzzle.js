@@ -1,5 +1,5 @@
-import { filter, forEach, reduce } from 'lodash-es'
-import extendWindowApp from 'apps/WindowApp'
+import { filter, forEach, reduce } from '../../../node_modules/lodash-es/lodash.js'
+import extendWindowApp from '../WindowApp.js'
 
 const styles = {
   ':host': {

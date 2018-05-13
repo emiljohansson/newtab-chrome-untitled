@@ -1,4 +1,4 @@
-import { add } from 'core/directives'
+import { add } from './directives.js'
 
 export default (name, definition) => {
   add(name, definition)

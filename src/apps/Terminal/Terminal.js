@@ -1,8 +1,8 @@
-import { isFunction } from 'lodash-es'
-import { isEnter } from 'keyboard-key-code'
-import { keyboard } from 'apps/Desktop'
-import extendWindowApp from 'apps/WindowApp'
-import * as cmd from 'apps/Terminal/cmd'
+import { isFunction } from '../../../node_modules/lodash-es/lodash.js'
+import { isEnter } from '../../../node_modules/keyboard-key-code/index.js'
+import { keyboard } from '../Desktop.js'
+import extendWindowApp from '../WindowApp.js'
+import * as cmd from '../Terminal/cmd.js'
 
 const styles = {
   ':host': {

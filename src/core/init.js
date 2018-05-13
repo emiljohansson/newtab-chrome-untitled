@@ -1,8 +1,8 @@
-import { uniqueId } from 'lodash-es'
-import oEmit from 'core/oEmit'
-import replaceWithTemplate from 'core/replaceWithTemplate'
-import storeAttributes from 'core/storeAttributes'
-import callHook from 'core/callHook'
+import { uniqueId } from '../../node_modules/lodash-es/lodash.js'
+import oEmit from './oEmit.js'
+import replaceWithTemplate from './replaceWithTemplate.js'
+import storeAttributes from './storeAttributes.js'
+import callHook from './callHook.js'
 
 function ChildrenArray (vm, array) {
   array.push = function (childVm) {

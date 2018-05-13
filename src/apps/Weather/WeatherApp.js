@@ -1,4 +1,4 @@
-import extendWindowApp from 'apps/WindowApp'
+import extendWindowApp from '../WindowApp.js'
 
 const styles = {
   root: {

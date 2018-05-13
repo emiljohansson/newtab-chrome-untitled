@@ -1,10 +1,10 @@
-import { forEach, reduce } from 'lodash-es'
-import attachStyleSheet from 'core/styleSheet'
-import watch from 'core/watch'
-import HistoryNodes from 'core/HistoryNodes'
-import findKeysInTemplate from 'core/findKeysInTemplate'
-import getAllTextNodes from 'core/getAllTextNodes'
-import replaceBracketContent from 'core/replaceBracketContent'
+import { forEach, reduce } from '../../node_modules/lodash-es/lodash.js'
+import attachStyleSheet from './styleSheet.js'
+import watch from './watch.js'
+import HistoryNodes from './HistoryNodes.js'
+import findKeysInTemplate from './findKeysInTemplate.js'
+import getAllTextNodes from './getAllTextNodes.js'
+import replaceBracketContent from './replaceBracketContent.js'
 
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {

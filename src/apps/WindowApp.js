@@ -1,4 +1,4 @@
-import { installApp } from 'apps/OS'
+import { installApp } from './OS.js'
 
 const WindowApp = {
   data: {}

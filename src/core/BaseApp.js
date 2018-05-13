@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es'
+import { merge } from '../../node_modules/lodash-es/lodash.js'
 
 const styles = {}
 

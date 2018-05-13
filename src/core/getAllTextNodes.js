@@ -1,4 +1,4 @@
-import { filter } from 'lodash-es'
+import { filter } from '../../node_modules/lodash-es/lodash.js'
 
 const textTag = '[object Text]'
 

@@ -1,4 +1,4 @@
-import { fileSystem } from 'apps/OS'
+import { fileSystem } from '../OS.js'
 
 let currentDir = '/'
 

@@ -1,5 +1,5 @@
-import { forEach, isFunction, remove } from 'lodash-es'
-import * as keyboardHandler from 'keyboard-handler'
+import { forEach, isFunction, remove } from '../../node_modules/lodash-es/lodash.js'
+import * as keyboardHandler from '../../node_modules/keyboard-handler/index.js'
 
 const styles = {
   ':host': {

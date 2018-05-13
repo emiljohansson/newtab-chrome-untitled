@@ -1,8 +1,8 @@
-import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash-es'
-import Subject from 'core/Subject'
-import coreFunctions from 'core/coreFunctions'
-import callHook from 'core/callHook'
-import watch from 'core/watch'
+import { filter, forEach, keys, indexOf, isArray, isFunction } from '../../node_modules/lodash-es/lodash.js'
+import Subject from './Subject.js'
+import coreFunctions from './coreFunctions.js'
+import callHook from './callHook.js'
+import watch from './watch.js'
 
 const dataWatcher = {}
 

@@ -1,5 +1,5 @@
-import Subject from 'core/Subject'
-import { date } from 'apps/Terminal/cmd'
+import Subject from '../../core/Subject.js'
+import { date } from '../Terminal/cmd.js'
 
 const updateSubject = Subject()
 let currentMin = -1
