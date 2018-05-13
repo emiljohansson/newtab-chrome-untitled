@@ -1,6 +1,5 @@
 import { forEach, isFunction, remove } from 'lodash'
 import * as keyboardHandler from 'keyboard-handler'
-import moveToEnd from 'array-movetoend'
 
 const styles = {
   ':host': {
@@ -80,6 +79,11 @@ let activeWindow
 let highestZIndex = 2
 
 const removeAt = (array, index) => remove(array, (n, i) => i === index)
+
+const moveToEnd = (array, index) => {
+  const item = array.splice(index, 1)[0]
+  array.push(item)
+}
 
 const updateZIndex = desktopWindow => {
   const index = zIndexList.indexOf(desktopWindow)
