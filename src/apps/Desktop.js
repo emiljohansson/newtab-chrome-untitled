@@ -1,5 +1,5 @@
 import { forEach, isFunction } from 'lodash'
-import keyboardHandler from 'keyboard-handler'
+import * as keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
 import removeAt from 'array-removeat'
 
