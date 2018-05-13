@@ -1,7 +1,6 @@
-import { forEach, isFunction } from 'lodash'
+import { forEach, isFunction, remove } from 'lodash'
 import * as keyboardHandler from 'keyboard-handler'
 import moveToEnd from 'array-movetoend'
-import removeAt from 'array-removeat'
 
 const styles = {
   ':host': {
@@ -79,6 +78,8 @@ const template = `
 const zIndexList = []
 let activeWindow
 let highestZIndex = 2
+
+const removeAt = (array, index) => remove(array, (n, i) => i === index)
 
 const updateZIndex = desktopWindow => {
   const index = zIndexList.indexOf(desktopWindow)

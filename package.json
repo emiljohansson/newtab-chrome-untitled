@@ -59,7 +59,6 @@
   },
   "dependencies": {
     "array-movetoend": "1.0.0",
-    "array-removeat": "1.0.0",
     "keyboard-handler": "^2.0.0",
     "keyboard-key-code": "^2.0.0",
     "lodash": "4.17.4",
