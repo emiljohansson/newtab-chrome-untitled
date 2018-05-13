@@ -1,4 +1,3 @@
-import moment from 'moment-timezone'
 import Subject from 'core/Subject'
 import { date } from 'apps/Terminal/cmd'
 
@@ -24,7 +23,7 @@ const Time = {
 
 Time.mounted = function () {
   const update = () => {
-    this.time = `${moment().tz(this.timezone).format('h:mm A')}`
+    this.time = `${window.moment().tz(this.timezone).format('h:mm A')}`
   }
 
   updateSubject.subscribe(update)
