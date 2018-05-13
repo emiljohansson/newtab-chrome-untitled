@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash'
+import { isFunction } from 'lodash-es'
 import { isEnter } from 'keyboard-key-code'
 import { keyboard } from 'apps/Desktop'
 import extendWindowApp from 'apps/WindowApp'

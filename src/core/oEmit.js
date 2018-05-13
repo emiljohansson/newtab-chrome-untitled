@@ -1,5 +1,5 @@
 import Subject from 'core/Subject'
-import { camelCase, filter, forEach, noop } from 'lodash'
+import { camelCase, filter, forEach, noop } from 'lodash-es'
 
 const emitSelector = 'o-emit-'
 

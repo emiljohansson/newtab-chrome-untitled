@@ -1,4 +1,4 @@
-import { camelCase, filter, forEach } from 'lodash'
+import { camelCase, filter, forEach } from 'lodash-es'
 import { getDirectiveAttributes } from 'core/directives'
 
 export default (vm, el) => {

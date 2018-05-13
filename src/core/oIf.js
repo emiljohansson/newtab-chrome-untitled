@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import Instance from 'core/Instance'
 import apps from 'core/apps'
 

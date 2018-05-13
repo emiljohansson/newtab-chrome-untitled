@@ -1,4 +1,4 @@
-import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash'
+import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash-es'
 import watch from 'core/watch'
 
 const list = {}

@@ -1,4 +1,4 @@
-import { forEach, isElement, map, uniqueId } from 'lodash'
+import { forEach, isElement, map, uniqueId } from 'lodash-es'
 import attachStyleSheet from 'core/styleSheet'
 import apps from 'core/apps'
 import Instance from 'core/Instance'

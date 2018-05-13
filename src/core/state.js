@@ -1,4 +1,4 @@
-import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
+import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash-es'
 import Subject from 'core/Subject'
 import coreFunctions from 'core/coreFunctions'
 import callHook from 'core/callHook'

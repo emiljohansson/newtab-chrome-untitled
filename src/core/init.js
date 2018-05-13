@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import oEmit from 'core/oEmit'
 import replaceWithTemplate from 'core/replaceWithTemplate'
 import storeAttributes from 'core/storeAttributes'

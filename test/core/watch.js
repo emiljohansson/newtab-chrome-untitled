@@ -1,5 +1,5 @@
 import test from 'ava'
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import watch from 'core/watch'
 
 test('should create a Subject', t => {

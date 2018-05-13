@@ -1,4 +1,4 @@
-import { forEach, isFunction, remove } from 'lodash'
+import { forEach, isFunction, remove } from 'lodash-es'
 import * as keyboardHandler from 'keyboard-handler'
 
 const styles = {

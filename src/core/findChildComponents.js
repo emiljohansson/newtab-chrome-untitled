@@ -1,4 +1,4 @@
-import { filter, forEach } from 'lodash'
+import { filter, forEach } from 'lodash-es'
 import apps from 'core/apps'
 import Instance from 'core/Instance'
 import { ifSelector } from 'core/oIf'

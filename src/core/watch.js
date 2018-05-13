@@ -1,4 +1,4 @@
-import { forEach } from 'lodash'
+import { forEach } from 'lodash-es'
 import Subject from 'core/Subject'
 
 const subjects = {}

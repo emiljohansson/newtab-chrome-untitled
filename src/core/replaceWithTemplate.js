@@ -1,4 +1,4 @@
-import { forEach, reduce } from 'lodash'
+import { forEach, reduce } from 'lodash-es'
 import attachStyleSheet from 'core/styleSheet'
 import watch from 'core/watch'
 import HistoryNodes from 'core/HistoryNodes'

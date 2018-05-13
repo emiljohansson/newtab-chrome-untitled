@@ -1,4 +1,4 @@
-import { forEach } from 'lodash'
+import { forEach } from 'lodash-es'
 import BaseApp from 'core/BaseApp'
 import destroy from 'core/destroy'
 import mount from 'core/mount'

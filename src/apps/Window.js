@@ -1,4 +1,4 @@
-import { forEach, isFunction } from 'lodash'
+import { forEach, isFunction } from 'lodash-es'
 import Subject from 'core/Subject'
 
 const savedCoor = window.localStorage.savedWinPos == null
