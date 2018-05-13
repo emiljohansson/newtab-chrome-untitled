@@ -1,5 +1,5 @@
 import { isFunction } from 'lodash'
-import * as keyCode from 'keyboard-key-code'
+import { isEnter } from 'keyboard-key-code'
 import { keyboard } from 'apps/Desktop'
 import extendWindowApp from 'apps/WindowApp'
 import * as cmd from 'apps/Terminal/cmd'
@@ -69,7 +69,7 @@ Terminal.windowFocused = function () {
 Terminal.onKeyDown = function (event) {
   const fieldEl = event.currentTarget
   const input = fieldEl.value
-  if (keyCode.isEnter(event)) {
+  if (isEnter(event)) {
     const output = getOutput(input)
     this.outputs.push({
       cmd: fieldEl.value,
