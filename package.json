@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "keyboard-handler": "^2.0.0",
-    "keyboard-key-code": "^2.0.0",
+    "keyboard-key-code": "^2.0.1",
     "lodash-es": "^4.17.10",
     "weather": "git+https://github.com/emiljohansson/weather.git"
   }
