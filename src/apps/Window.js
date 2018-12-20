@@ -61,7 +61,7 @@ const styles = {
     }
   },
   content: {
-    overflow: 'scroll',
+    overflow: 'auto',
     position: 'relative'
   },
   header: {
