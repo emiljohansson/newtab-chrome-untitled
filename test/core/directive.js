@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { noop } from '../../node_modules/lodash-es/lodash.js'
+import { noop } from 'lodash'
 import directive from 'core/directive'
 import { remove } from 'core/directives'
 import Instance from 'core/Instance'

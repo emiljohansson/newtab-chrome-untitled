@@ -1,4 +1,4 @@
-import { isFunction } from '../../../node_modules/lodash-es/lodash.js'
+import { isFunction } from 'lodash'
 import { isEnter } from '../../../node_modules/keyboard-key-code/index.js'
 import { keyboard } from '../Desktop.js'
 import extendWindowApp from '../WindowApp.js'

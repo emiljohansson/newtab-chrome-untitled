@@ -1,4 +1,4 @@
-import { forEach } from '../../node_modules/lodash-es/lodash.js'
+import { forEach } from 'lodash'
 import Subject from './Subject.js'
 
 const subjects = {}

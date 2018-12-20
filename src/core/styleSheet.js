@@ -1,4 +1,4 @@
-import { filter, forEach, kebabCase, keys } from '../../node_modules/lodash-es/lodash.js'
+import { filter, forEach, kebabCase, keys } from 'lodash'
 
 const createClasses = (styles, rootClassName) => {
   const propKeys = keys(styles)

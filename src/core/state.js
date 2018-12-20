@@ -1,4 +1,4 @@
-import { filter, forEach, keys, indexOf, isArray, isFunction } from '../../node_modules/lodash-es/lodash.js'
+import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
 import Subject from './Subject.js'
 import coreFunctions from './coreFunctions.js'
 import callHook from './callHook.js'

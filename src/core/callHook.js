@@ -1,4 +1,4 @@
-import { isFunction } from '../../node_modules/lodash-es/lodash.js'
+import { isFunction } from 'lodash'
 
 export default (vm, fn) => {
   if (isFunction(fn)) {

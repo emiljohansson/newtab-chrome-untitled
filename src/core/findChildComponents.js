@@ -1,4 +1,4 @@
-import { filter, forEach } from '../../node_modules/lodash-es/lodash.js'
+import { filter, forEach } from 'lodash'
 import apps from './apps.js'
 import Instance from './Instance.js'
 import { ifSelector } from './oIf.js'

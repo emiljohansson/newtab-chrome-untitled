@@ -1,4 +1,4 @@
-import { forEach, keys } from '../../node_modules/lodash-es/lodash.js'
+import { forEach, keys } from 'lodash'
 
 export default function (el, binding) {
   const classNames = keys(binding.value)

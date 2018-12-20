@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { isFunction } from '../../node_modules/lodash-es/lodash.js'
+import { isFunction } from 'lodash'
 import fireEvent from '../helpers/fireEvent'
 import install from 'core/install'
 import Instance from 'core/Instance'

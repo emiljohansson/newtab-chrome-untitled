@@ -1,4 +1,4 @@
-import { forEach, reduce } from '../../../node_modules/lodash-es/lodash.js'
+import { forEach, reduce } from 'lodash'
 import extendWindowApp from '../WindowApp.js'
 
 const baseStyle = {

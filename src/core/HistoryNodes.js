@@ -1,4 +1,4 @@
-import { filter, map } from '../../node_modules/lodash-es/lodash.js'
+import { filter, map } from 'lodash'
 import HistoryNode from './HistoryNode.js'
 
 export default (key, textNodes) => map(

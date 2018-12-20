@@ -1,5 +1,5 @@
 import test from 'ava'
-import { uniqueId } from '../../node_modules/lodash-es/lodash.js'
+import { uniqueId } from 'lodash'
 import watch from 'core/watch'
 
 test('should create a Subject', t => {

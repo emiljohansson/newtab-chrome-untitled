@@ -1,4 +1,4 @@
-import { uniqueId } from '../../node_modules/lodash-es/lodash.js'
+import { uniqueId } from 'lodash'
 import Instance from './Instance.js'
 import apps from './apps.js'
 

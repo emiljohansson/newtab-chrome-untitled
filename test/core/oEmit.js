@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { isFunction, noop } from '../../node_modules/lodash-es/lodash.js'
+import { isFunction, noop } from 'lodash'
 import oEmit from 'core/oEmit'
 
 test('should do nothing', t => {

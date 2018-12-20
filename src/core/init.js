@@ -1,4 +1,4 @@
-import { uniqueId } from '../../node_modules/lodash-es/lodash.js'
+import { uniqueId } from 'lodash'
 import oEmit from './oEmit.js'
 import replaceWithTemplate from './replaceWithTemplate.js'
 import storeAttributes from './storeAttributes.js'

@@ -1,4 +1,4 @@
-import { forEach } from '../../node_modules/lodash-es/lodash.js'
+import { forEach } from 'lodash'
 import BaseApp from './BaseApp.js'
 import destroy from './destroy.js'
 import mount from './mount.js'
