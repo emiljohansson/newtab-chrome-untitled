@@ -1,51 +1,51 @@
-import test from 'ava'
 import sinon from 'sinon'
-import Subject from 'core/Subject'
+import Subject from '../../src/core/Subject'
 
-test('next should trigger subscribers', t => {
+test('next should trigger subscribers', () => {
   const callback = sinon.spy()
   const subject = Subject()
   subject.subscribe(callback)
   subject.subscribe(callback)
   subject.next()
-  t.is(callback.callCount, 2)
-  t.is(subject.numberOfSubscriptions, 2)
+  expect(callback.callCount).toBe(2)
+  expect(subject.numberOfSubscriptions).toBe(2)
 })
 
-test('complete should stop trigger subscribers', t => {
+test('complete should stop trigger subscribers', () => {
   const callback = sinon.spy()
   const subject = Subject()
   subject.subscribe(callback)
   subject.complete()
   subject.next()
-  t.false(callback.called)
+  expect(callback.called).toBeFalsy()
   subject.subscribe(callback)
   subject.next()
-  t.false(callback.called)
+  expect(callback.called).toBeFalsy()
 })
 
-test('next should pass parameters to subscribers', t => {
+test('next should pass parameters to subscribers', (done) => {
   const expected = 123
   const callback = value => {
-    t.is(value, expected)
+    expect(value).toBe(expected)
+    done()
   }
   const subject = Subject()
   subject.subscribe(callback)
   subject.next(expected)
 })
 
-test('unsubscribe should remove subscription', t => {
+test('unsubscribe should remove subscription', () => {
   const callback1 = sinon.spy()
   const callback2 = sinon.spy()
   const subject = Subject()
   const unsubscribe = subject.subscribe(callback1)
   subject.subscribe(callback2)
   subject.next()
-  t.is(callback1.callCount, 1)
-  t.is(subject.numberOfSubscriptions, 2)
+  expect(callback1.callCount).toBe(1)
+  expect(subject.numberOfSubscriptions).toBe(2)
   unsubscribe()
   subject.next()
-  t.is(callback1.callCount, 1)
-  t.is(callback2.callCount, 2)
-  t.is(subject.numberOfSubscriptions, 1)
+  expect(callback1.callCount).toBe(1)
+  expect(callback2.callCount).toBe(2)
+  expect(subject.numberOfSubscriptions).toBe(1)
 })

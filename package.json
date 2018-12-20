@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch",
-    "test": "NODE_PATH='./src/' nyc ava",
+    "test-old": "NODE_PATH='./src/' nyc ava",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "standard"
   },
   "repository": {
@@ -48,11 +51,45 @@
       "test/helpers/webcomponents-lite.js"
     ]
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js}",
+      "!__test__/**/*",
+      "!test/**/*",
+      "!**/node_modules/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testMatch": [
+      "**/test/**/Subject.js"
+    ],
+    "globals": {},
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "moduleNameMapper": {},
+    "transformIgnorePatterns": [
+      "/node_modules/(?!lodash-es).+\\.js$"
+    ]
+  },
   "devDependencies": {
     "ava": "0.25.0",
+    "babel-jest": "23.6.0",
     "browser-env": "3.2.0",
     "esm": "3.0.34",
     "hoek": "4.2.1",
+    "jest": "23.6.0",
     "nyc": "11.4.1",
     "qs": "6.5.2",
     "sinon": "5.0.7",
