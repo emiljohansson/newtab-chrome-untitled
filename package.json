@@ -9,7 +9,12 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "standard"
+    "test:ci": "npm run test:coverage -- --coverageReporters=text-summary",
+    "lint": "standard",
+    "ts:check": "tsc --noEmit",
+    "ts:lint": "tslint --project tsconfig.json --config tslint.json",
+    "validate": "npm run validate:code && npm run test:ci",
+    "validate:code": "npm run ts:check && npm run ts:lint"
   },
   "repository": {
     "type": "git",
@@ -54,6 +59,9 @@
   "jest": {
     "collectCoverageFrom": [
       "**/*.{js}",
+      "**/*.{ts}",
+      "!**/*.d.ts",
+      "!src/*.ts",
       "!__test__/**/*",
       "!test/**/*",
       "!**/node_modules/**"
@@ -63,12 +71,18 @@
       "js"
     ],
     "transform": {
+      "^.+\\.ts?$": "ts-jest",
       "^.+\\.js$": "babel-jest"
     },
     "testMatch": [
-      "**/test/**/Subject.js"
+      "**/test/**/*.ts"
     ],
-    "globals": {},
+    "globals": {
+      "ts-jest": {
+        "useBabelrc": true,
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
@@ -84,6 +98,8 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "23.3.10",
+    "@types/sinon": "7.0.2",
     "ava": "0.25.0",
     "babel-jest": "23.6.0",
     "browser-env": "3.2.0",
@@ -94,6 +110,10 @@
     "qs": "6.5.2",
     "sinon": "5.0.7",
     "standard": "11.0.1",
+    "ts-jest": "23.10.5",
+    "tslint": "5.12.0",
+    "tslint-eslint-rules": "5.4.0",
+    "typescript": "3.2.2",
     "webpack": "4.28.0",
     "webpack-cli": "3.1.2"
   },
