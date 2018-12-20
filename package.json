@@ -49,20 +49,21 @@
     ]
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "0.25.0",
     "browser-env": "3.2.0",
-    "esm": "^3.0.34",
-    "hoek": "^4.2.1",
+    "esm": "3.0.34",
+    "hoek": "4.2.1",
     "nyc": "11.4.1",
-    "qs": "^6.5.2",
-    "sinon": "^5.0.7",
-    "standard": "^11.0.1",
-    "webpack": "3.5.4"
+    "qs": "6.5.2",
+    "sinon": "5.0.7",
+    "standard": "11.0.1",
+    "webpack": "4.28.0",
+    "webpack-cli": "3.1.2"
   },
   "dependencies": {
-    "keyboard-handler": "^2.0.0",
-    "keyboard-key-code": "^2.0.1",
-    "lodash-es": "^4.17.10",
+    "keyboard-handler": "2.0.0",
+    "keyboard-key-code": "2.0.1",
+    "lodash-es": "4.17.10",
     "weather": "git+https://github.com/emiljohansson/weather.git"
   }
 }
