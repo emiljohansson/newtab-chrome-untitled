@@ -1,5 +1,5 @@
-import extendWindowApp from './WindowApp.js'
-import directive from '../core/directive.js'
+import extendWindowApp from './WindowApp'
+import directive from '../core/directive.ts'
 
 directive('playground-foo-bar', el => {
   console.log(el)

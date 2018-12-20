@@ -7,30 +7,31 @@ module.exports = {
   //   core: './src/core.js'
   // },
   resolve: {
+    extensions: [
+      '.ts',
+      '.tsx',
+      '.js'
+    ],
     modules: [
       path.resolve('./node_modules'),
       path.resolve('./src')
     ]
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './public'),
     filename: 'bundle.js'
   },
   devtool: 'source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 3000
+  },
   module: {
-    // loaders: [{
-    //   test: /\.js$/,
-    //   exclude: /node_modules/,
-    //   loader: 'babel-loader',
-    //   options: {
-    //     presets: ['env'],
-    //     plugins: [require('babel-plugin-transform-object-rest-spread')]
-    //   }
-    // }]
+    rules: [{
+      test: /\.ts?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
+    }]
   }
-  // plugins: [
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'common'
-  //   })
-  // ]
 }

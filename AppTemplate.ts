@@ -1,10 +1,10 @@
-const styles = {
+const styles: any = {
   ':host': {
     fontSize: '2rem'
   }
 }
 
-const template = `
+const template: string = `
 <article o-class="{
   active: isActive
 }">
@@ -12,7 +12,7 @@ const template = `
 </article>
 `
 
-const Template = {
+const Template: any = {
   styles,
   template,
   data: {
@@ -21,7 +21,7 @@ const Template = {
   }
 }
 
-Template.mounted = function () {
+Template.mounted = function (): void {
   // this.$el is ready
 }
 

@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash'
-import Instance from './Instance.js'
-import apps from './apps.js'
+import Instance from './Instance'
+import apps from './apps'
 
 export const ifSelector = 'o-if'
 

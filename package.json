@@ -4,7 +4,7 @@
   "description": "x",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch",
+    "dev": "webpack-dev-server --env.NODE_ENV=local --env.development --inline",
     "test-old": "NODE_PATH='./src/' nyc ava",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -99,6 +99,7 @@
   },
   "devDependencies": {
     "@types/jest": "23.3.10",
+    "@types/lodash": "4.14.119",
     "@types/sinon": "7.0.2",
     "ava": "0.25.0",
     "babel-jest": "23.6.0",
@@ -111,11 +112,13 @@
     "sinon": "5.0.7",
     "standard": "11.0.1",
     "ts-jest": "23.10.5",
+    "ts-loader": "5.3.1",
     "tslint": "5.12.0",
     "tslint-eslint-rules": "5.4.0",
     "typescript": "3.2.2",
     "webpack": "4.28.0",
-    "webpack-cli": "3.1.2"
+    "webpack-cli": "3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
     "keyboard-handler": "2.0.0",

@@ -1,7 +1,7 @@
 import { filter, forEach } from 'lodash'
-import apps from './apps.js'
-import Instance from './Instance.js'
-import { ifSelector } from './oIf.js'
+import apps from './apps'
+import Instance from './Instance'
+import { ifSelector } from './oIf'
 
 const getChildElements = el => {
   if (el == null) {

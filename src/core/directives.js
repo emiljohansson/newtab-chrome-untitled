@@ -1,5 +1,5 @@
 import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash'
-import watch from './watch.js'
+import watch from './watch'
 
 const list = {}
 
