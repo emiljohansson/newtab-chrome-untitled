@@ -1,5 +1,5 @@
 import test from 'ava'
-import sinon from 'sinon'
+import * as sinon from 'sinon'
 import { noop } from 'lodash'
 import directive from 'core/directive'
 import { remove } from 'core/directives'

@@ -2,7 +2,7 @@ import callHook from './callHook'
 import { destroy as destroyWatchers } from './watch'
 
 export default (vm: any) => {
-  vm.$destroy = () => {
+  vm.$destroy = (): void => {
     callHook(vm, vm.beforeDestroy)
     destroyWatchers(vm)
     delete vm.$refs

@@ -46,7 +46,7 @@
   "nyc": {
     "reporter": "html"
   },
-  "babel": {
+  "babelx": {
     "presets": [
       "@ava/stage-4"
     ]
@@ -57,6 +57,7 @@
     ]
   },
   "jest": {
+    "verbose": true,
     "collectCoverageFrom": [
       "**/*.{js}",
       "**/*.{ts}",
@@ -75,12 +76,12 @@
       "^.+\\.js$": "babel-jest"
     },
     "testMatch": [
-      "**/test/**/*.ts"
+      "**/test/**/destroy.ts"
     ],
     "globals": {
       "ts-jest": {
         "useBabelrc": true,
-        "tsConfigFile": "tsconfig.json"
+        "tsConfigFile": "jest.tsconfig.json"
       }
     },
     "coveragePathIgnorePatterns": [

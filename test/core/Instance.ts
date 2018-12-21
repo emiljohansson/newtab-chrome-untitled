@@ -1,5 +1,5 @@
 import test from 'ava'
-import sinon from 'sinon'
+import * as sinon from 'sinon'
 import { isFunction } from 'lodash'
 import fireEvent from '../helpers/fireEvent'
 import install from 'core/install'

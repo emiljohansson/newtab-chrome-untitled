@@ -1,5 +1,5 @@
 import test from 'ava'
-import sinon from 'sinon'
+import * as sinon from 'sinon'
 import state from 'core/state'
 
 test('should bind options.data to vm.$data', t => {

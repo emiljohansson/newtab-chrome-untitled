@@ -12,6 +12,15 @@ import directive from './directive'
 import { directives } from './directives'
 import findChildComponents from './findChildComponents'
 
+export interface Instance {
+  $children: Instance[]
+  $refs: any
+  $host: HTMLElement | null
+  beforeDestroy: () => void
+  destroyed: () => void
+  $destroy: () => void
+}
+
 directive('o-class', oClass)
 directive('o-for', oFor)
 directive('o-if', oIf)

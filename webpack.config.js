@@ -25,7 +25,14 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     compress: true,
-    port: 3000
+    port: 3000,
+    watchOptions: {
+      ignored: [
+        '**/src/**/*.js',
+        '**/test/**/*',
+        '**/node_modules'
+      ]
+    }
   },
   module: {
     rules: [{

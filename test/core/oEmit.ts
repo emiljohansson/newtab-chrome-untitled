@@ -1,5 +1,5 @@
 import test from 'ava'
-import sinon from 'sinon'
+import * as sinon from 'sinon'
 import { isFunction, noop } from 'lodash'
 import oEmit from 'core/oEmit'
 
