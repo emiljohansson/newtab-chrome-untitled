@@ -22,8 +22,12 @@ export interface Instance {
   $el: HTMLElement
   data: any
   styles?: any
+  template?: any
   beforeDestroy: () => void
   destroyed: () => void
+  beforeCreate: () => void
+  created: () => void
+  beforeMount: () => void
   $destroy: () => void
   $emit: (type: string, ...args: any[]) => void
 }
@@ -35,12 +39,12 @@ forEach(onTypes, (onType: string) => {
   directive(`${onSelector}${onType}`, oOn)
 })
 
-export default (definition: any, el: HTMLElement | null, context?: any): any => {
+function instanceFactory (definition: any, el: HTMLElement | null, context?: any): Instance {
   const vm: any = BaseApp(definition)
   if (context != null) {
     Object.assign(vm.data, context)
   }
-  init(vm, el)
+  init(vm, el || document.createElement('div'))
   state(vm)
   directives(vm)
   findChildComponents(vm)
@@ -48,3 +52,5 @@ export default (definition: any, el: HTMLElement | null, context?: any): any => 
   destroy(vm)
   return vm
 }
+
+export default instanceFactory

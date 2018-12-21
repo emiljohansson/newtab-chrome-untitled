@@ -1,7 +1,7 @@
 import { forEach, isElement, map, uniqueId } from 'lodash'
 import attachStyleSheet from './styleSheet'
 import apps from './apps'
-import createInstance, { Instance } from './Instance'
+import instanceFactory, { Instance } from './Instance'
 import watch from './watch'
 import HistoryNodes from './HistoryNodes'
 import findKeysInTemplate from './findKeysInTemplate'
@@ -140,7 +140,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
 
   const App = (el: HTMLElement, parent, context, appendFirst) => {
     const definition: any = apps(el.getAttribute('is') || '')
-    const newVm: Instance = createInstance(definition, el, context)
+    const newVm: Instance = instanceFactory(definition, el, context)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {
       parent.insertBefore(newVm.$host, parent.firstChild)

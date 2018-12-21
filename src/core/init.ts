@@ -12,20 +12,20 @@ export interface Children {
 
 function ChildrenArray (vm: Instance, array: any): Children {
   array.push = function (childVm: Instance): number {
-    const length = Array.prototype.push.apply(this, arguments)
+    const length: number = Array.prototype.push.apply(this, arguments)
     childVm.$parent = vm
     return length
   }
   array.remove = function (childVm: Instance): Instance[] {
-    const index = this.indexOf(childVm)
-    const result = Array.prototype.splice.call(this, index, 1)
+    const index: number = this.indexOf(childVm)
+    const result: any[] = Array.prototype.splice.call(this, index, 1)
     childVm.$destroy()
     return result
   }
   return array
 }
 
-export default (vm, el) => {
+export default (vm: Instance, el: HTMLElement) => {
   vm.$id = uniqueId('App_')
   vm.$children = ChildrenArray(vm, [])
   vm.$refs = {}

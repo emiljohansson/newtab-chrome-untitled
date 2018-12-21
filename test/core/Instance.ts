@@ -1,7 +1,7 @@
 import * as sinon from 'sinon'
 import { isFunction } from 'lodash'
 import fireEvent from '../helpers/fireEvent'
-import createInstance, { Instance } from '../../src/core/Instance'
+import instanceFactory, { Instance } from '../../src/core/Instance'
 import install from '../../src/core/install'
 import watch from '../../src/core/watch'
 
@@ -10,7 +10,7 @@ test('should create an vm instance', () => {
   const el = document.createElement('div')
   el.setAttribute('is', 'Foo')
   el.setAttribute('foo', 'bar')
-  const vm = createInstance({
+  const vm: any = instanceFactory({
     data: {
       value: 123
     },
@@ -36,7 +36,7 @@ test('should allow custom data', () => {
       value: 123
     }
   }
-  const vm = createInstance(App, null, context)
+  const vm: any = instanceFactory(App, null, context)
   expect(vm.value).toBe(expected)
 })
 
@@ -46,8 +46,8 @@ test('should create a unique vm instance', () => {
       value: 123
     }
   }
-  const vm1 = createInstance(App, null)
-  const vm2 = createInstance(App, null)
+  const vm1: any = instanceFactory(App, null)
+  const vm2: any = instanceFactory(App, null)
   vm1.value = 234
   expect(vm2.value).toBe(123)
 })
@@ -64,7 +64,7 @@ test('should not touch child elements when data changes', () => {
       fooworld: 'World'
     }
   }
-  const vm = createInstance(App, el)
+  const vm: any = instanceFactory(App, el)
   const childNodes = vm.$el.childNodes
   vm.foo = 'bas'
   expect(childNodes[0].textContent.trim()).toBe('bas')
@@ -83,7 +83,7 @@ test('should update each data separately in single text node', () => {
       bar: 'World'
     }
   }
-  const vm = createInstance(App, el)
+  const vm: any = instanceFactory(App, el)
   expect(vm.$el.childNodes[0].textContent).toBe('Hello World, Hello')
   vm.$destroy()
 })
@@ -108,7 +108,7 @@ test('should only update view after $nextTick been triggered', () => {
       })
     }
   }
-  const vm = createInstance(App, el)
+  const vm: any = instanceFactory(App, el)
   vm.triggerUpdate()
 })
 
@@ -122,7 +122,7 @@ test('should replace empty values with an empty string', () => {
       bar: 'World'
     }
   }
-  const vm = createInstance(App, el)
+  const vm: any = instanceFactory(App, el)
   expect(vm.$el.children[0].innerHTML).toBe(' World')
   vm.$destroy()
 })
@@ -148,7 +148,7 @@ test('should create sub apps', () => {
 
   install('Bar', Bar)
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   const barEl = vm.$el.children[0]
   expect(barEl.shadowRoot.childNodes[0].textContent).toBe('World')
   expect(vm.$children[0].$parent).toEqual(vm)
@@ -162,7 +162,7 @@ test('should create sub apps in for loop', () => {
   const Foo = {
     template: `<div o-for="data in bars" is="Bar"></div>`,
     data: {
-      bars: [{id: 1}, {id: 2}]
+      bars: [{ id: 1 }, { id: 2 }]
     }
   }
   const Bar = {
@@ -174,7 +174,7 @@ test('should create sub apps in for loop', () => {
 
   install('Bar', Bar)
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$el.children.length).toBe(2)
   expect(vm.$children.length).toBe(2)
   expect(vm.$children[0].id).toBe(1)
@@ -190,8 +190,8 @@ test('should add an item to the view when calling unshift/push on an array', () 
     template: `<div o-for="data in list" is="Bar"></div>`,
     data: {
       list: [
-        {index: 1},
-        {index: 2}
+        { index: 1 },
+        { index: 2 }
       ]
     }
   }
@@ -204,12 +204,12 @@ test('should add an item to the view when calling unshift/push on an array', () 
 
   install('Bar', Bar)
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$el.children.length).toBe(2)
-  vm.list.push({index: 3})
+  vm.list.push({ index: 3 })
   expect(vm.$el.children.length).toBe(3)
   expect(vm.$el.children[2].shadowRoot.innerHTML).toBe('3')
-  vm.list.unshift({index: 4})
+  vm.list.unshift({ index: 4 })
   expect(vm.$el.children.length).toBe(4)
   expect(vm.$el.children[0].shadowRoot.innerHTML).toBe('4')
   vm.$destroy()
@@ -226,7 +226,7 @@ test('should destroy child apps', () => {
   <div is="Bar"></div>
 </article>`,
     data: {
-      list: [{value: 1}, {value: 2}]
+      list: [{ value: 1 }, { value: 2 }]
     }
   }
   const Bar = {
@@ -249,7 +249,7 @@ test('should destroy child apps', () => {
   install('Bar', Bar)
   install('Baz', Baz)
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   vm.$destroy()
   sinon.assert.callOrder.apply(null, [
     destroyed2,
@@ -265,12 +265,12 @@ test('should remove dom events', () => {
   const Foo = {
     template: `<article o-on-click="onClick"></article>`,
     data: {
-      list: [{value: 1}, {value: 2}]
+      list: [{ value: 1 }, { value: 2 }]
     },
     onClick
   }
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   fireEvent(vm.$el.children[0], 'click')
   expect(onClick.callCount).toBe(1)
   vm.$destroy()
@@ -289,7 +289,7 @@ test('should remove watchers', () => {
     }
   }
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   const subject = watch(vm, 'value')
   expect(subject.numberOfSubscriptions).toBe(1)
   vm.$destroy()
@@ -304,7 +304,7 @@ test('should remove a app in the loop', () => {
   const Foo = {
     template: `<div o-for="value in list" is="Bar"></div>`,
     data: {
-      list: [{value: 1}, {value: 2}]
+      list: [{ value: 1 }, { value: 2 }]
     }
   }
   const Bar = {
@@ -317,7 +317,7 @@ test('should remove a app in the loop', () => {
 
   install('Bar', Bar)
 
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$el.children.length).toBe(2)
   expect(vm.$el.children[1].shadowRoot.innerHTML).toBe('2')
   vm.list.splice(1, 1)
@@ -331,7 +331,7 @@ test('should remove a app in the loop', () => {
 //   el.innerHTML = `<div is="Bar" o-props="childProps"></div>`
 //   document.body.appendChild(el)
 //   const onClick = sinon.spy()
-//   const vm = {
+//   const vm: any = {
 //     $el: el,
 //     childProps: ['foo']
 //   }
@@ -340,7 +340,7 @@ test('should remove a app in the loop', () => {
 //     data: {}
 //   }
 //   install('Bar', Bar)
-//   const vm = Instance(Foo, el)
+//   const vm: any = Instance(Foo, el)
 //   t.deepEqual(vm.$host.children[0].data., )
 //   vm.$destroy()
 // })
@@ -352,7 +352,7 @@ test('should call parent method from child', () => {
   let sum = 0
   let args
   const Foo = {
-    onIncrement (a, b, c) {
+    onIncrement (a: any, b: any, c: any) {
       sum++
       args = [a, b, c]
     }
@@ -365,7 +365,7 @@ test('should call parent method from child', () => {
     }
   }
   install('Bar', Bar)
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   fireEvent(vm.$host.children[0].shadowRoot.children[0], 'click')
   expect(sum).toBe(1)
   expect(args).toEqual([1, 2, 'foo'])
@@ -381,7 +381,7 @@ test('should append root class names to new shadow host', () => {
     template: `<div></div>`,
     $el: el
   }
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$host.className).toBe(expected)
   vm.$destroy()
 })
@@ -404,7 +404,7 @@ test('should create a app reference with oRef', () => {
     }
   }
   install('Bar', Bar)
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$refs.bar).toEqual(barVm)
   expect(barVm.$host.hasAttribute('o-ref')).toBeFalsy()
 
@@ -421,7 +421,7 @@ test('should store a DOM element containing oRef', () => {
 </article>`,
     data: {}
   }
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$refs.bar).toEqual(vm.$el.querySelector('span'))
   expect(vm.$refs.bar.hasAttribute('o-ref')).toBeFalsy()
 
@@ -437,22 +437,24 @@ test('should create an array for each reference with oRef in a oFor', () => {
   <span is="Bar" o-for="barData in barsData" o-ref="bars"></span>
 </article>`,
     data: {
-      barsData: [{id: 1}, {id: 2}, {id: 3}]
+      barsData: [{ id: 1 }, { id: 2 }, { id: 3 }]
     }
   }
   const Bar = {
     template: `<article>World</article>`,
     data: {},
-    mounted () {}
+    mounted () {
+      //
+    }
   }
   install('Bar', Bar)
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
   expect(vm.$refs.bars.length).toBe(3)
   expect(vm.$refs.bars[0].id).toBe(1)
   expect(vm.$refs.bars[1].id).toBe(2)
   expect(vm.$refs.bars[2].id).toBe(3)
 
-  vm.barsData.unshift({id: 4})
+  vm.barsData.unshift({ id: 4 })
   expect(vm.$refs.bars[0].id).toBe(4)
   expect(vm.$refs.bars[1].id).toBe(1)
 
@@ -472,7 +474,7 @@ test('moving around array values should update view', () => {
       values: [1, 2, 3, 4]
     }
   }
-  const vm = createInstance(Foo, el)
+  const vm: any = instanceFactory(Foo, el)
 
   expect(vm.$el.children[0].innerHTML).toBe('1')
   expect(vm.$el.children[2].innerHTML).toBe('3')
@@ -510,7 +512,7 @@ test('moving around array values should update view', () => {
 //     mounted () {}
 //   }
 //   install('Bar', Bar)
-//   const vm = Instance(Foo, el)
+//   const vm: any = Instance(Foo, el)
 
 //   expect(vm.$host.children[0].innerHTML, '1')
 //   expect(vm.$host.children[2].innerHTML, '3')

@@ -1,6 +1,6 @@
 import { filter, forEach, toArray } from 'lodash'
 import apps from './apps'
-import createInstance, { Instance } from './Instance'
+import instanceFactory, { Instance } from './Instance'
 import { ifSelector } from './oIf'
 
 const getChildElements = (el?: HTMLElement | null): HTMLElement[] => {
@@ -37,7 +37,7 @@ export default (vm: Instance) => {
     const id: string | null = el.getAttribute('is')
     const ref: string | null = el.getAttribute('o-ref')
     if (id !== null) {
-      const childVm = createInstance(apps(id), el)
+      const childVm = instanceFactory(apps(id), el)
       vm.$children.push(childVm)
       if (ref !== null) {
         vm.$refs[ref] = childVm
