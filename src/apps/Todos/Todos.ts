@@ -67,12 +67,13 @@ Todos.beforeCreate = function () {
     : []
 }
 
-Todos.onKeyUp = function (event) {
+Todos.onKeyUp = function (event: KeyboardEvent) {
   if (event.key !== 'Enter') {
     return
   }
-  const text = event.target.value
-  event.target.value = ''
+  const target: HTMLInputElement = event.target as HTMLInputElement
+  const text: string = target.value
+  target.value = ''
   this.todos.unshift({
     id: randomId().toString(),
     text,
@@ -81,7 +82,7 @@ Todos.onKeyUp = function (event) {
   updateDb(this.todos)
 }
 
-Todos.onRemoveTodo = function (id) {
+Todos.onRemoveTodo = function (id: string) {
   const index = reduce(this.todos, (pos, todo, index) => {
     return todo.id === id
       ? index
@@ -91,7 +92,7 @@ Todos.onRemoveTodo = function (id) {
   updateDb(this.todos)
 }
 
-Todos.onToggleCompleteTodo = function (id, value) {
+Todos.onToggleCompleteTodo = function (id: string, value: string) {
   forEach(this.todos, (todo) => {
     if (todo.id === id) {
       todo.completed = value

@@ -30,7 +30,7 @@ export const fileSystem = {
     let index = -1
     while (++index < length) {
       currentDir = currentDir[paths[index]]
-      if (currentDir == null) {
+      if (!currentDir) {
         return
       }
     }

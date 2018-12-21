@@ -86,11 +86,12 @@ WeatherApp.created = function () {
   // console.log('created', this.windowSettings)
 }
 
-WeatherApp.mounted = function () {
-}
+// tslint:disable-next-line:no-empty
+WeatherApp.mounted = function () {}
 
-WeatherApp.onChannelRetrieved = function (channelData) {
+WeatherApp.onChannelRetrieved = function (channelData: any) {
   const condition = channelData.item.condition.text
+  // tslint:disable-next-line:no-console
   console.log(condition)
   const iconEl = this.$el.querySelector('.svg-inline--fa') || this.$el.querySelector('.fas')
   const style = getStyleByCondition(condition)

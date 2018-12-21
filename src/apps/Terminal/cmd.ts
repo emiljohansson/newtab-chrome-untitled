@@ -2,12 +2,12 @@ import { fileSystem } from '../OS'
 
 let currentDir: string = '/'
 
-export const cd = path => {
-  const isRootPath = path[0] === '/'
-  const newPath = isRootPath
+export const cd = (path: string) => {
+  const isRootPath: boolean = path[0] === '/'
+  const newPath: string = isRootPath
     ? path
     : `${currentDir}/${path}`.replace(new RegExp('//', 'g'), '/')
-  if (fileSystem.getDir(newPath) != null) {
+  if (fileSystem.getDir(newPath)) {
     currentDir = newPath
     return ''
   }
