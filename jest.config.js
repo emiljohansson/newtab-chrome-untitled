@@ -9,6 +9,7 @@ module.exports = {
   collectCoverageFrom: [
     '!**/*.{js}',
     '**/*.{ts}',
+    '!**/AppTemplate.ts',
     '!**/*.d.ts',
     '!src/*.ts',
     '!__test__/**/*',
@@ -23,14 +24,7 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest'
   },
   testMatch: [
-    '**/test/core/*.ts',
-    '!**/test/core/oFor.ts',
-    '!**/test/core/oIf.ts',
-    '!**/test/core/oOn.ts',
-    '!**/test/core/replaceWithTemplate.ts',
-    '!**/test/core/state.ts',
-    '!**/test/core/storeAttributes.ts',
-    '!**/test/core/watch.ts'
+    '**/test/core/*.ts'
   ],
   globals: {
     'ts-jest': {

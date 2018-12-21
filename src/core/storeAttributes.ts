@@ -1,7 +1,7 @@
 import { camelCase, filter, forEach } from 'lodash'
 import { getDirectiveAttributes } from './directives'
 
-export default (vm, el) => {
+export default (vm, el?: HTMLElement) => {
   if (!el) {
     return
   }

@@ -13,7 +13,7 @@ test('should add a keyup listener', () => {
   }
   const vm = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'keyup')
-  t.true(onKeyUp.called)
+  expect(onKeyUp.called).toBeTruthy()
   vm.$destroy()
 })
 
@@ -29,7 +29,7 @@ test('should add click listener', () => {
 
   const vm = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'click')
-  t.true(onClick.called)
+  expect(onClick.called).toBeTruthy()
   vm.$destroy()
 })
 
@@ -53,7 +53,7 @@ test('should add a click listener to child element', () => {
   const vm = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'click')
   fireEvent(vm.$el.children[0].children[0], 'click')
-  t.is(onClick.callCount, 1)
-  t.is(onClick2.callCount, 1)
+  expect(onClick.callCount).toBe(1)
+  expect(onClick2.callCount).toBe(1)
   vm.$destroy()
 })

@@ -5,12 +5,13 @@ test('should bind options.data to vm.$data', () => {
   const data = {
     a: 1
   }
-  const vm = {
+  const vm: any = {
     data
   }
   state(vm)
-  t.deepEqual(vm.$data, data)
-  t.is(vm.a, 1)
+  console.log('STATE')
+  expect(vm.$data).toEqual(data)
+  expect(vm.a).toBe(1)
 })
 
 test('should update key value after change', () => {
@@ -18,16 +19,16 @@ test('should update key value after change', () => {
     a: 1,
     b: 'Foo'
   }
-  const vm = {
+  const vm: any = {
     data
   }
   state(vm)
   vm.a = 2
   vm.b = 'Bar'
-  t.is(vm.a, 2)
-  t.is(vm.b, 'Bar')
-  t.is(vm.data.a, 2)
-  t.is(vm.data.b, 'Bar')
+  expect(vm.a).toBe(2)
+  expect(vm.b).toBe('Bar')
+  expect(vm.data.a).toBe(2)
+  expect(vm.data.b).toBe('Bar')
 })
 
 test('should call beforeUpdate before updating the value', () => {
@@ -35,19 +36,19 @@ test('should call beforeUpdate before updating the value', () => {
   const data = {
     a: 1
   }
-  const vm = {
+  const vm: any = {
     data,
     beforeUpdate: callback
   }
   state(vm)
   vm.a = 2
-  t.true(callback.called)
+  expect(callback.called).toBeTruthy()
 })
 
 test('should call methods in vm', () => {
   const beforeUpdate = sinon.spy()
   const updated = sinon.spy()
-  const vm = {
+  const vm: any = {
     data: {
       a: 1
     },
@@ -61,7 +62,6 @@ test('should call methods in vm', () => {
   ]
   vm.a = 2
   sinon.assert.callOrder.apply(null, order)
-  t.pass()
 })
 
 test('should watch arrays', () => {
@@ -69,7 +69,7 @@ test('should watch arrays', () => {
   const updated = sinon.spy()
   const obj1 = {id: 1}
   const obj2 = {id: 2}
-  const vm = {
+  const vm: any = {
     data: {
       a: [obj1, obj2]
     },
@@ -83,6 +83,6 @@ test('should watch arrays', () => {
   ]
   vm.a.push({id: 3})
   sinon.assert.callOrder.apply(null, order)
-  t.true(vm.a[0] === obj1)
-  t.true(vm.a[1] === obj2)
+  expect(vm.a[0] === obj1).toBeTruthy()
+  expect(vm.a[1] === obj2).toBeTruthy()
 })

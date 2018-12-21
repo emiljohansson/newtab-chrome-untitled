@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./public/",
     "module": "esnext",
     "target": "esnext",
     "jsx": "preserve",
@@ -28,7 +28,6 @@
   },
   "exclude": [
     "node_modules",
-    "dist",
     "test"
   ]
 }

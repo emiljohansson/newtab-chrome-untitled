@@ -13,11 +13,11 @@ test('should add and remove element', () => {
   }
   const vm = Instance(Foo, el)
   const rootEl = vm.$el.firstChild
-  t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+  expect(rootEl.innerHTML).toBe(`Hello, <!--${vm.$id}.show-->`)
   vm.show = true
-  t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show--><span>World</span>`)
+  expect(rootEl.innerHTML).toBe(`Hello, <!--${vm.$id}.show--><span>World</span>`)
   vm.show = false
-  t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+  expect(rootEl.innerHTML).toBe(`Hello, <!--${vm.$id}.show-->`)
   vm.$destroy()
 })
 
@@ -42,15 +42,15 @@ test('should add and remove apps', () => {
   const vm = Instance(Foo, el)
   const falseExpected = `Hello, <!--${vm.$id}.show-->`
   const trueExpected = `Hello, <!--${vm.$id}.show--><div>World</div>`
-  t.is(vm.$el.firstChild.innerHTML, falseExpected)
+  expect(vm.$el.firstChild.innerHTML).toBe(falseExpected)
   vm.show = true
-  t.is(vm.$el.firstChild.innerHTML, trueExpected)
+  expect(vm.$el.firstChild.innerHTML).toBe(trueExpected)
   vm.show = false
-  t.is(vm.$el.firstChild.innerHTML, falseExpected)
+  expect(vm.$el.firstChild.innerHTML).toBe(falseExpected)
   vm.show = true
-  t.is(vm.$el.firstChild.innerHTML, trueExpected)
-  t.is(mounted.callCount, 2)
-  t.is(destroyed.callCount, 1)
+  expect(vm.$el.firstChild.innerHTML).toBe(trueExpected)
+  expect(mounted.callCount).toBe(2)
+  expect(destroyed.callCount).toBe(1)
   vm.$destroy()
 })
 
@@ -65,9 +65,9 @@ test('should allow initial true value', () => {
   }
   const vm = Instance(Foo, el)
   const rootEl = vm.$el.firstChild
-  t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show--><span>World</span>`)
+  expect(rootEl.innerHTML).toBe(`Hello, <!--${vm.$id}.show--><span>World</span>`)
   vm.show = false
-  t.is(rootEl.innerHTML, `Hello, <!--${vm.$id}.show-->`)
+  expect(rootEl.innerHTML).toBe(`Hello, <!--${vm.$id}.show-->`)
   vm.$destroy()
 })
 
@@ -92,8 +92,8 @@ test('should add child app with initial true value', () => {
   const vm = Instance(Foo, el)
   const falseExpected = `Hello, <!--${vm.$id}.show-->`
   const trueExpected = `Hello, <!--${vm.$id}.show--><div>World</div>`
-  t.is(vm.$el.firstChild.innerHTML, trueExpected)
+  expect(vm.$el.firstChild.innerHTML).toBe(trueExpected)
   vm.show = false
-  t.is(vm.$el.firstChild.innerHTML, falseExpected)
+  expect(vm.$el.firstChild.innerHTML).toBe(falseExpected)
   vm.$destroy()
 })

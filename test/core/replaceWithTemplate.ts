@@ -4,7 +4,7 @@ import state from '../../src/core/state'
 test('should replace all text nodes with data from `vm`', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  const vm = {
+  const vm: any = {
     $el: el,
     template: `{{foo}}, {{bar}}`,
     data: {
@@ -14,7 +14,7 @@ test('should replace all text nodes with data from `vm`', () => {
   }
   replaceWithTemplate(vm)
   state(vm)
-  t.is(vm.$el.childNodes.length, 1)
-  t.is(vm.$el.childNodes[0].textContent, 'Hello, World')
+  expect(vm.$el.childNodes.length).toBe(1)
+  expect(vm.$el.childNodes[0].textContent).toBe('Hello, World')
   document.body.removeChild(vm.$host)
 })

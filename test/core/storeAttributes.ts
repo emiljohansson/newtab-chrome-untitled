@@ -5,7 +5,7 @@ test('should do nothing', () => {
     data: {}
   }
   storeAttributes(vm)
-  t.deepEqual(vm.data, {})
+  expect(vm.data).toEqual({})
 })
 
 test('should append to context', () => {
@@ -16,7 +16,7 @@ test('should append to context', () => {
     data: {}
   }
   storeAttributes(vm, el)
-  t.deepEqual(vm.data, {
+  expect(vm.data).toEqual({
     foo: 'bar'
   })
 })
@@ -31,7 +31,7 @@ test('should not store any attributes atrting with `o-`', () => {
     data: {}
   }
   storeAttributes(vm, el)
-  t.deepEqual(vm.data, {
+  expect(vm.data).toEqual({
     foo: 'bar'
   })
 })
