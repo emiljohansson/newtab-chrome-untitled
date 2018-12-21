@@ -1,8 +1,8 @@
 import { filter } from 'lodash'
 
-const bracketsRegExp = /{{([^}]+)}}/g
+const bracketsRegExp: RegExp = /{{([^}]+)}}/g
 
-const first: any = (value: string, index, array) => array.indexOf(value) === index
+const first: any = (value: string, index: number, array: string[]) => array.indexOf(value) === index
 
 export default (template: string): string[] => {
   const keys: string[] = []

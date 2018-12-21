@@ -1,30 +1,30 @@
-import { filter, forEach } from 'lodash'
+import { filter, forEach, toArray } from 'lodash'
 import apps from './apps'
-import Instance from './Instance'
+import createInstance, { Instance } from './Instance'
 import { ifSelector } from './oIf'
 
-const getChildElements = el => {
-  if (el == null) {
+const getChildElements = (el?: HTMLElement | null): HTMLElement[] => {
+  if (!el) {
     return []
   }
-  const children = getChildren(el)
-  let elements = filter(children, el => el.toString() !== '[object Text]')
-  let index = children.length
+  const children: HTMLElement[] = getChildren(el)
+  let elements: HTMLElement[] = filter(children, el => el.toString() !== '[object Text]')
+  let index: number = children.length
   while (index--) {
     elements = elements.concat(getChildElements(children[index]))
   }
   return elements
 }
 
-const getChildren = el => {
-  const base = el.children
-  const shadow = el.shadowRoot == null
+const getChildren = (el: HTMLElement): HTMLElement[] => {
+  const base: Element[] = toArray(el.children)
+  const shadow = el.shadowRoot === null
     ? []
-    : filter(el.shadowRoot.children, childEl => childEl !== el) // fixes bug in tests where extra shadowRoot is added within it-self
-  return [...shadow, ...base]
+    : filter(el.shadowRoot.children, (childEl: Element) => childEl !== el) // fixes bug in tests where extra shadowRoot is added within it-self
+  return [...shadow, ...base] as HTMLElement[]
 }
 
-export default vm => {
+export default (vm: Instance) => {
   let children = filter(
     getChildElements(vm.$host),
     el => (el.hasAttribute('is') || el.hasAttribute('o-ref')) && !el.hasAttribute(ifSelector)
@@ -32,19 +32,21 @@ export default vm => {
   if (children.length < 1) {
     return
   }
-  children = filter(children, childEl => children.indexOf(childEl.parentElement) < 0)
+  children = filter(children, (childEl: HTMLElement) => children.indexOf(childEl.parentElement as HTMLElement) < 0)
   forEach(children, el => {
-    const id = el.getAttribute('is')
-    const ref = el.getAttribute('o-ref')
-    if (id != null) {
-      const childVm = Instance(apps(id), el)
+    const id: string | null = el.getAttribute('is')
+    const ref: string | null = el.getAttribute('o-ref')
+    if (id !== null) {
+      const childVm = createInstance(apps(id), el)
       vm.$children.push(childVm)
-      if (ref != null) {
+      if (ref !== null) {
         vm.$refs[ref] = childVm
       }
       return
     }
     el.removeAttribute('o-ref')
-    vm.$refs[ref] = el
+    if (ref !== null) {
+      vm.$refs[ref] = el
+    }
   })
 }

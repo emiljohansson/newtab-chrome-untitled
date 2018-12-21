@@ -1,5 +1,6 @@
 import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash'
 import watch from './watch'
+import { Instance } from './Instance'
 
 interface Directive {
   bind: () => void
@@ -7,9 +8,9 @@ interface Directive {
   update: () => void
 }
 
-const list = {}
+const list: any = {}
 
-const defaultDirective = (directive: Directive) => {
+const defaultDirective = (directive: Directive): void => {
   if (isFunction(directive)) {
     directive.bind = directive
     directive.update = directive
@@ -20,7 +21,7 @@ const defaultDirective = (directive: Directive) => {
   directive.unbind = directive.unbind || noop
 }
 
-const getObjectLiteralValue = (vm, el, expression, onUpdate, binding) => {
+const getObjectLiteralValue = (vm: Instance, el: HTMLElement, expression: string, onUpdate: any, binding: any) => {
   const valueChanged = expression => newValue => {
     binding.oldValue = binding.value
     if (isPlainObject(binding.value)) {
@@ -42,7 +43,7 @@ const getObjectLiteralValue = (vm, el, expression, onUpdate, binding) => {
   return vm[expression]
 }
 
-const toObjectLiteral = (vm, expression, onUpdate) => {
+const toObjectLiteral = (vm: Instance, expression: string, onUpdate: any) => {
   const result = {}
   const separation = expression
     .replace(/ /g, '')
@@ -50,7 +51,7 @@ const toObjectLiteral = (vm, expression, onUpdate) => {
     .replace('{', '')
     .replace('}', '')
     .split(',')
-  const groups = separation.map(s => s.split(':'))
+  const groups = separation.map((s: string) => s.split(':'))
   forEach(groups, group => {
     const key = group[0]
     const value = group[1]
@@ -59,8 +60,8 @@ const toObjectLiteral = (vm, expression, onUpdate) => {
   return result
 }
 
-const fixValue = (expression, value, vm, valueChanged) => {
-  if (value.match(/["']/g) != null) {
+const fixValue = (expression: string, value: string, vm: Instance, valueChanged: any) => {
+  if (value.match(/["']/g) !== null) {
     return value.replace(/["']/g, '')
   }
   const subject = watch(vm, value)
@@ -68,21 +69,21 @@ const fixValue = (expression, value, vm, valueChanged) => {
   return vm[value]
 }
 
-export const remove = name => {
+export const remove: any = name => {
   delete list[name]
 }
 
-export const add = (name, definition) => {
+export const add: any = (name: string, definition: any) => {
   if (list[name] != null) {
     throw new Error(`${name} directive is already defined`)
   }
   list[name] = definition
 }
 
-export const getDirectiveAttributes = () => keys(list)
+export const getDirectiveAttributes: any = () => keys(list)
 
-export const directives = vm => {
-  if (vm.$host == null) {
+export const directives: any = (vm: any) => {
+  if (!vm.$host) {
     return
   }
   forEach(getDirectiveAttributes(), selector => {

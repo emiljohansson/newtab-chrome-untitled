@@ -1,10 +1,16 @@
 import { filter } from 'lodash'
 
-const textTag = '[object Text]'
+//
+//
+// TODO assign correct types
+//
+//
 
-const getAllTextNodes = el => {
-  const childNodes = getChildNodes(el)
-  let nodes = filter(childNodes, node => node.toString() === textTag)
+const textTag: string = '[object Text]'
+
+const getAllTextNodes = (el: any): any => {
+  const childNodes: any = getChildNodes(el)
+  let nodes: any = filter(childNodes, node => node.toString() === textTag)
   nodes = nodesFromChildren(nodes, el.children)
   if (el.shadowRoot != null) {
     nodes = nodesFromChildren(nodes, el.shadowRoot.children)
@@ -12,8 +18,8 @@ const getAllTextNodes = el => {
   return nodes
 }
 
-const getChildNodes = el => {
-  let shadowNodes = el.shadowRoot != null
+const getChildNodes = (el: any): any => {
+  let shadowNodes: any = el.shadowRoot != null
     ? el.shadowRoot.childNodes
     : []
   return [
@@ -22,7 +28,7 @@ const getChildNodes = el => {
   ]
 }
 
-const nodesFromChildren = (nodes, children: HTMLElement[]) => {
+const nodesFromChildren = (nodes: any, children: any): any => {
   let index = children.length
   while (index--) {
     nodes = nodes.concat(getAllTextNodes(children[index]))
