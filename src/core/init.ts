@@ -3,14 +3,20 @@ import oEmit from './oEmit'
 import replaceWithTemplate from './replaceWithTemplate'
 import storeAttributes from './storeAttributes'
 import callHook from './callHook'
+import { Instance } from './Instance'
 
-function ChildrenArray (vm, array) {
-  array.push = function (childVm) {
+export interface Children {
+  push: (childVm: Instance) => number
+  remove: (childVm: Instance) => Instance[]
+}
+
+function ChildrenArray (vm: Instance, array: any): Children {
+  array.push = function (childVm: Instance): number {
     const length = Array.prototype.push.apply(this, arguments)
     childVm.$parent = vm
     return length
   }
-  array.remove = function (childVm) {
+  array.remove = function (childVm: Instance): Instance[] {
     const index = this.indexOf(childVm)
     const result = Array.prototype.splice.call(this, index, 1)
     childVm.$destroy()

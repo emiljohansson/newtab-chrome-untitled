@@ -1,14 +1,14 @@
 import { isPlainObject } from 'lodash'
 
-export default (string, value, key: string, objectAsString = '') => {
+export default (text, value, key: string, objectAsString = '') => {
   if (isPlainObject(value)) {
     const objKey = key.replace(`${objectAsString}.`, '')
-    return string
+    return text
       .replace(/\s+(?=[^{\]]*\})/g, '')
       .split(`{{${key}}}`)
       .join(value[objKey])
   }
-  return string
+  return text
     .replace(/\s+(?=[^{\]]*\})/g, '')
     .split(`{{${key}}}`)
     .join(value)

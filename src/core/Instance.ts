@@ -2,7 +2,7 @@ import { forEach } from 'lodash'
 import BaseApp from './BaseApp'
 import destroy from './destroy'
 import mount from './mount'
-import init from './init'
+import init, { Children } from './init'
 import state from './state'
 import oFor from './oFor'
 import oIf from './oIf'
@@ -13,7 +13,9 @@ import { directives } from './directives'
 import findChildComponents from './findChildComponents'
 
 export interface Instance {
-  $children: Instance[]
+  $id: string
+  $parent: Instance
+  $children: Children
   $refs: any
   $host: HTMLElement | null
   beforeDestroy: () => void

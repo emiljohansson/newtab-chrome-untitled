@@ -1,22 +1,22 @@
 import { uniqueId } from 'lodash'
-import Instance from './Instance'
+import createInstance, { Instance } from './Instance'
 import apps from './apps'
 
 export const ifSelector = 'o-if'
 
 const dirs = {}
 
-function App (el, parent, comment) {
+function App (this: Instance, el, parent, comment) {
   const definition = apps(el.getAttribute('is'))
-  const newVm = Instance(definition, el)
+  const newVm = createInstance(definition, el)
   this.$children.push(newVm)
   parent.insertBefore(newVm.$host, comment.nextSibling)
   return newVm
 }
 
-function update (el, binding, initialTrue = false) {
+function update (this: Instance, el, binding, initialTrue = false) {
   const dir = dirs[binding.id]
-  if (!!binding.value === false) {
+  if (!binding.value) {
     if (dir.cachedVm != null) {
       this.$children.remove(dir.cachedVm)
       delete dir.cachedVm
@@ -39,7 +39,7 @@ function update (el, binding, initialTrue = false) {
 }
 
 export default {
-  bind (el, binding) {
+  bind (this: Instance, el, binding) {
     binding.id = uniqueId(uniqueId('oIf_'))
     const cloneNode = el.cloneNode(true)
     const commentContent = `${this.$id}.${binding.expression}`

@@ -1,6 +1,6 @@
-export const onSelector = 'o-on-'
+export const onSelector: string = 'o-on-'
 
-export const onTypes = [
+export const onTypes: string[] = [
   'click',
   'mousedown',
   'mousemove',
@@ -10,7 +10,7 @@ export const onTypes = [
 ]
 
 export default {
-  bind (el, binding: any) {
+  bind (el: HTMLElement, binding: any) {
     const attribute = binding.name
     const type = binding.name.replace(onSelector, '')
     const inlineFn = binding.expression
@@ -19,11 +19,11 @@ export default {
     const stringArgs = groups.slice(1)
     const handler = event => {
       const args = stringArgs.length
-        ? stringArgs.map(string => {
-          // if (string === '$event') {
+        ? stringArgs.map((value: string) => {
+          // if (value === '$event') {
           //   return event
           // }
-          // if (string === 'index') {
+          // if (value === 'index') {
           //   return index
           // }
           // return data
@@ -38,7 +38,7 @@ export default {
       el.removeEventListener(type, handler)
     }
   },
-  unbind (el, binding) {
+  unbind (el: HTMLElement, binding: any) {
     binding.removeListener()
   }
 }

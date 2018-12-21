@@ -9,7 +9,6 @@ test('should bind options.data to vm.$data', () => {
     data
   }
   state(vm)
-  console.log('STATE')
   expect(vm.$data).toEqual(data)
   expect(vm.a).toBe(1)
 })
@@ -67,8 +66,8 @@ test('should call methods in vm', () => {
 test('should watch arrays', () => {
   const beforeUpdate = sinon.spy()
   const updated = sinon.spy()
-  const obj1 = {id: 1}
-  const obj2 = {id: 2}
+  const obj1 = { id: 1 }
+  const obj2 = { id: 2 }
   const vm: any = {
     data: {
       a: [obj1, obj2]
@@ -81,7 +80,7 @@ test('should watch arrays', () => {
     beforeUpdate,
     updated
   ]
-  vm.a.push({id: 3})
+  vm.a.push({ id: 3 })
   sinon.assert.callOrder.apply(null, order)
   expect(vm.a[0] === obj1).toBeTruthy()
   expect(vm.a[1] === obj2).toBeTruthy()

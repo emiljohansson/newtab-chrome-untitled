@@ -23,7 +23,7 @@ function ObserverArray (vm: any, key, array, viewSubject) {
     'reverse'
   ], function (method) {
     array[method] = function (...args) {
-      const data = {
+      const data: any = {
         arg: args,
         method,
         inserted: []
@@ -57,12 +57,13 @@ const dataChanged = (vm, subject, newValue) => {
 }
 
 const bind = (vm, fn) => {
-  var orgFn = vm[fn]
+  const orgFn = vm[fn]
   vm[fn] = function (...args) {
     dataWatcher[vm.$id] = dataWatcher[vm.$id] || []
     dataWatcher[vm.$id].$functionInProgress = true
     orgFn.apply(vm, args)
     let update
+    // tslint:disable-next-line:no-conditional-assignment
     while ((update = dataWatcher[vm.$id].splice(0, 1)[0])) {
       update()
     }
@@ -82,6 +83,7 @@ const iterateData = vm => {
       return
     }
     let fn
+    // tslint:disable-next-line:no-conditional-assignment
     while ((fn = tickCallbacks.splice(0, 1)[0])) {
       fn()
     }
