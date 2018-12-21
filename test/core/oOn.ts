@@ -1,9 +1,8 @@
-import test from 'ava'
 import * as sinon from 'sinon'
 import fireEvent from '../helpers/fireEvent'
-import Instance from 'core/Instance'
+import Instance from '../../src/core/Instance'
 
-test('should add a keyup listener', t => {
+test('should add a keyup listener', () => {
   const el = document.createElement('div')
   el.setAttribute('o-on-keyup', 'onKeyUp')
   document.body.appendChild(el)
@@ -18,7 +17,7 @@ test('should add a keyup listener', t => {
   vm.$destroy()
 })
 
-test('should add click listener', t => {
+test('should add click listener', () => {
   const el = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
@@ -34,7 +33,7 @@ test('should add click listener', t => {
   vm.$destroy()
 })
 
-test('should add a click listener to child element', t => {
+test('should add a click listener to child element', () => {
   const el = document.createElement('div')
   el.innerHTML = ``
   document.body.appendChild(el)

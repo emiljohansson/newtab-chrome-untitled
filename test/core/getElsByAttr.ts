@@ -1,7 +1,6 @@
-import test from 'ava'
-import getElsByAttr from 'core/getElsByAttr'
+import getElsByAttr from '../../src/core/getElsByAttr'
 
-test('should find all elements by attribute', t => {
+test('should find all elements by attribute', () => {
   const el = document.createElement('div')
   const childEl = document.createElement('div')
   childEl.setAttribute('o-for', 'x in y')
@@ -10,11 +9,11 @@ test('should find all elements by attribute', t => {
     childEl
   ]
   const actual = getElsByAttr(el, `o-for`)
-  t.deepEqual(actual, expected)
+  expect(actual).toEqual(expected)
 })
 
-test('should do nothing', t => {
+test('should do nothing', () => {
   const expected = []
   const actual = getElsByAttr(null, `o-for`)
-  t.deepEqual(actual, expected)
+  expect(actual).toEqual(expected)
 })

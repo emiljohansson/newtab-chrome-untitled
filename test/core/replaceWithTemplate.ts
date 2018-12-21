@@ -1,8 +1,7 @@
-import test from 'ava'
-import replaceWithTemplate from 'core/replaceWithTemplate'
-import state from 'core/state'
+import replaceWithTemplate from '../../src/core/replaceWithTemplate'
+import state from '../../src/core/state'
 
-test('should replace all text nodes with data from `vm`', t => {
+test('should replace all text nodes with data from `vm`', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const vm = {

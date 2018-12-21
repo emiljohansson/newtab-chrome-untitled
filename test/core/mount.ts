@@ -1,8 +1,7 @@
-import test from 'ava'
 import * as sinon from 'sinon'
-import mount from 'core/mount'
+import mount from '../../src/core/mount'
 
-test('should call methods in vm', t => {
+test('should call methods in vm', () => {
   const mounted = sinon.spy()
 
   const vm = {
@@ -13,5 +12,4 @@ test('should call methods in vm', t => {
     mounted
   ]
   sinon.assert.callOrder.apply(null, order)
-  t.pass()
 })

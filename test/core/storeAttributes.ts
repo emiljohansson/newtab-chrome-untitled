@@ -1,7 +1,6 @@
-import test from 'ava'
-import storeAttributes from 'core/storeAttributes'
+import storeAttributes from '../../src/core/storeAttributes'
 
-test('should do nothing', t => {
+test('should do nothing', () => {
   const vm = {
     data: {}
   }
@@ -9,7 +8,7 @@ test('should do nothing', t => {
   t.deepEqual(vm.data, {})
 })
 
-test('should append to context', t => {
+test('should append to context', () => {
   const el = document.createElement('div')
   el.setAttribute('is', 'FooBar')
   el.setAttribute('foo', 'bar')
@@ -22,7 +21,7 @@ test('should append to context', t => {
   })
 })
 
-test('should not store any attributes atrting with `o-`', t => {
+test('should not store any attributes atrting with `o-`', () => {
   const el = document.createElement('div')
   el.setAttribute('is', 'FooBar')
   el.setAttribute('foo', 'bar')

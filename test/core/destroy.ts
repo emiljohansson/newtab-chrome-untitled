@@ -1,6 +1,6 @@
 import * as sinon from 'sinon'
 import { noop } from 'lodash'
-import destroy from '../../src/core/destroy'
+import destroyMixin from '../../src/core/destroy'
 import { Instance } from '../../src/core/Instance'
 
 const defaultInstance: any = (vm: any = {}): Instance => ({
@@ -23,7 +23,7 @@ test('should call methods in order', () => {
     beforeDestroy,
     destroyed
   })
-  destroy(vm)
+  destroyMixin(vm)
   const order = [
     beforeDestroy,
     destroyed
@@ -38,7 +38,7 @@ test('should remove element', () => {
   const vm: Instance = defaultInstance({
     $host: el
   })
-  destroy(vm)
+  destroyMixin(vm)
   vm.$destroy()
   expect(document.body.children.length).toBe(0)
 })

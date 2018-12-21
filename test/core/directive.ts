@@ -1,63 +1,63 @@
-import test from 'ava'
 import * as sinon from 'sinon'
 import { noop } from 'lodash'
-import directive from 'core/directive'
-import { remove } from 'core/directives'
-import Instance from 'core/Instance'
+import instanceMixin from '../../src/core/Instance'
+import directive from '../../src/core/directive'
+import { remove } from '../../src/core/directives'
 
-test('should do nothing', t => {
+test('should do nothing', () => {
   const callback = sinon.spy()
   const el = document.createElement('div')
   el.innerHTML = `<span bar>Bar</span>`
   document.body.appendChild(el)
   directive('foo', callback)
   directive('bar', {})
-  const vm = Instance({}, el)
-  t.false(callback.called)
+  const vm = instanceMixin({}, el)
+  expect(callback.called).toBeFalsy()
   vm.$destroy()
   remove('foo')
   remove('bar')
 })
 
-test('should call when found', t => {
+test('should call when found', () => {
+  expect.assertions(1)
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
   document.body.appendChild(el)
   directive('foo-bar', el => {
-    t.is(el.innerHTML, 'Foo')
+    expect(el.innerHTML).toBe('Foo')
   })
-  vm = Instance({}, el)
+  vm = instanceMixin({}, el)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should throw error when already defined', t => {
+test('should throw error when already defined', () => {
   directive('foo-bar', noop)
-  const error = t.throws(() => {
+  expect(() => {
     directive('foo-bar', noop)
-  }, Error)
-  t.is(error.message, 'foo-bar directive is already defined')
+  }).toThrowError('foo-bar directive is already defined')
   remove('foo-bar')
 })
 
-test('should call each element found', t => {
+test('should call each element found', () => {
+  expect.assertions(3)
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span><span foo-bar>Bar</span>`
   document.body.appendChild(el)
   let index = 0
   directive('foo-bar', el => {
-    t.is(el.innerHTML, index === 0 ? 'Foo' : 'Bar')
+    expect(el.innerHTML).toBe(index === 0 ? 'Foo' : 'Bar')
     index++
   })
-  vm = Instance({}, el)
-  t.is(index, 2)
+  vm = instanceMixin({}, el)
+  expect(index).toBe(2)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should call all directives', t => {
+test('should call all directives', () => {
   const fooCallback = sinon.spy()
   const barCallback = sinon.spy()
   let vm
@@ -66,52 +66,52 @@ test('should call all directives', t => {
   document.body.appendChild(el)
   directive('foo', fooCallback)
   directive('bar', barCallback)
-  vm = Instance({}, el)
-  t.true(fooCallback.called)
-  t.true(barCallback.called)
+  vm = instanceMixin({}, el)
+  expect(fooCallback.called).toBeTruthy()
+  expect(barCallback.called).toBeTruthy()
   vm.$destroy()
   remove('foo')
   remove('bar')
 })
 
-test('should not share bindings', t => {
+test('should not share bindings', () => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo>Foo</span><span foo>Bar</span>`
   document.body.appendChild(el)
-  const bindings = []
+  const bindings: any[] = []
   directive('foo', (el, binding) => {
     binding.id = 'foo' + bindings.length
     bindings.push(binding)
   })
-  vm = Instance({}, el)
-  t.is(bindings[0].id, 'foo0')
-  t.is(bindings[1].id, 'foo1')
+  vm = instanceMixin({}, el)
+  expect(bindings[0].id).toBe('foo0')
+  expect(bindings[1].id).toBe('foo1')
   vm.$destroy()
   remove('foo')
   remove('bar')
 })
 
-test('should link this to vm', t => {
+test('should link this to vm', () => {
   let vm
   let context
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
   document.body.appendChild(el)
-  directive('foo-bar', function (el, binding) {
+  directive('foo-bar', function (this: any, el, binding) {
     context = this
   })
-  vm = Instance({
+  vm = instanceMixin({
     data: {
       message: 'hello!'
     }
   }, el)
-  t.is(context.message, vm.message)
+  expect(context.message).toBe(vm.message)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should bind binding.value to a data variable', t => {
+test('should bind binding.value to a data variable', () => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="message">Foo</span>`
@@ -121,46 +121,46 @@ test('should bind binding.value to a data variable', t => {
   let oldValue
   directive('foo-bar', {
     bind (el, binding) {
-      t.is(binding.value, expected)
-      t.is(binding.expression, 'message')
+      expect(binding.value).toBe(expected)
+      expect(binding.expression).toBe('message')
       count++
       oldValue = binding.value
     },
     update (el, binding) {
-      t.is(binding.value, expected)
-      t.is(binding.expression, 'message')
-      t.is(binding.oldValue, oldValue)
+      expect(binding.value).toBe(expected)
+      expect(binding.expression).toBe('message')
+      expect(binding.oldValue).toBe(oldValue)
       count++
     }
   })
-  vm = Instance({
+  vm = instanceMixin({
     data: {
       message: 'hello 1'
     }
   }, el)
   expected = 'hello 2'
   vm.message = expected
-  t.is(count, 2)
+  expect(count).toBe(2)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should convert object literal value to binding.value', t => {
+test('should convert object literal value to binding.value', () => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ border-color: 'white', text: 'hello!' }">Foo</span>`
   document.body.appendChild(el)
   directive('foo-bar', (el, binding) => {
-    t.is(binding.value['border-color'], 'white')
-    t.is(binding.value.text, 'hello!')
-    t.is(binding.expression, `{ border-color: 'white', text: 'hello!' }`)
+    expect(binding.value['border-color']).toBe('white')
+    expect(binding.value.text).toBe('hello!')
+    expect(binding.expression).toBe(`{ border-color: 'white', text: 'hello!' }`)
   })
-  vm = Instance({}, el)
+  vm = instanceMixin({}, el)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should call same function for both bind and update', t => {
+test('should call same function for both bind and update', () => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ text: message }">Foo</span>`
@@ -169,25 +169,25 @@ test('should call same function for both bind and update', t => {
   let count = 0
   let oldValue
   directive('foo-bar', function (el, binding) {
-    t.is(binding.name, 'foo-bar')
-    t.is(binding.value.text, expected)
-    t.is(binding.oldValue, oldValue)
+    expect(binding.name).toBe('foo-bar')
+    expect(binding.value.text).toBe(expected)
+    expect(binding.oldValue).toBe(oldValue)
     oldValue = binding.value
     count++
   })
-  vm = Instance({
+  vm = instanceMixin({
     data: {
       message: 'hello 1'
     }
   }, el)
   expected = 'hello 2'
   vm.message = expected
-  t.is(count, 2)
+  expect(count).toBe(2)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should watch object literal values', t => {
+test('should watch object literal values', () => {
   let vm
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ text: message }">Foo</span>`
@@ -197,28 +197,28 @@ test('should watch object literal values', t => {
   let oldValue
   directive('foo-bar', {
     bind (el, binding) {
-      t.is(binding.value.text, expected)
+      expect(binding.value.text).toBe(expected)
       oldValue = binding.value
     },
     update (el, binding) {
-      t.is(binding.value.text, expected)
-      t.is(binding.oldValue, oldValue)
+      expect(binding.value.text).toBe(expected)
+      expect(binding.oldValue).toBe(oldValue)
       count++
     }
   })
-  vm = Instance({
+  vm = instanceMixin({
     data: {
       message: 'hello 1'
     }
   }, el)
   expected = 'hello 2'
   vm.message = expected
-  t.is(count, 1)
+  expect(count).toBe(1)
   vm.$destroy()
   remove('foo-bar')
 })
 
-test('should call unbind on destroy', t => {
+test('should call unbind on destroy', () => {
   const callback = sinon.spy()
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
@@ -226,8 +226,8 @@ test('should call unbind on destroy', t => {
   directive('foo-bar', {
     unbind: callback
   })
-  const vm = Instance({}, el)
+  const vm = instanceMixin({}, el)
   vm.$destroy()
-  t.true(callback.called)
+  expect(callback.called).toBeTruthy()
   remove('foo-bar')
 })

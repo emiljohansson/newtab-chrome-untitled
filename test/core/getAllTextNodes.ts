@@ -1,14 +1,13 @@
-import test from 'ava'
-import getAllTextNodes from 'core/getAllTextNodes'
+import getAllTextNodes from '../../src/core/getAllTextNodes'
 
-test('should find text nodes from element', t => {
+test('should find text nodes from element', () => {
   const el = document.createElement('div')
   el.innerHTML = `Foo`
   const nodes = getAllTextNodes(el)
-  t.is(nodes[0].textContent.trim(), 'Foo')
+  expect(nodes[0].textContent.trim()).toBe('Foo')
 })
 
-test('should find text nodes from element and children', t => {
+test('should find text nodes from element and children', () => {
   const el = document.createElement('div')
   el.innerHTML = `
 Foo
@@ -16,12 +15,12 @@ Foo
 Bar
 `
   const nodes = getAllTextNodes(el)
-  t.is(nodes[0].textContent.trim(), 'Foo')
-  t.is(nodes[1].textContent.trim(), 'Bar')
-  t.is(nodes[2].textContent.trim(), 'Child')
+  expect(nodes[0].textContent.trim()).toBe('Foo')
+  expect(nodes[1].textContent.trim()).toBe('Bar')
+  expect(nodes[2].textContent.trim()).toBe('Child')
 })
 
-test('should find text nodes from shadow dom', t => {
+test('should find text nodes from shadow dom', () => {
   const el = document.createElement('div')
   el.attachShadow({
     mode: 'open'
@@ -32,7 +31,7 @@ Bar
 `
 
   const nodes = getAllTextNodes(el)
-  t.is(nodes[0].textContent.trim(), 'Foo')
-  t.is(nodes[1].textContent.trim(), 'Bar')
-  t.is(nodes[2].textContent.trim(), 'Child')
+  expect(nodes[0].textContent.trim()).toBe('Foo')
+  expect(nodes[1].textContent.trim()).toBe('Bar')
+  expect(nodes[2].textContent.trim()).toBe('Child')
 })

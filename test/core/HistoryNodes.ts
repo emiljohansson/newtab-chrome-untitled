@@ -1,14 +1,12 @@
-import test from 'ava'
-import HistoryNodes from 'core/HistoryNodes'
-import getAllTextNodes from 'core/getAllTextNodes'
+import HistoryNodes from '../../src/core/HistoryNodes'
+import getAllTextNodes from '../../src/core/getAllTextNodes'
 
-test('should find all text nodes, matchin a key, and convert them to a HistoryNode', t => {
+test('should find all text nodes, matchin a key, and convert them to a HistoryNode', () => {
   const el = document.createElement('div')
   el.innerHTML = `{{foo}}<br/>{{foo}} Bar`
   const nodes = getAllTextNodes(el)
   const historyNodes = HistoryNodes('foo', nodes)
-  t.pass()
-  t.deepEqual(historyNodes, [{
+  expect(historyNodes).toEqual([{
     node: nodes[0],
     orgContent: `{{foo}}`
   }, {

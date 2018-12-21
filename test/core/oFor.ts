@@ -1,7 +1,6 @@
-import test from 'ava'
-import Instance from 'core/Instance'
+import Instance from '../../src/core/Instance'
 
-test('should create an element for each item in the list', t => {
+test('should create an element for each item in the list', () => {
   const el = document.createElement('article')
   document.body.appendChild(el)
   const array = ['foo', 'bar']
@@ -21,7 +20,7 @@ test('should create an element for each item in the list', t => {
   vm.$destroy()
 })
 
-test('should update view when item in list changes', t => {
+test('should update view when item in list changes', () => {
   const el = document.createElement('article')
   document.body.appendChild(el)
   const array = ['foo', 'bar']

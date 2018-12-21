@@ -1,8 +1,7 @@
-import test from 'ava'
 import * as sinon from 'sinon'
-import state from 'core/state'
+import state from '../../src/core/state'
 
-test('should bind options.data to vm.$data', t => {
+test('should bind options.data to vm.$data', () => {
   const data = {
     a: 1
   }
@@ -14,7 +13,7 @@ test('should bind options.data to vm.$data', t => {
   t.is(vm.a, 1)
 })
 
-test('should update key value after change', t => {
+test('should update key value after change', () => {
   const data = {
     a: 1,
     b: 'Foo'
@@ -31,7 +30,7 @@ test('should update key value after change', t => {
   t.is(vm.data.b, 'Bar')
 })
 
-test('should call beforeUpdate before updating the value', t => {
+test('should call beforeUpdate before updating the value', () => {
   const callback = sinon.spy()
   const data = {
     a: 1
@@ -45,7 +44,7 @@ test('should call beforeUpdate before updating the value', t => {
   t.true(callback.called)
 })
 
-test('should call methods in vm', t => {
+test('should call methods in vm', () => {
   const beforeUpdate = sinon.spy()
   const updated = sinon.spy()
   const vm = {
@@ -65,7 +64,7 @@ test('should call methods in vm', t => {
   t.pass()
 })
 
-test('should watch arrays', t => {
+test('should watch arrays', () => {
   const beforeUpdate = sinon.spy()
   const updated = sinon.spy()
   const obj1 = {id: 1}

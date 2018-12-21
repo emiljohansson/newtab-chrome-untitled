@@ -56,48 +56,6 @@
       "test/helpers/webcomponents-lite.js"
     ]
   },
-  "jest": {
-    "verbose": true,
-    "collectCoverageFrom": [
-      "**/*.{js}",
-      "**/*.{ts}",
-      "!**/*.d.ts",
-      "!src/*.ts",
-      "!__test__/**/*",
-      "!test/**/*",
-      "!**/node_modules/**"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.ts?$": "ts-jest",
-      "^.+\\.js$": "babel-jest"
-    },
-    "testMatch": [
-      "**/test/**/destroy.ts"
-    ],
-    "globals": {
-      "ts-jest": {
-        "useBabelrc": true,
-        "tsConfigFile": "jest.tsconfig.json"
-      }
-    },
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "text-summary"
-    ],
-    "moduleNameMapper": {},
-    "transformIgnorePatterns": [
-      "/node_modules/(?!lodash-es).+\\.js$"
-    ]
-  },
   "devDependencies": {
     "@types/jest": "23.3.10",
     "@types/lodash": "4.14.119",

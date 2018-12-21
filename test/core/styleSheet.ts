@@ -1,23 +1,15 @@
-import test from 'ava'
-import attachStyleSheet from 'core/styleSheet'
+import attachStyleSheet from '../../src/core/styleSheet'
 
 const attachStyle = styles => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   attachStyleSheet(styles, el)
   if (el.firstChild == null) {
     return null
   }
-  return el.firstChild.innerHTML
+  return (el.firstChild as Element).innerHTML
 }
 
-test('should do nothing if el is null', t => {
-  attachStyleSheet({
-    blue: {}
-  })
-  t.pass()
-})
-
-test('attach: should attach a style element', t => {
+test('attach: should attach a style element', () => {
   const expected = `
 .blue {
 }
@@ -29,15 +21,10 @@ test('attach: should attach a style element', t => {
     blue: {},
     red: {}
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })
 
-test('attach: should NOT attach when empty', t => {
-  const content = attachStyle()
-  t.is(content, null)
-})
-
-test('classes: should kebab case properties', t => {
+test('classes: should kebab case properties', () => {
   const expected = `
 .blue {
 font-size: 1rem;
@@ -59,10 +46,10 @@ width: 100%;
       width: '100%'
     }
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })
 
-test('classes: should add pseudo', t => {
+test('classes: should add pseudo', () => {
   const expected = `
 :host {
 font-size: 1rem;
@@ -73,10 +60,10 @@ font-size: 1rem;
       fontSize: '1rem'
     }
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })
 
-test('classes: should replace & with current scope', t => {
+test('classes: should replace & with current scope', () => {
   const expected = `
 .foo {
 font-size: 1rem;
@@ -102,10 +89,10 @@ border: 1px;
       }
     }
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })
 
-test('classes: should extend style', t => {
+test('classes: should extend style', () => {
   const expected = `
 .bar {
 display: block;
@@ -121,10 +108,10 @@ font-size: 1rem;
       fontSize: '1rem'
     }
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })
 
-test('classes: should not replace tag name selectors', t => {
+test('classes: should not replace tag name selectors', () => {
   const expected = `
 .bar {
 display: block;
@@ -145,5 +132,5 @@ font-size: 1rem;
       extend: foo
     }
   })
-  t.is(content, expected)
+  expect(content).toBe(expected)
 })

@@ -1,49 +1,48 @@
-import test from 'ava'
 import * as sinon from 'sinon'
 import { isFunction, noop } from 'lodash'
-import oEmit from 'core/oEmit'
+import oEmit from '../../src/core/oEmit'
 
-test('should do nothing', t => {
-  const vm = {}
+test('should do nothing', () => {
+  const vm : any= {}
   oEmit(vm)
-  t.is(vm.$emit, noop)
+  expect(vm.$emit).toBe(noop)
 })
 
-test('should set $emit', t => {
+test('should set $emit', () => {
   const el = document.createElement('div')
   el.setAttribute('o-emit-increment', '')
-  const vm = {
+  const vm: any = {
     $el: el
   }
   oEmit(vm)
-  t.true(isFunction(vm.$emit))
-  t.not(vm.$emit, noop)
+  expect(isFunction(vm.$emit)).toBeTruthy()
+  expect(vm.$emit === noop).toBeFalsy()
 })
 
-test('should create a subject for each attribute', t => {
+test('should create a subject for each attribute', () => {
   const el = document.createElement('div')
   el.setAttribute('o-emit-increment', '')
   el.setAttribute('o-emit-foo-bar', '')
-  const vm = {
+  const vm: any = {
     $el: el
   }
   oEmit(vm)
-  t.true(isFunction(vm.$listeners.increment.next))
-  t.true(isFunction(vm.$listeners.fooBar.next))
+  expect(isFunction(vm.$listeners.increment.next)).toBeTruthy()
+  expect(isFunction(vm.$listeners.fooBar.next)).toBeTruthy()
 })
 
-test('should call subject', t => {
+test('should call subject', () => {
   const callback = sinon.spy()
   const el = document.createElement('div')
   el.setAttribute('o-emit-increment', '')
-  const vm = {
+  const vm: any = {
     $el: el,
     $parent: {}
   }
   oEmit(vm)
   vm.$listeners.increment.subscribe(callback)
   vm.$emit('increment')
-  t.is(callback.callCount, 1)
+  expect(callback.callCount).toBe(1)
   vm.$emit('bad-param')
-  t.is(callback.callCount, 1)
+  expect(callback.callCount).toBe(1)
 })

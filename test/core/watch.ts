@@ -1,8 +1,7 @@
-import test from 'ava'
 import { uniqueId } from 'lodash'
-import watch from 'core/watch'
+import watch from '../../src/core/watch'
 
-test('should create a Subject', t => {
+test('should create a Subject', () => {
   const vm = {
     $id: uniqueId('abc_')
   }
@@ -14,7 +13,7 @@ test('should create a Subject', t => {
   subject.next(expected)
 })
 
-test('should return the same Subject for matching key', t => {
+test('should return the same Subject for matching key', () => {
   t.plan(2)
   const vm = {
     $id: uniqueId('abc_')
@@ -31,7 +30,7 @@ test('should return the same Subject for matching key', t => {
   subject2.next(expected)
 })
 
-test('should be based on vm instance', t => {
+test('should be based on vm instance', () => {
   t.plan(1)
   const vm1 = {
     $id: uniqueId('abc_')
@@ -51,7 +50,7 @@ test('should be based on vm instance', t => {
   subject2.next(expected)
 })
 
-test('should allow passing in id', t => {
+test('should allow passing in id', () => {
   t.plan(1)
   const id = uniqueId('abc_')
   const expected = 123

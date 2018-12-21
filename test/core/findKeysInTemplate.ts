@@ -1,8 +1,7 @@
-import test from 'ava'
-import findKeysInTemplate from 'core/findKeysInTemplate'
+import findKeysInTemplate from '../../src/core/findKeysInTemplate'
 
-test('should find all curly backet keys', t => {
+test('should find all curly backet keys', () => {
   const template = `{{foo}} {{bar}}`
   const keys = findKeysInTemplate(template)
-  t.deepEqual(keys, ['foo', 'bar'])
+  expect(keys).toEqual(['foo', 'bar'])
 })

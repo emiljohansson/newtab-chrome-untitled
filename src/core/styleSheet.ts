@@ -66,10 +66,7 @@ const getDot = (className, rootClassName: string) => {
   return '.'
 }
 
-export default (styles = {}, el: HTMLElement | null) => {
-  if (!el) {
-    return
-  }
+export default (styles = {}, el: HTMLElement) => {
   const content = createClasses(styles)
   if (content.trim().length < 1) {
     return

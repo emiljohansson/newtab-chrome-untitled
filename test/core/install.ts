@@ -1,11 +1,10 @@
-import test from 'ava'
-import apps from 'core/apps'
-import install from 'core/install'
+import install from '../../src/core/install'
+import apps from '../../src/core/apps'
 
-test('should store install definition', t => {
+test('should store install definition', () => {
   const definition = {
     data: {}
   }
   install('Foo', definition)
-  t.deepEqual(apps('Foo'), definition)
+  expect(apps('Foo')).toEqual(definition)
 })

@@ -1,7 +1,6 @@
-import test from 'ava'
-import Instance from 'core/Instance'
+import Instance from '../../src/core/Instance'
 
-test('should toggle class', t => {
+test('should toggle class', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
@@ -12,15 +11,15 @@ test('should toggle class', t => {
   }
   const vm = Instance(Foo, el)
   const className = 'my-class'
-  t.true(vm.$el.children[0].classList.contains(className))
+  expect(vm.$el.children[0].classList.contains(className)).toBeTruthy()
   vm.showMyClass = !vm.showMyClass
-  t.false(vm.$el.children[0].classList.contains(className))
+  expect(vm.$el.children[0].classList.contains(className)).toBeFalsy()
   vm.showMyClass = !vm.showMyClass
-  t.true(vm.$el.children[0].classList.contains(className))
+  expect(vm.$el.children[0].classList.contains(className)).toBeTruthy()
   vm.$destroy()
 })
 
-test('should toggle child classes', t => {
+test('should toggle child classes', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
@@ -33,15 +32,15 @@ test('should toggle child classes', t => {
   }
   const vm = Instance(Foo, el)
   const childEl = vm.$el.children[0].children[0]
-  t.true(childEl.classList.contains('my-class'))
+  expect(childEl.classList.contains('my-class')).toBeTruthy()
   vm.showMyClass = !vm.showMyClass
-  t.false(childEl.classList.contains('my-class'))
+  expect(childEl.classList.contains('my-class')).toBeFalsy()
   vm.showMyClass = !vm.showMyClass
-  t.true(childEl.classList.contains('my-class'))
+  expect(childEl.classList.contains('my-class')).toBeTruthy()
   vm.$destroy()
 })
 
-test('should remove o-class attribute', t => {
+test('should remove o-class attribute', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
@@ -51,6 +50,6 @@ test('should remove o-class attribute', t => {
     }
   }
   const vm = Instance(Foo, el)
-  t.false(vm.$el.children[0].hasAttribute('o-class'))
+  expect(vm.$el.children[0].hasAttribute('o-class')).toBeFalsy()
   vm.$destroy()
 })

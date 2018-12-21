@@ -1,9 +1,8 @@
-import test from 'ava'
 import * as sinon from 'sinon'
-import Instance from 'core/Instance'
-import install from 'core/install'
+import Instance from '../../src/core/Instance'
+import install from '../../src/core/install'
 
-test('should add and remove element', t => {
+test('should add and remove element', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
@@ -22,7 +21,7 @@ test('should add and remove element', t => {
   vm.$destroy()
 })
 
-test('should add and remove apps', t => {
+test('should add and remove apps', () => {
   const mounted = sinon.spy()
   const destroyed = sinon.spy()
   const el = document.createElement('div')
@@ -55,7 +54,7 @@ test('should add and remove apps', t => {
   vm.$destroy()
 })
 
-test('should allow initial true value', t => {
+test('should allow initial true value', () => {
   const el = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
@@ -72,7 +71,7 @@ test('should allow initial true value', t => {
   vm.$destroy()
 })
 
-test('should add child app with initial true value', t => {
+test('should add child app with initial true value', () => {
   const mounted = sinon.spy()
   const destroyed = sinon.spy()
   const el = document.createElement('div')

@@ -1,21 +1,20 @@
-import test from 'ava'
-import replaceBracketContent from 'core/replaceBracketContent'
+import replaceBracketContent from "../../src/core/replaceBracketContent"
 
-test('should do no-operations', t => {
-  t.is(replaceBracketContent(`
+test('should do no-operations', () => {
+  expect(replaceBracketContent(`
     {{text}} - {{completed}}
-`, 'Foo', 'text'), `
+`, 'Foo', 'text')).toBe(`
     Foo - {{completed}}
 `)
 })
 
-test('should return string from plain object', t => {
+test('should return string from plain object', () => {
   const foo = {
     bar: 'hello'
   }
-  t.is(replaceBracketContent(`
+  expect(replaceBracketContent(`
     {{foo.bar}}
-`, foo, 'foo.bar', 'foo'), `
+`, foo, 'foo.bar', 'foo')).toBe(`
     hello
 `)
 })

@@ -19,6 +19,7 @@ export interface Instance {
   beforeDestroy: () => void
   destroyed: () => void
   $destroy: () => void
+  $emit: (type, ...args: any[]) => void
 }
 
 directive('o-class', oClass)
