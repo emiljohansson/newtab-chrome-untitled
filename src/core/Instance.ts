@@ -16,12 +16,16 @@ export interface Instance {
   $id: string
   $parent: Instance
   $children: Children
+  $data: any
   $refs: any
   $host: HTMLElement | null
+  $el: HTMLElement
+  data: any
+  styles?: any
   beforeDestroy: () => void
   destroyed: () => void
   $destroy: () => void
-  $emit: (type, ...args: any[]) => void
+  $emit: (type: string, ...args: any[]) => void
 }
 
 directive('o-class', oClass)

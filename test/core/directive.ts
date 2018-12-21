@@ -80,7 +80,7 @@ test('should not share bindings', () => {
   el.innerHTML = `<span foo>Foo</span><span foo>Bar</span>`
   document.body.appendChild(el)
   const bindings: any[] = []
-  directive('foo', (el, binding) => {
+  directive('foo', (el: HTMLElement, binding: any) => {
     binding.id = 'foo' + bindings.length
     bindings.push(binding)
   })
@@ -120,13 +120,13 @@ test('should bind binding.value to a data variable', () => {
   let count = 0
   let oldValue
   directive('foo-bar', {
-    bind (el, binding) {
+    bind (el: HTMLElement, binding: any) {
       expect(binding.value).toBe(expected)
       expect(binding.expression).toBe('message')
       count++
       oldValue = binding.value
     },
-    update (el, binding) {
+    update (el: HTMLElement, binding: any) {
       expect(binding.value).toBe(expected)
       expect(binding.expression).toBe('message')
       expect(binding.oldValue).toBe(oldValue)
@@ -150,7 +150,7 @@ test('should convert object literal value to binding.value', () => {
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar="{ border-color: 'white', text: 'hello!' }">Foo</span>`
   document.body.appendChild(el)
-  directive('foo-bar', (el, binding) => {
+  directive('foo-bar', (el: HTMLElement, binding: any) => {
     expect(binding.value['border-color']).toBe('white')
     expect(binding.value.text).toBe('hello!')
     expect(binding.expression).toBe(`{ border-color: 'white', text: 'hello!' }`)
@@ -168,7 +168,7 @@ test('should call same function for both bind and update', () => {
   let expected = 'hello 1'
   let count = 0
   let oldValue
-  directive('foo-bar', function (el, binding) {
+  directive('foo-bar', function (el: HTMLElement, binding: any) {
     expect(binding.name).toBe('foo-bar')
     expect(binding.value.text).toBe(expected)
     expect(binding.oldValue).toBe(oldValue)
@@ -196,11 +196,11 @@ test('should watch object literal values', () => {
   let count = 0
   let oldValue
   directive('foo-bar', {
-    bind (el, binding) {
+    bind (el: HTMLElement, binding: any) {
       expect(binding.value.text).toBe(expected)
       oldValue = binding.value
     },
-    update (el, binding) {
+    update (el: HTMLElement, binding: any) {
       expect(binding.value.text).toBe(expected)
       expect(binding.oldValue).toBe(oldValue)
       count++

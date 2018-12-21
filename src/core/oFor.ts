@@ -1,21 +1,23 @@
 import { forEach, isElement, map, uniqueId } from 'lodash'
 import attachStyleSheet from './styleSheet'
 import apps from './apps'
-import Instance from './Instance'
+import createInstance, { Instance } from './Instance'
 import watch from './watch'
 import HistoryNodes from './HistoryNodes'
 import findKeysInTemplate from './findKeysInTemplate'
 import getAllTextNodes from './getAllTextNodes'
 import replaceBracketContent from './replaceBracketContent'
+import { Subject } from './Subject'
 
 export const forSelector = 'o-for'
 
-function CacheArray (vm, ref) {
-  const array = []
+function CacheArray (vm: Instance, ref: string | null): any[] {
+  const array: any[] = []
 
-  if (ref != null) {
-    vm.$refs[ref] = []
+  if (!ref) {
+    return array
   }
+  vm.$refs[ref] = []
 
   forEach([
     'push',
@@ -25,8 +27,8 @@ function CacheArray (vm, ref) {
     'splice',
     'sort',
     'reverse'
-  ], function (method) {
-    array[method] = function (...args) {
+  ], function (method: string) {
+    array[method] = function (...args: any[]) {
       const result = Array.prototype[method].apply(this, args)
       if (vm.$refs[ref] != null) {
         vm.$refs[ref] = map(array, obj => obj.vm)
@@ -38,24 +40,24 @@ function CacheArray (vm, ref) {
   return array
 }
 
-export default function (el, binding) {
-  const vm = this
-  const parentEl = el.parentElement || el.parentNode.host
+export default function (this: Instance, el: HTMLElement, binding: any) {
+  const vm: Instance = this
+  const parentEl = el.parentElement || (el.parentNode as any).host
   const id = uniqueId('oFor_')
   const template = el.outerHTML
   const keys = findKeysInTemplate(template)
   const tempContainer = document.createDocumentFragment()
-  const ref = el.getAttribute('o-ref')
+  const ref: string | null = el.getAttribute('o-ref')
   const forValues = binding.expression.split(' ')
   const valueString = forValues[0]
   const dataKey = forValues[2]
   const dataItems = vm.data[dataKey]
 
-  const cache = CacheArray(vm, ref)
+  const cache: any[] = CacheArray(vm, ref)
 
   const viewSubject = watch(vm, dataKey)
   viewSubject.subscribe(data => {
-    let index
+    let index: number
     if (data.inserted.length > 0) {
       index = 0
       if (data.method === 'splice') {
@@ -69,10 +71,10 @@ export default function (el, binding) {
       insertNode(vm.data[dataKey][index], index, parentEl.shadowRoot || parentEl, data.method)
       return
     }
-    const removedItems = []
+    const removedItems: any[] = []
     index = cache.length
     while (index--) {
-      const item = cache[index]
+      const item: any = cache[index]
       if (vm.data[dataKey].indexOf(item.data) < 0) {
         removedItems.push(item)
         cache.splice(index, 1)
@@ -87,7 +89,7 @@ export default function (el, binding) {
     container = container != null && (isElement(container) || container.toString() === '[object ShadowRoot]' || container.toString() === '[object DocumentFragment]')
       ? container
       : tempContainer
-    const cloneNode = el.cloneNode(true)
+    const cloneNode: HTMLElement = el.cloneNode(true) as HTMLElement
     if (cloneNode.hasAttribute('is')) {
       const newVm = App(cloneNode, container, dataItem, index === 0)
       // const method = index === 0
@@ -101,13 +103,13 @@ export default function (el, binding) {
     }
     const textNodes = getAllTextNodes(cloneNode)
     let tempValue = dataItem
-    const subjects = []
+    const subjects: Subject[] = []
 
     Object.defineProperty(vm.data[dataKey], index.toString(), {
       get () {
         return tempValue
       },
-      set (newValue) {
+      set (newValue: any) {
         subjects[index].next(newValue)
       }
     })
@@ -136,9 +138,9 @@ export default function (el, binding) {
     container.appendChild(cloneNode)
   }
 
-  const App = (el, parent, context, appendFirst) => {
-    const definition = apps(el.getAttribute('is'))
-    const newVm = Instance(definition, el, context)
+  const App = (el: HTMLElement, parent, context, appendFirst) => {
+    const definition: any = apps(el.getAttribute('is') || '')
+    const newVm: Instance = createInstance(definition, el, context)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {
       parent.insertBefore(newVm.$host, parent.firstChild)

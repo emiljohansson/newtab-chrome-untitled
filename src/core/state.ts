@@ -1,13 +1,14 @@
 import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
-import Subject from './Subject'
+import createSubject, { Subject } from './Subject'
 import coreFunctions from './coreFunctions'
 import callHook from './callHook'
 import watch from './watch'
+import { Instance } from './Instance'
 
 const dataWatcher = {}
 
-function ObserverArray (vm: any, key, array, viewSubject) {
-  const subject = Subject()
+function ObserverArray (vm: any, key: string, array: any[], viewSubject: Subject) {
+  const subject = createSubject()
   subject.subscribe(inserted => {
     callHook(vm, vm.beforeUpdate)
     viewSubject.next(inserted)
@@ -21,8 +22,8 @@ function ObserverArray (vm: any, key, array, viewSubject) {
     'splice',
     'sort',
     'reverse'
-  ], function (method) {
-    array[method] = function (...args) {
+  ], function (method: string) {
+    array[method] = function (...args: any[]) {
       const data: any = {
         arg: args,
         method,
@@ -44,7 +45,7 @@ function ObserverArray (vm: any, key, array, viewSubject) {
   })
 }
 
-const dataChanged = (vm, subject, newValue) => {
+const dataChanged = (vm: Instance, subject: Subject, newValue: any) => {
   const cb = () => {
     subject.next(newValue)
   }
@@ -58,7 +59,7 @@ const dataChanged = (vm, subject, newValue) => {
 
 const bind = (vm, fn) => {
   const orgFn = vm[fn]
-  vm[fn] = function (...args) {
+  vm[fn] = function (...args: any[]) {
     dataWatcher[vm.$id] = dataWatcher[vm.$id] || []
     dataWatcher[vm.$id].$functionInProgress = true
     orgFn.apply(vm, args)
@@ -73,8 +74,8 @@ const bind = (vm, fn) => {
 }
 
 const iterateData = vm => {
-  const tickCallbacks = []
-  vm.$nextTick = cb => {
+  const tickCallbacks: any[] = []
+  vm.$nextTick = (cb: any) => {
     if (cb != null) {
       tickCallbacks.push(cb)
       return
@@ -89,7 +90,7 @@ const iterateData = vm => {
     }
   }
   const addWatch = (value, key) => {
-    const subject = Subject()
+    const subject = createSubject()
     const viewSubject = watch(vm, key)
     if (isArray(value)) {
       ObserverArray(vm, key, value, viewSubject)
@@ -106,7 +107,7 @@ const iterateData = vm => {
       get () {
         return vm.$data[key]
       },
-      set (newValue) {
+      set (newValue: any) {
         dataChanged(vm, subject, newValue)
       }
     })
@@ -115,7 +116,7 @@ const iterateData = vm => {
   return addWatch
 }
 
-export default vm => {
+export default (vm: Instance) => {
   vm.$data = vm.data
   const publicMethods = filter(
     keys(vm),

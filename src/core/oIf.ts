@@ -6,15 +6,15 @@ export const ifSelector = 'o-if'
 
 const dirs = {}
 
-function App (this: Instance, el, parent, comment) {
-  const definition = apps(el.getAttribute('is'))
+function App (this: Instance, el: HTMLElement, parent: HTMLElement, comment: HTMLElement) {
+  const definition = apps(el.getAttribute('is') || '')
   const newVm = createInstance(definition, el)
   this.$children.push(newVm)
   parent.insertBefore(newVm.$host, comment.nextSibling)
   return newVm
 }
 
-function update (this: Instance, el, binding, initialTrue = false) {
+function update (this: Instance, el: HTMLElement, binding: any, initialTrue: boolean = false) {
   const dir = dirs[binding.id]
   if (!binding.value) {
     if (dir.cachedVm != null) {
@@ -39,12 +39,12 @@ function update (this: Instance, el, binding, initialTrue = false) {
 }
 
 export default {
-  bind (this: Instance, el, binding) {
+  bind (this: Instance, el: HTMLElement, binding: any) {
     binding.id = uniqueId(uniqueId('oIf_'))
     const cloneNode = el.cloneNode(true)
     const commentContent = `${this.$id}.${binding.expression}`
     const commentEl = document.createComment(commentContent)
-    const parentEl = el.parentElement
+    const parentEl = el.parentElement as HTMLElement
     parentEl.insertBefore(commentEl, el)
     dirs[binding.id] = {
       cloneNode,
@@ -55,7 +55,7 @@ export default {
     update.call(this, el, binding, !!binding.value)
   },
   update,
-  unbind (el, binding) {
+  unbind (el: HTMLElement, binding: any) {
     delete dirs[binding.id]
   }
 }

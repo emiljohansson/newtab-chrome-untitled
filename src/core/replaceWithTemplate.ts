@@ -5,6 +5,7 @@ import HistoryNodes from './HistoryNodes'
 import findKeysInTemplate from './findKeysInTemplate'
 import getAllTextNodes from './getAllTextNodes'
 import replaceBracketContent from './replaceBracketContent'
+import { Instance } from './Instance'
 
 const replaceWithTemplate = vm => {
   if (vm.$el == null || vm.template == null) {
@@ -33,7 +34,7 @@ const replaceWithTemplate = vm => {
 
   forEach(keys, key => {
     const historyNodes = HistoryNodes(key, textNodes)
-    const update = updateWithNewValue(vm, historyNodes)
+    const update: any = updateWithNewValue(vm, historyNodes)
     const subject = watch(vm, key)
     subject.subscribe(update)
     if (vm.data[key] != null) {
@@ -56,11 +57,11 @@ const getElFromTemplate = template => {
   return tempEl.children
 }
 
-const updateWithNewValue = (vm, historyNodes) => newValue => {
-  forEach(historyNodes, historyNode => {
+const updateWithNewValue = (vm: Instance, historyNodes: any) => (): void => {
+  forEach(historyNodes, (historyNode: any) => {
     historyNode.node.textContent = reduce(
       vm.$data,
-      replaceBracketContent,
+      replaceBracketContent as any,
       historyNode.orgContent
     )
   })
