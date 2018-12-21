@@ -1,4 +1,4 @@
-import apps from './apps.js'
+import apps from './apps'
 
 export default (id, definition) => {
   return apps(id, definition)

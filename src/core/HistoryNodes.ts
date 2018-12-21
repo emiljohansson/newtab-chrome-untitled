@@ -1,9 +1,9 @@
 import { filter, map } from 'lodash'
-import HistoryNode from './HistoryNode.js'
+import HistoryNode from './HistoryNode'
 
-export default (key, textNodes) => map(
+export default (key: string, textNodes: Node[]): any[] => map(
   filter(textNodes, node =>
-    node.textContent
+    (node.textContent || '')
       .replace(/ /g, '')
       .indexOf(`{{${key}}}`) > -1
   ),

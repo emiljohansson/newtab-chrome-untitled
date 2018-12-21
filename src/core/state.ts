@@ -1,12 +1,12 @@
 import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
-import Subject from './Subject.js'
-import coreFunctions from './coreFunctions.js'
-import callHook from './callHook.js'
-import watch from './watch.js'
+import Subject from './Subject'
+import coreFunctions from './coreFunctions'
+import callHook from './callHook'
+import watch from './watch'
 
 const dataWatcher = {}
 
-function ObserverArray (vm, key, array, viewSubject) {
+function ObserverArray (vm: any, key, array, viewSubject) {
   const subject = Subject()
   subject.subscribe(inserted => {
     callHook(vm, vm.beforeUpdate)

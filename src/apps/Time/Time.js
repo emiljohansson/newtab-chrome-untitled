@@ -1,4 +1,4 @@
-import Subject from '../../core/Subject.js'
+import Subject from '../../core/Subject.ts'
 import { date } from '../Terminal/cmd.js'
 
 const updateSubject = Subject()

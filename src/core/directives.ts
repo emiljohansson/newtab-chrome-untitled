@@ -1,9 +1,15 @@
 import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash'
 import watch from './watch'
 
+interface Directive {
+  bind: () => void
+  unbind: () => void
+  update: () => void
+}
+
 const list = {}
 
-const defaultDirective = directive => {
+const defaultDirective = (directive: Directive) => {
   if (isFunction(directive)) {
     directive.bind = directive
     directive.update = directive
@@ -80,14 +86,14 @@ export const directives = vm => {
     return
   }
   forEach(getDirectiveAttributes(), selector => {
-    const directive = list[selector]
+    const directive: any = list[selector]
     const elements = [
       ...vm.$host.querySelectorAll(`[${selector}]`),
       ...vm.$el.querySelectorAll(`[${selector}]`)
     ]
     forEach(elements, el => {
       const expression = el.getAttribute(`${selector}`)
-      const binding = {}
+      const binding: any = {}
       el.removeAttribute(selector)
       defaultDirective(directive)
       binding.name = selector

@@ -1,5 +1,5 @@
 import { camelCase, filter, forEach, noop } from 'lodash'
-import Subject from './Subject.js'
+import Subject from './Subject'
 
 const emitSelector = 'o-emit-'
 
@@ -25,7 +25,7 @@ export default vm => {
     })
     vm.$listeners[name] = subject
   })
-  vm.$emit = (type, ...args) => {
+  vm.$emit = (type, ...args: any[]) => {
     const subject = vm.$listeners[type]
     if (subject == null) {
       return

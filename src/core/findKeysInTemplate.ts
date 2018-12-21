@@ -4,7 +4,7 @@ const bracketsRegExp = /{{([^}]+)}}/g
 
 const first = (string, index, array) => array.indexOf(string) === index
 
-export default template => {
+export default (template: string) => {
   const keys = []
   let currentMatch
   while ((currentMatch = bracketsRegExp.exec(template))) {

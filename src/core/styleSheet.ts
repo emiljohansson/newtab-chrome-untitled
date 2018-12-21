@@ -1,6 +1,6 @@
 import { filter, forEach, kebabCase, keys } from 'lodash'
 
-const createClasses = (styles, rootClassName) => {
+const createClasses = (styles, rootClassName: string = '') => {
   const propKeys = keys(styles)
   const length = propKeys.length
   let classes = '\n'
@@ -56,7 +56,7 @@ const createClassContent = style => {
   return result
 }
 
-const getDot = (className, rootClassName) => {
+const getDot = (className, rootClassName: string) => {
   if (className[0] === ':') {
     return ''
   }
@@ -66,8 +66,8 @@ const getDot = (className, rootClassName) => {
   return '.'
 }
 
-export default (styles = {}, el = null) => {
-  if (el == null) {
+export default (styles = {}, el: HTMLElement | null) => {
+  if (!el) {
     return
   }
   const content = createClasses(styles)

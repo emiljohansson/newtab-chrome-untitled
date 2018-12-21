@@ -10,7 +10,7 @@ export const onTypes = [
 ]
 
 export default {
-  bind (el, binding) {
+  bind (el, binding: any) {
     const attribute = binding.name
     const type = binding.name.replace(onSelector, '')
     const inlineFn = binding.expression

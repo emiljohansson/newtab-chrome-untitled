@@ -22,7 +22,7 @@ const getChildNodes = el => {
   ]
 }
 
-const nodesFromChildren = (nodes, children) => {
+const nodesFromChildren = (nodes, children: HTMLElement[]) => {
   let index = children.length
   while (index--) {
     nodes = nodes.concat(getAllTextNodes(children[index]))

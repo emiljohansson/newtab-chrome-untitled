@@ -1,8 +1,8 @@
 import { camelCase, filter, forEach } from 'lodash'
-import { getDirectiveAttributes } from './directives.js'
+import { getDirectiveAttributes } from './directives'
 
 export default (vm, el) => {
-  if (el == null) {
+  if (!el) {
     return
   }
   el.removeAttribute('is')
