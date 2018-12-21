@@ -1,4 +1,4 @@
-import Subject from '../core/Subject.ts'
+import Subject from '../core/Subject'
 
 const updateSubject = Subject()
 
@@ -6,7 +6,7 @@ const getWeather = unit => {
   // const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="denver, co") and u="${unit}"`
   const query = `select item.condition from weather.forecast where woeid = 2391279 and u="${unit}"`
   const url = `https://query.yahooapis.com/v1/public/yql?q=${encodeURI(query)}&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`
-  const httpRequest = new window.XMLHttpRequest()
+  const httpRequest = new (window as any).XMLHttpRequest()
   let resolved = false
   httpRequest.onreadystatechange = () => {
     if (!httpRequest.response || resolved) {
@@ -15,7 +15,9 @@ const getWeather = unit => {
     let data
     try {
       data = JSON.parse(httpRequest.response)
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
     if (data == null) {
       return
     }
@@ -82,7 +84,7 @@ const template = `
 </article>
 `
 
-const Weather = {
+const Weather: any = {
   styles,
   template,
   data: {
@@ -110,7 +112,7 @@ Weather.mounted = function () {
   getWeather('f')
 }
 
-Weather.onClick = function (event) {
+Weather.onClick = function (event: MouseEvent) {
   this.isFahrenheit = !this.isFahrenheit
 }
 

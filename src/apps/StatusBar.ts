@@ -41,7 +41,7 @@ const template = `
 <link rel="stylesheet" href="vendor/css/fontawesome-all.min.css">
 `
 
-const StatusBar = {
+const StatusBar: any = {
   debug: true,
   styles,
   template,
@@ -50,9 +50,11 @@ const StatusBar = {
   }
 }
 
+// tslint:disable-next-line:no-empty
 StatusBar.mounted = function () {}
 
 StatusBar.onAppMenuClick = function () {
+  // tslint:disable-next-line:no-console
   console.log('click')
 }
 

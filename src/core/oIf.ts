@@ -10,7 +10,9 @@ function App (this: Instance, el: HTMLElement, parent: HTMLElement, comment: HTM
   const definition = apps(el.getAttribute('is') || '')
   const newVm = instanceFactory(definition, el)
   this.$children.push(newVm)
-  parent.insertBefore(newVm.$host, comment.nextSibling)
+  if (newVm.$host) {
+    parent.insertBefore(newVm.$host, comment.nextSibling)
+  }
   return newVm
 }
 

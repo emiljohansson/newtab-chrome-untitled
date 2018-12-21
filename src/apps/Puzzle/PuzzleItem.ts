@@ -1,3 +1,5 @@
+import { Instance } from '../../core/Instance'
+
 const styles = {
   ':host': {
     border: '1px solid',
@@ -10,7 +12,7 @@ const styles = {
 
 const template = `<div o-on-click="onClick">{{value}}</div>`
 
-const PuzzleItem = {
+const PuzzleItem: any = {
   styles,
   template,
   data: {
@@ -18,9 +20,10 @@ const PuzzleItem = {
   }
 }
 
+// tslint:disable-next-line:no-empty
 PuzzleItem.mounted = function () {}
 
-PuzzleItem.onClick = function () {
+PuzzleItem.onClick = function (this: Instance) {
   this.$emit('click', this.$host)
 }
 

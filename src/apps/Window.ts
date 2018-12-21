@@ -1,5 +1,5 @@
 import { forEach, isFunction } from 'lodash'
-import Subject from '../core/Subject.ts'
+import Subject from '../core/Subject'
 
 const savedCoor = window.localStorage.savedWinPos == null
   ? {}
@@ -127,7 +127,7 @@ const template = `
   </main>
 </article>`
 
-const DesktopWindow = {
+const DesktopWindow: any = {
   styles,
   template,
   data: {
@@ -145,6 +145,7 @@ const DesktopWindow = {
   }
 }
 
+// tslint:disable-next-line:no-empty
 DesktopWindow.created = function () {}
 
 DesktopWindow.mounted = function () {
@@ -214,11 +215,11 @@ DesktopWindow.focusWindow = function () {
   $child.windowFocused()
 }
 
-DesktopWindow.onWindowClick = function (event) {
+DesktopWindow.onWindowClick = function (event: Event) {
   this.$emit('focus', this)
 }
 
-DesktopWindow.onMenuMouseDown = function (event) {
+DesktopWindow.onMenuMouseDown = function (event: MouseEvent) {
   this.isDragging = true
   this.offsetCoor.x = this.$host.offsetLeft - event.x
   this.offsetCoor.y = this.$host.offsetTop - event.y
@@ -226,23 +227,23 @@ DesktopWindow.onMenuMouseDown = function (event) {
   this.$emit('focus', this)
 }
 
-DesktopWindow.onMenuCloseClick = function (event) {
+DesktopWindow.onMenuCloseClick = function (event: MouseEvent) {
   this.$emit('close', this, this.index)
 }
 
-DesktopWindow.onPreventMouseEvent = function (event) {
+DesktopWindow.onPreventMouseEvent = function (event: MouseEvent) {
   event.preventDefault()
   event.stopPropagation()
 }
 
-DesktopWindow.setPosition = function (x, y) {
+DesktopWindow.setPosition = function (x: number, y: number) {
   if (x > document.body.offsetWidth) {
     x = document.body.offsetWidth - this.width
   }
   if (y > document.body.offsetHeight) {
     y = document.body.offsetHeight - this.height
   }
-  const coor = {
+  const coor: any = {
     x
   }
   this.$host.style.left = `${x}px`

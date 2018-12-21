@@ -1,5 +1,5 @@
 import { forEach, reduce } from 'lodash'
-import extendWindowApp from '../WindowApp.js'
+import extendWindowApp from '../WindowApp'
 
 const baseStyle = {
   boxSizing: 'border-box',

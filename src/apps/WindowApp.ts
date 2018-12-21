@@ -1,11 +1,13 @@
-import { installApp } from './OS.js'
+import { installApp } from './OS'
 
-const WindowApp = {
+const WindowApp: any = {
   data: {}
 }
 
+// tslint:disable-next-line:no-empty
 WindowApp.windowBlurred = function () {}
 
+// tslint:disable-next-line:no-empty
 WindowApp.windowFocused = function () {}
 
 export default (definition, App) => {

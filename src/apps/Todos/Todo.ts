@@ -68,7 +68,7 @@ const template = `
 </div>
 `
 
-const Todo = {
+const Todo: any = {
   styles,
   template,
   data: {

@@ -1,6 +1,6 @@
-import { fileSystem } from '../OS.js'
+import { fileSystem } from '../OS'
 
-let currentDir = '/'
+let currentDir: string = '/'
 
 export const cd = path => {
   const isRootPath = path[0] === '/'
@@ -17,7 +17,7 @@ export const cd = path => {
 export const date = () => new Date()
 
 export const ls = () => {
-  const dir = fileSystem.getDir(pwd())
+  const dir: any = fileSystem.getDir(pwd())
   return Object.keys(dir)
 }
 

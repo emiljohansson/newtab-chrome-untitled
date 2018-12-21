@@ -1,7 +1,8 @@
 import extendWindowApp from './WindowApp'
-import directive from '../core/directive.ts'
+import directive from '../core/directive'
 
 directive('playground-foo-bar', el => {
+  // tslint:disable-next-line:no-console
   console.log(el)
 })
 
@@ -29,7 +30,7 @@ const template = `
 </article>
 `
 
-export const Playground = extendWindowApp('Playground', {
+export const Playground: any = extendWindowApp('Playground', {
   debug: false,
   styles,
   template,
@@ -37,9 +38,9 @@ export const Playground = extendWindowApp('Playground', {
     fooArray: ['foo', 'bar'],
     testVar: 1,
     testArr: [
-      {text: 'Butter'},
-      {text: 'Coffee'},
-      {text: 'Carrots'}
+      { text: 'Butter' },
+      { text: 'Coffee' },
+      { text: 'Carrots' }
     ],
     testArr2: [1, 2, 3],
     sum: 0,
@@ -48,14 +49,21 @@ export const Playground = extendWindowApp('Playground', {
 })
 
 Playground.beforeCreate = function () {
-  window.playground = this
+  (window as any).playground = this
 }
+// tslint:disable-next-line:no-empty
 Playground.created = function () {}
+// tslint:disable-next-line:no-empty
 Playground.beforeMount = function () {}
+// tslint:disable-next-line:no-empty
 Playground.mounted = function () {}
+// tslint:disable-next-line:no-empty
 Playground.beforeDestroy = function () {}
+// tslint:disable-next-line:no-empty
 Playground.destroyed = function () {}
+// tslint:disable-next-line:no-empty
 Playground.beforeUpdate = function () {}
+// tslint:disable-next-line:no-empty
 Playground.updated = function () {}
 
 Playground.onClick = function () {
@@ -71,7 +79,7 @@ Playground.onIncrement = function () {
   this.sum++
 }
 
-export const PlaygroundItem = {
+export const PlaygroundItem: any = {
   debug: false,
   styles: {},
   template: `

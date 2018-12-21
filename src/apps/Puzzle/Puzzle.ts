@@ -1,5 +1,5 @@
 import { filter, forEach, reduce } from 'lodash'
-import extendWindowApp from '../WindowApp.js'
+import extendWindowApp from '../WindowApp'
 
 const styles = {
   ':host': {
@@ -30,11 +30,13 @@ const template = `
 const numberOfValues = 15
 
 const swapEl = (el1, el2) => {
-  const tempEl = document.createElement('div')
+  const tempEl: HTMLElement = document.createElement('div')
   el1.parentNode.insertBefore(tempEl, el1)
   el2.parentNode.insertBefore(el1, el2)
-  tempEl.parentNode.insertBefore(el2, tempEl)
-  tempEl.parentNode.removeChild(tempEl)
+  if (tempEl.parentNode) {
+    tempEl.parentNode.insertBefore(el2, tempEl)
+    tempEl.parentNode.removeChild(tempEl)
+  }
 }
 
 const Puzzle = extendWindowApp('Puzzle', {
@@ -56,24 +58,24 @@ Puzzle.beforeCreate = function () {
 }
 
 Puzzle.mounted = function () {
-  const length = this.$children.length
+  const length: number = this.$children.length
 
   // shuffle
-  let index = -1
+  let index: number = -1
   while (++index < 20) {
-    const r1 = parseInt(Math.random() * length, 10)
-    const r2 = parseInt(Math.random() * length, 10)
+    const r1: number = parseInt((Math.random() * length).toString(), 10)
+    const r2: number = parseInt((Math.random() * length).toString(), 10)
     const el1 = this.$el.children[r1]
     const el2 = this.$el.children[r2]
     swapEl(el1, el2)
   }
 }
 
-Puzzle.onItemClick = function (el) {
+Puzzle.onItemClick = function (el: HTMLElement) {
   let blankIndex = 0
   let selectedIndex = 0
   const blankEl = this.$refs.blankItem.$host
-  forEach(this.$el.children, (childEl, index) => {
+  forEach(this.$el.children, (childEl, index: number) => {
     if (childEl === blankEl) {
       blankIndex = index
     }
@@ -105,6 +107,7 @@ Puzzle.onItemClick = function (el) {
     }
     return elValue
   }, -1)
+  // tslint:disable-next-line:no-console
   console.log(winner ? 'winner winner chicken dinner' : 'not yet...')
 }
 

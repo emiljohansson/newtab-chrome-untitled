@@ -1,8 +1,8 @@
 import { isFunction } from 'lodash'
-import { isEnter } from '../../../node_modules/keyboard-key-code/index.js'
-import { keyboard } from '../Desktop.js'
-import extendWindowApp from '../WindowApp.js'
-import * as cmd from '../Terminal/cmd.js'
+import { isEnter } from 'keyboard-key-code'
+import { keyboard } from '../Desktop'
+import extendWindowApp from '../WindowApp'
+import * as cmd from './cmd'
 
 const styles = {
   ':host': {
@@ -66,8 +66,8 @@ Terminal.windowFocused = function () {
   this.focusField()
 }
 
-Terminal.onKeyDown = function (event) {
-  const fieldEl = event.currentTarget
+Terminal.onKeyDown = function (event: KeyboardEvent) {
+  const fieldEl: HTMLInputElement = event.currentTarget as HTMLInputElement
   const input = fieldEl.value
   if (isEnter(event)) {
     const output = getOutput(input)

@@ -20,7 +20,7 @@ const OS = {
 }
 
 export const fileSystem = {
-  getDir (path) {
+  getDir (path: string) {
     if (path === '/') {
       return fileSystem[path]
     }

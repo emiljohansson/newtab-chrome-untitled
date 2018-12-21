@@ -1,5 +1,5 @@
-import Subject from '../../core/Subject.ts'
-import { date } from '../Terminal/cmd.js'
+import Subject from '../../core/Subject'
+import { date } from '../Terminal/cmd'
 
 const updateSubject = Subject()
 let currentMin = -1
@@ -13,7 +13,7 @@ setInterval(() => {
 
 const template = `<slot></slot><span>{{time}}</span>`
 
-const Time = {
+const Time: any = {
   styles: {},
   template,
   data: {
@@ -23,7 +23,7 @@ const Time = {
 
 Time.mounted = function () {
   const update = () => {
-    this.time = `${window.moment().tz(this.timezone).format('h:mm A')}`
+    this.time = `${(window as any).moment().tz(this.timezone).format('h:mm A')}`
   }
 
   updateSubject.subscribe(update)

@@ -1,5 +1,5 @@
 import { forEach, isFunction, remove } from 'lodash'
-import * as keyboardHandler from '../../node_modules/keyboard-handler/index.js'
+import * as keyboardHandler from 'keyboard-handler'
 
 const styles = {
   ':host': {
@@ -74,9 +74,9 @@ const template = `
   o-emit-close="onCloseWindow"></div>
 `
 
-const zIndexList = []
-let activeWindow
-let highestZIndex = 2
+const zIndexList: any[] = []
+let activeWindow: any
+let highestZIndex: number = 2
 
 const removeAt = (array, index) => remove(array, (n, i) => i === index)
 
@@ -85,8 +85,8 @@ const moveToEnd = (array, index) => {
   array.push(item)
 }
 
-const updateZIndex = desktopWindow => {
-  const index = zIndexList.indexOf(desktopWindow)
+const updateZIndex = (desktopWindow: any) => {
+  const index: number = zIndexList.indexOf(desktopWindow)
   highestZIndex++
   desktopWindow.$host.style.zIndex = highestZIndex
   if (index < 0) {
@@ -103,7 +103,7 @@ const removeFromZIndex = desktopWindow => {
   }
 }
 
-const Desktop = {
+const Desktop: any = {
   styles,
   template,
   data: {
@@ -143,11 +143,11 @@ Desktop.mounted = function () {
   })
 }
 
-Desktop.onFocusWindow = function (desktopWindow) {
+Desktop.onFocusWindow = function (desktopWindow: any) {
   this.focusWindow(desktopWindow)
 }
 
-Desktop.focusWindow = function (desktopWindow) {
+Desktop.focusWindow = function (desktopWindow: any) {
   if (activeWindow === desktopWindow) {
     return
   }
@@ -161,11 +161,11 @@ Desktop.focusWindow = function (desktopWindow) {
   updateZIndex(desktopWindow)
 }
 
-Desktop.onCloseWindow = function (desktopWindow, index) {
+Desktop.onCloseWindow = function (desktopWindow: any, index: number) {
   this.removeWindow(desktopWindow, index)
 }
 
-Desktop.removeWindow = function (desktopWindow, index) {
+Desktop.removeWindow = function (desktopWindow: any, index: number) {
   removeFromZIndex(desktopWindow)
   if (index > -1) {
     this.windows.splice(index, 1)
@@ -174,14 +174,14 @@ Desktop.removeWindow = function (desktopWindow, index) {
   desktopWindow.$destroy()
 }
 
-export const keyboard = {}
+export const keyboard: any = {}
 
 forEach(Object.keys(keyboardHandler), key => {
   const method = keyboardHandler[key]
   if (!isFunction(method)) {
     return
   }
-  keyboard[key] = function (...args) {
+  keyboard[key] = function (...args: any[]) {
     const app = args[0]
     const params = args[1]
     const callback = args[2]
