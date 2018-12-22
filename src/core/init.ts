@@ -1,4 +1,3 @@
-import { uniqueId } from 'lodash'
 import oEmit from './oEmit'
 import replaceWithTemplate from './replaceWithTemplate'
 import storeAttributes from './storeAttributes'
@@ -26,10 +25,7 @@ function ChildrenArray (vm: Instance, array: any): Children {
 }
 
 export default (vm: Instance, el: HTMLElement) => {
-  vm.$id = uniqueId('App_')
   vm.$children = ChildrenArray(vm, [])
-  vm.$refs = {}
-  vm.data = vm.data || {}
   // TODO init events & lifecycle
   callHook(vm, vm.beforeCreate)
   // TODO init injections & reactivity

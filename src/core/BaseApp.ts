@@ -1,16 +1,10 @@
-import { merge } from 'lodash'
-
-const styles: any = {}
-
-const template: any = ``
-
-const baseApp: any = {
-  styles,
-  template,
-  data: {}
-}
+import { isFunction, merge } from 'lodash'
+import InstanceConstructor from './InstanceConstructor'
 
 export default (definition: any): any => {
-  const vm: any = merge({}, baseApp, definition)
-  return vm
+  if (isFunction(definition)) {
+    return new (definition as any)()
+  }
+  const vm: InstanceConstructor = new InstanceConstructor()
+  return merge(vm, definition)
 }

@@ -4,10 +4,11 @@ import fireEvent from '../helpers/fireEvent'
 import instanceFactory, { Instance } from '../../src/core/Instance'
 import install from '../../src/core/install'
 import watch from '../../src/core/watch'
+import InstanceConstructor from '../../src/core/InstanceConstructor'
 
 test('should create an vm instance', () => {
-  const callback = sinon.spy()
-  const el = document.createElement('div')
+  const callback: any = sinon.spy()
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   el.setAttribute('foo', 'bar')
   const vm: any = instanceFactory({
@@ -23,6 +24,30 @@ test('should create an vm instance', () => {
   expect(isFunction(vm.$destroy)).toBeTruthy()
 
   vm.foo = 'bas'
+  expect(callback.called).toBeTruthy()
+})
+
+test('should create an vm instance from a class', () => {
+  const callback: any = sinon.spy()
+  const el: HTMLElement = document.createElement('div')
+  el.setAttribute('is', 'Foo')
+  el.setAttribute('foo', 'bar')
+
+  class Component extends InstanceConstructor {
+    public data: any = {
+      value: 123
+    }
+
+    public mounted (): void {
+      callback()
+    }
+  }
+  const vm: any = instanceFactory(Component, el)
+  expect(vm.data.foo).toBe('bar')
+  expect(vm.foo).toBe('bar')
+  expect(vm.data.value).toBe(123)
+  expect(vm.value).toBe(123)
+  expect(isFunction(vm.$destroy)).toBeTruthy()
   expect(callback.called).toBeTruthy()
 })
 
@@ -53,7 +78,7 @@ test('should create a unique vm instance', () => {
 })
 
 test('should not touch child elements when data changes', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const App = {
     template: `{{foo}}
@@ -74,7 +99,7 @@ test('should not touch child elements when data changes', () => {
 })
 
 test('should update each data separately in single text node', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const App = {
     template: `<template>{{foo}} {{bar}}, {{ foo }}</template>`,
@@ -90,7 +115,7 @@ test('should update each data separately in single text node', () => {
 
 test('should only update view after $nextTick been triggered', () => {
   expect.assertions(2)
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const App = {
     template: `{{foo}}-{{bar}}`,
@@ -113,7 +138,7 @@ test('should only update view after $nextTick been triggered', () => {
 })
 
 test('should replace empty values with an empty string', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const App = {
     template: `<div>{{foo}} {{bar}}</div>`,
@@ -128,7 +153,7 @@ test('should replace empty values with an empty string', () => {
 })
 
 test('should create sub apps', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -156,7 +181,7 @@ test('should create sub apps', () => {
 })
 
 test('should create sub apps in for loop', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -183,7 +208,7 @@ test('should create sub apps in for loop', () => {
 })
 
 test('should add an item to the view when calling unshift/push on an array', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -218,7 +243,7 @@ test('should add an item to the view when calling unshift/push on an array', () 
 test('should destroy child apps', () => {
   const destroyed1 = sinon.spy()
   const destroyed2 = sinon.spy()
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -259,7 +284,7 @@ test('should destroy child apps', () => {
 
 test('should remove dom events', () => {
   const onClick = sinon.spy()
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -279,7 +304,7 @@ test('should remove dom events', () => {
 })
 
 test('should remove watchers', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -298,7 +323,7 @@ test('should remove watchers', () => {
 
 test('should remove a app in the loop', () => {
   const destroyed = sinon.spy()
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.setAttribute('is', 'Foo')
   document.body.appendChild(el)
   const Foo = {
@@ -327,7 +352,7 @@ test('should remove a app in the loop', () => {
 })
 
 // test('should pass down props to child instance', () => {
-//   const el = document.createElement('div')
+//   const el: HTMLElement = document.createElement('div')
 //   el.innerHTML = `<div is="Bar" o-props="childProps"></div>`
 //   document.body.appendChild(el)
 //   const onClick = sinon.spy()
@@ -346,7 +371,7 @@ test('should remove a app in the loop', () => {
 // })
 
 test('should call parent method from child', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.innerHTML = `<div is="Bar" o-emit-increment="onIncrement"></div>`
   document.body.appendChild(el)
   let sum = 0
@@ -374,7 +399,7 @@ test('should call parent method from child', () => {
 
 test('should append root class names to new shadow host', () => {
   const expected = 'foo bar'
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   el.className = expected
   document.body.appendChild(el)
   const Foo = {
@@ -387,7 +412,7 @@ test('should append root class names to new shadow host', () => {
 })
 
 test('should create a app reference with oRef', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   let barVm
   const Foo = {
@@ -413,7 +438,7 @@ test('should create a app reference with oRef', () => {
 })
 
 test('should store a DOM element containing oRef', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
     template: `<article>
@@ -430,7 +455,7 @@ test('should store a DOM element containing oRef', () => {
 })
 
 test('should create an array for each reference with oRef in a oFor', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
     template: `<article>
@@ -466,7 +491,7 @@ test('should create an array for each reference with oRef in a oFor', () => {
 })
 
 test('moving around array values should update view', () => {
-  const el = document.createElement('div')
+  const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
     template: `<span o-for="values in values">{{value}}</span>`,
@@ -488,7 +513,7 @@ test('moving around array values should update view', () => {
 })
 
 // test('moving around array apps should update view', () => {
-//   const el = document.createElement('div')
+//   const el: HTMLElement = document.createElement('div')
 //   document.body.appendChild(el)
 //   let barVm
 //   const Foo = {

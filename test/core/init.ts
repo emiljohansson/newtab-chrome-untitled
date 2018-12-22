@@ -1,12 +1,6 @@
 import * as sinon from 'sinon'
 import init from '../../src/core/init'
 
-test('should create unique id', () => {
-  const vm: any = {}
-  init(vm, document.createElement('div'))
-  expect(vm.$id.indexOf('App_')).toBe(0)
-})
-
 test('should call methods in vm', () => {
   const beforeCreate = sinon.spy()
   const created = sinon.spy()

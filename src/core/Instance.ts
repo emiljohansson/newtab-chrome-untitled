@@ -12,22 +12,28 @@ import directive from './directive'
 import { directives } from './directives'
 import findChildComponents from './findChildComponents'
 
+export interface InstanceOptions<I extends Instance> {
+  data?: any
+  styles?: any
+  template?: any
+}
+
 export interface Instance {
   $id: string
-  $parent: Instance
+  $parent?: Instance
   $children: Children
   $data: any
   $refs: any
   $host: HTMLElement | null
   $el: HTMLElement
   data: any
-  styles?: any
-  template?: any
-  beforeDestroy: () => void
-  destroyed: () => void
-  beforeCreate: () => void
-  created: () => void
-  beforeMount: () => void
+  styles: any
+  template: string
+  beforeDestroy?: () => void
+  destroyed?: () => void
+  beforeCreate?: () => void
+  created?: () => void
+  beforeMount?: () => void
   $destroy: () => void
   $emit: (type: string, ...args: any[]) => void
 }

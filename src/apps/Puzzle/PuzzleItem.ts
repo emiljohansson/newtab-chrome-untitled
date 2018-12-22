@@ -1,30 +1,40 @@
 import { Instance } from '../../core/Instance'
+import InstanceConstructor from '../../core/InstanceConstructor'
 
-const styles = {
-  ':host': {
-    border: '1px solid',
-    cursor: 'pointer',
-    float: 'left',
-    height: '45px',
-    width: '45px'
+class PuzzleItem extends InstanceConstructor {
+  public styles: any = {
+    ':host': {
+      border: '1px solid',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      float: 'left',
+      height: '45px',
+      width: '45px'
+    },
+    value: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+      width: '100%'
+    }
   }
-}
 
-const template = `<div o-on-click="onClick">{{value}}</div>`
+  public template: string = `<div class="value" o-on-click="onClick">{{value}}</div>`
 
-const PuzzleItem: any = {
-  styles,
-  template,
-  data: {
+  public data: any = {
     value: ''
   }
-}
 
-// tslint:disable-next-line:no-empty
-PuzzleItem.mounted = function () {}
+  public mounted (): void {
+    // tslint:disable-next-line:no-console
+    console.log('PuzzleItem mounted')
+  }
 
-PuzzleItem.onClick = function (this: Instance) {
-  this.$emit('click', this.$host)
+  public onClick (this: Instance) {
+    this.$emit('click', this.$host)
+  }
 }
 
 export default PuzzleItem
