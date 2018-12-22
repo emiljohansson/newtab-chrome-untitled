@@ -152,7 +152,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
         parent.appendChild(newVm.$host)
       }
     }
-    attachStyleSheet(newVm.styles, newVm.$el)
+    attachStyleSheet(newVm.styles, newVm.$el as HTMLElement)
     return newVm
   }
 
