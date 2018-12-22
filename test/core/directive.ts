@@ -98,7 +98,7 @@ test('should link this to vm', () => {
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
   document.body.appendChild(el)
-  directive('foo-bar', function (this: any, el, binding) {
+  directive('foo-bar', function (this: any, el: HTMLElement, binding: any) {
     context = this
   })
   vm = instanceMixin({

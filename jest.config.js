@@ -8,7 +8,7 @@ module.exports = {
   // globalTeardown: './test/helpers/teardown.js',
   collectCoverageFrom: [
     '!**/*.{js}',
-    '**/*.{ts}',
+    '**/core/**/*.{ts}',
     '!**/AppTemplate.ts',
     '!**/*.d.ts',
     '!src/*.ts',

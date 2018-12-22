@@ -24,15 +24,17 @@ function ChildrenArray (vm: Instance, array: any): Children {
   return array
 }
 
-export default (vm: Instance, el: HTMLElement) => {
+export default (vm: Instance, el: HTMLElement | null) => {
   vm.$children = ChildrenArray(vm, [])
   // TODO init events & lifecycle
   callHook(vm, vm.beforeCreate)
   // TODO init injections & reactivity
   callHook(vm, vm.created)
   callHook(vm, vm.beforeMount)
-  storeAttributes(vm, el)
-  vm.$el = el
+  if (el) {
+    storeAttributes(vm, el)
+    vm.$el = el
+  }
   oEmit(vm)
   replaceWithTemplate(vm)
   return vm

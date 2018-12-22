@@ -1,10 +1,8 @@
 import { camelCase, filter, forEach } from 'lodash'
 import { getDirectiveAttributes } from './directives'
+import { Instance } from './Instance'
 
-export default (vm, el: HTMLElement) => {
-  if (!el) {
-    return
-  }
+export default (vm: Instance, el: HTMLElement) => {
   el.removeAttribute('is')
   const directives = getDirectiveAttributes()
   const attributes = filter(

@@ -1,18 +1,10 @@
 import storeAttributes from '../../src/core/storeAttributes'
 
-test('should do nothing', () => {
-  const vm = {
-    data: {}
-  }
-  storeAttributes(vm)
-  expect(vm.data).toEqual({})
-})
-
 test('should append to context', () => {
   const el = document.createElement('div')
   el.setAttribute('is', 'FooBar')
   el.setAttribute('foo', 'bar')
-  const vm = {
+  const vm: any = {
     data: {}
   }
   storeAttributes(vm, el)
@@ -27,7 +19,7 @@ test('should not store any attributes atrting with `o-`', () => {
   el.setAttribute('foo', 'bar')
   el.setAttribute('o-on-click', 'onClick')
   el.setAttribute('o-emit-increment', 'onIncrement')
-  const vm = {
+  const vm: any = {
     data: {}
   }
   storeAttributes(vm, el)

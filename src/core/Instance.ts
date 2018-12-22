@@ -50,7 +50,7 @@ function instanceFactory (definition: any, el: HTMLElement | null, context?: any
   if (context != null) {
     Object.assign(vm.data, context)
   }
-  init(vm, el || document.createElement('div'))
+  init(vm, el)
   state(vm)
   directives(vm)
   findChildComponents(vm)
