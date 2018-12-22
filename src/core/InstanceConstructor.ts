@@ -21,13 +21,31 @@ function childrenArray (vm: Instance, array: any): ChildrenArray {
   return array
 }
 
-export default class InstanceConstructor {
+export default class InstanceConstructor implements Instance {
   public readonly $id: string = uniqueId('App_')
+
+  // public $parent?: Instance | undefined;
+  public $data: any = {}
+  public $host: HTMLElement | null
+  // public $el?: HTMLElement | undefined;
+  // public beforeDestroy?: (() => void) | undefined;
+  // public destroyed?: (() => void) | undefined;
+  // public beforeCreate?: (() => void) | undefined;
+  // public created?: (() => void) | undefined;
+  // public beforeMount?: (() => void) | undefined;
 
   public styles: any = {}
   public template: string = ``
   public data: any = {}
 
-  public $children: ChildrenArray = childrenArray(this as any, []) // todo remove any
+  public $children: ChildrenArray = childrenArray(this, [])
   public $refs: any = {}
+
+  public $destroy (): void {
+    //
+  }
+
+  public $emit (type: string, ...args: any[]): void {
+    //
+  }
 }

@@ -6,6 +6,7 @@ test('should bind options.data to vm.$data', () => {
     a: 1
   }
   const vm: any = {
+    $data: {},
     data
   }
   state(vm)
@@ -19,6 +20,7 @@ test('should update key value after change', () => {
     b: 'Foo'
   }
   const vm: any = {
+    $data: {},
     data
   }
   state(vm)
@@ -26,8 +28,10 @@ test('should update key value after change', () => {
   vm.b = 'Bar'
   expect(vm.a).toBe(2)
   expect(vm.b).toBe('Bar')
-  expect(vm.data.a).toBe(2)
-  expect(vm.data.b).toBe('Bar')
+  expect(vm.$data.a).toBe(2)
+  expect(vm.$data.b).toBe('Bar')
+  expect(vm.data.a).toBe(1)
+  expect(vm.data.b).toBe('Foo')
 })
 
 test('should call beforeUpdate before updating the value', () => {
@@ -36,6 +40,7 @@ test('should call beforeUpdate before updating the value', () => {
     a: 1
   }
   const vm: any = {
+    $data: {},
     data,
     beforeUpdate: callback
   }
@@ -45,9 +50,10 @@ test('should call beforeUpdate before updating the value', () => {
 })
 
 test('should call methods in vm', () => {
-  const beforeUpdate = sinon.spy()
-  const updated = sinon.spy()
+  const beforeUpdate: any = sinon.spy()
+  const updated: any = sinon.spy()
   const vm: any = {
+    $data: {},
     data: {
       a: 1
     },
@@ -55,7 +61,7 @@ test('should call methods in vm', () => {
     updated
   }
   state(vm)
-  const order = [
+  const order: any[] = [
     beforeUpdate,
     updated
   ]
@@ -69,6 +75,7 @@ test('should watch arrays', () => {
   const obj1 = { id: 1 }
   const obj2 = { id: 2 }
   const vm: any = {
+    $data: {},
     data: {
       a: [obj1, obj2]
     },

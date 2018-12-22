@@ -6,6 +6,7 @@ test('should replace all text nodes with data from `vm`', () => {
   document.body.appendChild(el)
   const vm: any = {
     $el: el,
+    $data: {},
     template: `{{foo}}, {{bar}}`,
     data: {
       foo: 'Hello',

@@ -1,4 +1,4 @@
-import { filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
+import { assign, filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
 import createSubject, { Subject } from './Subject'
 import coreFunctions from './coreFunctions'
 import callHook from './callHook'
@@ -117,7 +117,7 @@ const iterateData = vm => {
 }
 
 export default (vm: Instance) => {
-  vm.$data = vm.data
+  assign(vm.$data, vm.data)
   const publicMethods = filter(
     keys(vm),
     key => key[0] !== '$' && indexOf(coreFunctions, key) < 0 && isFunction(vm[key])

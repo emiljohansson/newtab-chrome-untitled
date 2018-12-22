@@ -2,16 +2,16 @@ import * as sinon from 'sinon'
 import init from '../../src/core/init'
 
 test('should call methods in vm', () => {
-  const beforeCreate = sinon.spy()
-  const created = sinon.spy()
-  const beforeMount = sinon.spy()
+  const beforeCreate: any = sinon.spy()
+  const created: any = sinon.spy()
+  const beforeMount: any = sinon.spy()
 
   const vm: any = {
     beforeCreate,
     created,
     beforeMount
   }
-  init(vm, document.createElement('div'))
+  init(vm, null)
   const order = [
     beforeCreate,
     created,
