@@ -1,14 +1,6 @@
 import { Instance } from '../../core/Instance'
 import InstanceConstructor from '../../core/InstanceConstructor'
-
-function Component (options?: any): any {
-  return function (Component: any): void {
-    Object.keys(options).forEach((key: string) => {
-      Component.prototype[key] = options[key]
-    })
-    return Component
-  }
-}
+import { Component } from '../../core/decorators'
 
 @Component({
   template: `<div class="value" o-on-click="onClick">{{value}}</div>`

@@ -98,13 +98,6 @@ test('should not touch child elements when data changes', () => {
   vm.$destroy()
 })
 
-test('should find template in prototype', () => {
-  class App extends InstanceConstructor {}
-  App.prototype.template = `<div></div>`
-  const vm: any = instanceFactory(App, null)
-  expect(vm.template).toBe(App.prototype.template)
-})
-
 test('should update each data separately in single text node', () => {
   const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
