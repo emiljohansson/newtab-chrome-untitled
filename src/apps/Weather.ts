@@ -1,6 +1,12 @@
-import Subject from '../core/Subject'
+import { Subject } from '../core/Subject'
 
-const updateSubject = Subject()
+interface State {
+  channel: any
+  temp: string
+  unit: string
+}
+
+const updateSubject: Subject<State> = new Subject()
 
 const getWeather = unit => {
   // const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="denver, co") and u="${unit}"`
@@ -97,7 +103,7 @@ const Weather: any = {
 }
 
 Weather.mounted = function () {
-  updateSubject.subscribe(state => {
+  updateSubject.subscribe((state: State) => {
     if (this.channel == null) {
       this.channel = state.channel
       this.$emit('channelRetrieved', this.channel)

@@ -60,7 +60,7 @@ export default class InstanceConstructor implements Instance {
   }
 
   public $emit (type: string, ...args: any[]): void {
-    const subject: Subject = this.$listeners[type]
+    const subject: Subject<any[]> = this.$listeners[type]
     if (!subject) {
       return
     }

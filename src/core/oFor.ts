@@ -101,7 +101,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
     }
     const textNodes = getAllTextNodes(cloneNode)
     let tempValue = dataItem
-    const subjects: Subject[] = []
+    const subjects: Subject<any>[] = []
 
     Object.defineProperty(vm.data[dataKey], index.toString(), {
       get () {
@@ -125,7 +125,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
           )
         })
       }
-      const subject = watch(id, index)
+      const subject: Subject<any> = watch(id, index)
       subject.subscribe(update)
       subjects[index] = subject
 

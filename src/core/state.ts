@@ -1,5 +1,5 @@
 import { assign, filter, forEach, keys, indexOf, isArray, isFunction } from 'lodash'
-import createSubject, { Subject } from './Subject'
+import { Subject } from './Subject'
 import coreFunctions from './coreFunctions'
 import callHook from './callHook'
 import watch from './watch'
@@ -7,8 +7,8 @@ import { Instance } from './Instance'
 
 const dataWatcher = {}
 
-function ObserverArray (vm: any, key: string, array: any[], viewSubject: Subject) {
-  const subject = createSubject()
+function ObserverArray (vm: any, key: string, array: any[], viewSubject: Subject<any>) {
+  const subject: Subject<any> = new Subject()
   subject.subscribe(inserted => {
     callHook(vm, vm.beforeUpdate)
     viewSubject.next(inserted)
@@ -45,7 +45,7 @@ function ObserverArray (vm: any, key: string, array: any[], viewSubject: Subject
   })
 }
 
-const dataChanged = (vm: Instance, subject: Subject, newValue: any) => {
+const dataChanged = (vm: Instance, subject: Subject<any>, newValue: any) => {
   const cb = () => {
     subject.next(newValue)
   }
@@ -90,14 +90,14 @@ const iterateData = vm => {
     }
   }
   const addWatch = (value, key) => {
-    const subject = createSubject()
+    const subject: Subject<any> = new Subject()
     const viewSubject = watch(vm, key)
     if (isArray(value)) {
       ObserverArray(vm, key, value, viewSubject)
       vm[key] = value
       return
     }
-    subject.subscribe(newValue => {
+    subject.subscribe((newValue: any) => {
       vm.$data[key] = newValue
       callHook(vm, vm.beforeUpdate)
       viewSubject.next(newValue)

@@ -1,49 +1,42 @@
 import { forEach } from 'lodash'
 
-export interface Subject {
-  readonly numberOfSubscriptions: number
-  complete: () => void
-  next: (value?: any) => void
-  subscribe: (callback: any) => any
-}
+export class Subject<T> {
+  private subscriptions: any[] = []
+  private completed: boolean = false
 
-export default (): Subject => {
-  const subscriptions: any[] = []
-  let completed: boolean = false
-
-  const unsubscribe: any = (callback: any): any => (): void => {
-    let index: number = subscriptions.length
+  private unsubscribe: any = (callback: any): any => (): void => {
+    let index: number = this.subscriptions.length
     while (index--) {
-      if (callback === subscriptions[index]) {
-        subscriptions.splice(index, 1)
+      if (callback === this.subscriptions[index]) {
+        this.subscriptions.splice(index, 1)
         return
       }
     }
   }
 
-  const subject: Subject = {
-    get numberOfSubscriptions (): number {
-      return subscriptions.length
-    },
-    complete (): void {
-      completed = true
-      subscriptions.length = 0
-    },
-    next (value: any): void {
-      if (completed) {
-        return
-      }
-      forEach(subscriptions, (subscription: any) => {
-        subscription(value)
-      })
-    },
-    subscribe (callback: any): any {
-      if (completed) {
-        return
-      }
-      subscriptions.push(callback)
-      return unsubscribe(callback)
-    }
+  public get numberOfSubscriptions (): number {
+    return this.subscriptions.length
   }
-  return subject
+
+  public complete (): void {
+    this.completed = true
+    this.subscriptions.length = 0
+  }
+
+  public next (value?: T): void {
+    if (this.completed) {
+      return
+    }
+    forEach(this.subscriptions, (subscription: any) => {
+      subscription(value)
+    })
+  }
+
+  public subscribe (callback: any): any {
+    if (this.completed) {
+      return
+    }
+    this.subscriptions.push(callback)
+    return this.unsubscribe(callback)
+  }
 }

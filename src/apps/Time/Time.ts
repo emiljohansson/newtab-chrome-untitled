@@ -1,7 +1,7 @@
-import Subject from '../../core/Subject'
+import { Subject } from '../../core/Subject'
 import { date } from '../Terminal/cmd'
 
-const updateSubject = Subject()
+const updateSubject: Subject<void> = new Subject()
 let currentMin = -1
 setInterval(() => {
   const now = date()

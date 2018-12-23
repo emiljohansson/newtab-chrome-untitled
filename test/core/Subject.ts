@@ -1,9 +1,9 @@
 import * as sinon from 'sinon'
-import Subject from '../../src/core/Subject'
+import { Subject } from '../../src/core/Subject'
 
 test('next should trigger subscribers', () => {
   const callback: any = sinon.spy()
-  const subject: any = Subject()
+  const subject: Subject<void> = new Subject<void>()
   subject.subscribe(callback)
   subject.subscribe(callback)
   subject.next()
@@ -13,7 +13,7 @@ test('next should trigger subscribers', () => {
 
 test('complete should stop trigger subscribers', () => {
   const callback: any = sinon.spy()
-  const subject: any = Subject()
+  const subject: Subject<void> = new Subject<void>()
   subject.subscribe(callback)
   subject.complete()
   subject.next()
@@ -29,7 +29,7 @@ test('next should pass parameters to subscribers', (done: any) => {
     expect(value).toBe(expected)
     done()
   }
-  const subject: any = Subject()
+  const subject: Subject<number> = new Subject()
   subject.subscribe(callback)
   subject.next(expected)
 })
@@ -37,7 +37,7 @@ test('next should pass parameters to subscribers', (done: any) => {
 test('unsubscribe should remove subscription', () => {
   const callback1: any = sinon.spy()
   const callback2: any = sinon.spy()
-  const subject: any = Subject()
+  const subject: Subject<void> = new Subject()
   const unsubscribe: any = subject.subscribe(callback1)
   subject.subscribe(callback2)
   subject.next()

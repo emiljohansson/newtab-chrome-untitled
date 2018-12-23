@@ -1,4 +1,3 @@
-import { Instance } from '../../core/Instance'
 import InstanceConstructor from '../../core/InstanceConstructor'
 import { Component } from '../../core/decorators'
 
@@ -32,7 +31,7 @@ class PuzzleItem extends InstanceConstructor {
     console.log('PuzzleItem mounted')
   }
 
-  public onClick (this: Instance) {
+  public onClick (): void {
     this.$emit('click', this.$host)
   }
 }
