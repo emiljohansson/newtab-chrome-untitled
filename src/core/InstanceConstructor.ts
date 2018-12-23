@@ -23,16 +23,10 @@ function childrenArray (vm: Instance, array: any): ChildrenArray {
 
 export default class InstanceConstructor implements Instance {
   public readonly $id: string = uniqueId('App_')
-
-  // public $parent?: Instance | undefined;
-  public $data: any = {}
-  public $host: HTMLElement | null
-  // public $el?: HTMLElement | undefined;
-  // public beforeDestroy?: (() => void) | undefined;
-  // public destroyed?: (() => void) | undefined;
-  // public beforeCreate?: (() => void) | undefined;
-  // public created?: (() => void) | undefined;
-  // public beforeMount?: (() => void) | undefined;
+  public readonly $el: HTMLElement
+  public readonly $parent: Instance
+  public readonly $data: any = {}
+  public readonly $host: HTMLElement | null
 
   public styles: any = {}
   public template: string = ``

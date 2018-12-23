@@ -29,7 +29,7 @@ export interface Instance {
   $el?: HTMLElement
   data: any
   styles: any
-  template: string
+  template?: string
   beforeDestroy?: () => void
   destroyed?: () => void
   beforeCreate?: () => void
