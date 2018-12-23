@@ -40,16 +40,16 @@ function CacheArray (vm: Instance, ref: string | null): any[] {
 
 export default function (this: Instance, el: HTMLElement, binding: any) {
   const vm: Instance = this
-  const parentEl = el.parentElement || (el.parentNode as any).host
-  const id = uniqueId('oFor_')
-  const template = el.outerHTML
-  const keys = findKeysInTemplate(template)
-  const tempContainer = document.createDocumentFragment()
+  const parentEl: HTMLElement = el.parentElement || (el.parentNode as any).host
+  const id: string = uniqueId('oFor_')
+  const template: string = el.outerHTML
+  const keys: string[] = findKeysInTemplate(template)
+  const tempContainer: DocumentFragment = document.createDocumentFragment()
   const ref: string | null = el.getAttribute('o-ref')
-  const forValues = binding.expression.split(' ')
-  const valueString = forValues[0]
-  const dataKey = forValues[2]
-  const dataItems = vm.data[dataKey]
+  const forValues: string[] = binding.expression.split(' ')
+  const valueString: string = forValues[0]
+  const dataKey: string = forValues[2]
+  const dataItems: any[] = vm.data[dataKey]
 
   const cache: any[] = CacheArray(vm, ref)
 
@@ -156,7 +156,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
 
   forEach(dataItems, insertNode)
 
-  if (parentEl.shadowRoot != null) {
+  if (parentEl.shadowRoot !== null) {
     parentEl.shadowRoot.replaceChild(tempContainer, el)
   } else {
     parentEl.replaceChild(tempContainer, el)

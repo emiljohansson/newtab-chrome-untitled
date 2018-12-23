@@ -12,7 +12,7 @@ import { directives } from './directives'
 import findChildComponents from './findChildComponents'
 import { ChildrenArray } from './InstanceConstructor'
 
-export interface InstanceOptions<I extends Instance> {
+export interface InstanceOptions {
   data?: any
   styles?: any
   template?: any

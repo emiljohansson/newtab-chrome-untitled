@@ -32,8 +32,8 @@ export default class InstanceConstructor implements Instance {
   public readonly $host: HTMLElement | null = null
   public readonly $listeners: any = {}
 
-  public styles: any = {}
   public template: string = ``
+  public styles: any = {}
   public data: any = {}
 
   public $children: ChildrenArray = childrenArray(this, [])

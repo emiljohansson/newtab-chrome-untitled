@@ -3,10 +3,8 @@ import InstanceConstructor from '../../core/InstanceConstructor'
 import { Component } from '../../core/decorators'
 
 @Component({
-  template: `<div class="value" o-on-click="onClick">{{value}}</div>`
-})
-class PuzzleItem extends InstanceConstructor {
-  public styles: any = {
+  template: `<div class="value" o-on-click="onClick">{{value}}</div>`,
+  styles: {
     ':host': {
       border: '1px solid',
       cursor: 'pointer',
@@ -23,12 +21,12 @@ class PuzzleItem extends InstanceConstructor {
       height: '100%',
       width: '100%'
     }
-  }
-
-  public data: any = {
+  },
+  data: {
     value: ''
   }
-
+})
+class PuzzleItem extends InstanceConstructor {
   public mounted (): void {
     // tslint:disable-next-line:no-console
     console.log('PuzzleItem mounted')

@@ -1,5 +1,6 @@
-import { isFunction, merge } from 'lodash'
+import { isFunction, isPlainObject, isString, keys, merge } from 'lodash'
 import InstanceConstructor from './InstanceConstructor'
+import { decoratorOptions } from './decorators'
 
 export default (definition: any): any => {
   let instance: any
@@ -9,8 +10,17 @@ export default (definition: any): any => {
     const vm: InstanceConstructor = new InstanceConstructor()
     instance = merge(vm, definition)
   }
-  if (!instance.template && definition.prototype && definition.prototype.template) {
-    instance.template = definition.prototype.template
+  if (definition.prototype) {
+    keys(decoratorOptions(definition.prototype)).forEach((key: string) => {
+      const value: any = definition.prototype[key]
+      if (value) {
+        if (isString(value)) {
+          instance[key] = value
+        } else if (isPlainObject(value)) {
+          instance[key] = { ...value }
+        }
+      }
+    })
   }
   return instance
 }
