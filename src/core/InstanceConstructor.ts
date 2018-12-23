@@ -1,5 +1,7 @@
 import { uniqueId } from 'lodash'
 import { Instance } from './Instance'
+import callHook from './callHook'
+import { destroy as destroyWatchers } from './watch'
 
 export interface ChildrenArray extends Array<any> {
   push: (childVm: Instance) => number
@@ -26,7 +28,7 @@ export default class InstanceConstructor implements Instance {
   public readonly $el: HTMLElement
   public readonly $parent: Instance
   public readonly $data: any = {}
-  public readonly $host: HTMLElement | null
+  public readonly $host: HTMLElement | null = null
 
   public styles: any = {}
   public template: string = ``
@@ -36,10 +38,25 @@ export default class InstanceConstructor implements Instance {
   public $refs: any = {}
 
   public $destroy (): void {
-    //
+    callHook(this, (this as any).beforeDestroy)
+    destroyWatchers(this)
+    delete this.$refs
+    while (this.$children.length) {
+      const childVm = this.$children[0]
+      this.$children.remove(childVm)
+    }
+    if (this.$host !== null) {
+      if (this.$host.parentElement === null) {
+        if (this.$host.parentNode) {
+          this.$host.parentNode.removeChild(this.$host)
+        }
+      } else {
+        this.$host.parentElement.removeChild(this.$host)
+      }
+    }
+    callHook(this, (this as any).destroyed)
   }
 
-  public $emit (type: string, ...args: any[]): void {
-    //
-  }
+  // tslint:disable-next-line:no-empty
+  public $emit (type: string, ...args: any[]): void {}
 }

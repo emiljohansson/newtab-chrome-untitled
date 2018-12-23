@@ -1,6 +1,5 @@
 import { forEach } from 'lodash'
 import BaseApp from './BaseApp'
-import destroy from './destroy'
 import mount from './mount'
 import init from './init'
 import state from './state'
@@ -56,7 +55,6 @@ function instanceFactory (definition: any, el: HTMLElement | null, context?: any
   directives(vm)
   findChildComponents(vm)
   mount(vm)
-  destroy(vm)
   return vm
 }
 

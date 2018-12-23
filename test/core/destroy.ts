@@ -1,19 +1,14 @@
 import * as sinon from 'sinon'
-import { noop } from 'lodash'
-import destroyMixin from '../../src/core/destroy'
 import { Instance } from '../../src/core/Instance'
+import InstanceConstructor from '../../src/core/InstanceConstructor'
 
-const defaultInstance: any = (vm: any = {}): Instance => ({
-  ...{
-    $children: [],
-    $refs: {},
-    $host: null,
-    beforeDestroy: noop,
-    destroyed: noop,
-    $destroy: noop
-  },
-  ...vm
-})
+const defaultInstance: any = (options: any = {}): Instance => {
+  const vm: InstanceConstructor = new InstanceConstructor()
+  Object.keys(options).forEach((key: string) => {
+    vm[key] = options[key]
+  })
+  return vm
+}
 
 test('should call methods in order', () => {
   const beforeDestroy = sinon.spy()
@@ -23,8 +18,7 @@ test('should call methods in order', () => {
     beforeDestroy,
     destroyed
   })
-  destroyMixin(vm)
-  const order = [
+  const order: any[] = [
     beforeDestroy,
     destroyed
   ]
@@ -38,7 +32,6 @@ test('should remove element', () => {
   const vm: Instance = defaultInstance({
     $host: el
   })
-  destroyMixin(vm)
   vm.$destroy()
   expect(document.body.children.length).toBe(0)
 })
