@@ -1,4 +1,4 @@
-import { filter, forEach, toArray } from 'lodash'
+import { filter, forEach, toArray, toString } from 'lodash'
 import apps from './apps'
 import instanceFactory, { Instance } from './Instance'
 import { ifSelector } from './oIf'
@@ -35,18 +35,14 @@ export default (vm: Instance) => {
   children = filter(children, (childEl: HTMLElement) => children.indexOf(childEl.parentElement as HTMLElement) < 0)
   forEach(children, el => {
     const id: string | null = el.getAttribute('is')
-    const ref: string | null = el.getAttribute('o-ref')
+    const ref: string = toString(el.getAttribute('o-ref'))
     if (id !== null) {
       const childVm = instanceFactory(apps(id), el)
       vm.$children.push(childVm)
-      if (ref !== null) {
-        vm.$refs[ref] = childVm
-      }
+      vm.$refs[ref] = childVm
       return
     }
     el.removeAttribute('o-ref')
-    if (ref !== null) {
-      vm.$refs[ref] = el
-    }
+    vm.$refs[ref] = el
   })
 }

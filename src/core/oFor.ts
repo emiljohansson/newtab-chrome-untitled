@@ -1,4 +1,4 @@
-import { forEach, isElement, map, uniqueId } from 'lodash'
+import { forEach, isElement, map, toString, uniqueId } from 'lodash'
 import attachStyleSheet from './styleSheet'
 import apps from './apps'
 import instanceFactory, { Instance } from './Instance'
@@ -30,9 +30,7 @@ function CacheArray (vm: Instance, ref: string | null): any[] {
   ], function (method: string) {
     array[method] = function (...args: any[]) {
       const result = Array.prototype[method].apply(this, args)
-      if (vm.$refs[ref] != null) {
-        vm.$refs[ref] = map(array, obj => obj.vm)
-      }
+      vm.$refs[ref] = map(array, obj => obj.vm)
       return result
     }
   })
@@ -139,7 +137,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
   }
 
   const App = (el: HTMLElement, parent, context, appendFirst) => {
-    const definition: any = apps(el.getAttribute('is') || '')
+    const definition: any = apps(toString(el.getAttribute('is')))
     const newVm: Instance = instanceFactory(definition, el, context)
     vm.$children.push(newVm)
     if (appendFirst && parent.children.length > 0) {

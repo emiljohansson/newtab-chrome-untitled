@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash'
+import { toString, uniqueId } from 'lodash'
 import instanceFactory, { Instance } from './Instance'
 import apps from './apps'
 
@@ -7,12 +7,10 @@ export const ifSelector = 'o-if'
 const dirs = {}
 
 function App (this: Instance, el: HTMLElement, parent: HTMLElement, comment: HTMLElement) {
-  const definition = apps(el.getAttribute('is') || '')
-  const newVm = instanceFactory(definition, el)
+  const definition = apps(toString(el.getAttribute('is')))
+  const newVm: Instance = instanceFactory(definition, el)
   this.$children.push(newVm)
-  if (newVm.$host) {
-    parent.insertBefore(newVm.$host, comment.nextSibling)
-  }
+  parent.insertBefore((newVm.$host as any), comment.nextSibling)
   return newVm
 }
 

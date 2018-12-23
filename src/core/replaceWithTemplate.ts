@@ -17,7 +17,7 @@ const replaceWithTemplate = vm => {
   shadowContainer.attachShadow({
     mode: 'open'
   })
-  const template = vm.template
+  const template: string = vm.template
 
   vm.$host = shadowContainer
   vm.$el = shadowContainer.shadowRoot
