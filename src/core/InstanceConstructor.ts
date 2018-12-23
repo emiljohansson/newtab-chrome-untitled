@@ -2,6 +2,7 @@ import { uniqueId } from 'lodash'
 import { Instance } from './Instance'
 import callHook from './callHook'
 import { destroy as destroyWatchers } from './watch'
+import { Subject } from './Subject'
 
 export interface ChildrenArray extends Array<any> {
   push: (childVm: Instance) => number
@@ -29,6 +30,7 @@ export default class InstanceConstructor implements Instance {
   public readonly $parent: Instance
   public readonly $data: any = {}
   public readonly $host: HTMLElement | null = null
+  public readonly $listeners: any = {}
 
   public styles: any = {}
   public template: string = ``
@@ -57,6 +59,11 @@ export default class InstanceConstructor implements Instance {
     callHook(this, (this as any).destroyed)
   }
 
-  // tslint:disable-next-line:no-empty
-  public $emit (type: string, ...args: any[]): void {}
+  public $emit (type: string, ...args: any[]): void {
+    const subject: Subject = this.$listeners[type]
+    if (!subject) {
+      return
+    }
+    subject.next(args)
+  }
 }

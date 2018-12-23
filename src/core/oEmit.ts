@@ -1,23 +1,25 @@
-import { camelCase, filter, forEach, noop } from 'lodash'
-import Subject from './Subject'
+import { camelCase, filter, forEach } from 'lodash'
+import subjectFactory, { Subject } from './Subject'
+import { Instance } from './Instance'
 
 const emitSelector = 'o-emit-'
 
-export default vm => {
-  vm.$emit = noop
-  if (vm.$el == null) {
+export default (vm: Instance): void => {
+  if (!vm.$el) {
     return
   }
   const attributes = filter(vm.$el.attributes, attribute => attribute.name.indexOf(emitSelector) > -1)
   if (!attributes.length) {
     return
   }
-  vm.$listeners = {}
   forEach(attributes, attribute => {
-    const name = camelCase(attribute.name.substr(emitSelector.length))
-    const subject = Subject()
-    subject.subscribe((args) => {
-      const callback = vm.$parent[attribute.value]
+    const name: string = camelCase(attribute.name.substr(emitSelector.length))
+    const subject: Subject = subjectFactory()
+    subject.subscribe((args: any) => {
+      if (!vm.$parent) {
+        return
+      }
+      const callback: any = vm.$parent[attribute.value]
       if (callback == null) {
         return
       }
@@ -25,11 +27,4 @@ export default vm => {
     })
     vm.$listeners[name] = subject
   })
-  vm.$emit = (type, ...args: any[]) => {
-    const subject = vm.$listeners[type]
-    if (subject == null) {
-      return
-    }
-    subject.next(args)
-  }
 }

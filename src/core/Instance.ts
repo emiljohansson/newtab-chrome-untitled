@@ -20,12 +20,13 @@ export interface InstanceOptions<I extends Instance> {
 
 export interface Instance {
   $id: string
+  $el?: HTMLElement
   $parent?: Instance
+  $host: HTMLElement | null
   $children: ChildrenArray
   $data: any
   $refs: any
-  $host: HTMLElement | null
-  $el?: HTMLElement
+  $listeners: any
   data: any
   styles: any
   template?: string
