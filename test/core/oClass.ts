@@ -9,7 +9,7 @@ test('should toggle class', () => {
       showMyClass: true
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   const className = 'my-class'
   expect(vm.$el.children[0].classList.contains(className)).toBeTruthy()
   vm.showMyClass = !vm.showMyClass
@@ -30,7 +30,7 @@ test('should toggle child classes', () => {
       showMyClass: true
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   const childEl = vm.$el.children[0].children[0]
   expect(childEl.classList.contains('my-class')).toBeTruthy()
   vm.showMyClass = !vm.showMyClass
@@ -49,7 +49,7 @@ test('should remove o-class attribute', () => {
       showMyClass: true
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   expect(vm.$el.children[0].hasAttribute('o-class')).toBeFalsy()
   vm.$destroy()
 })

@@ -11,7 +11,7 @@ test('should add a keyup listener', () => {
     template: `<div o-on-keyup="onKeyUp"></div>`,
     onKeyUp
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'keyup')
   expect(onKeyUp.called).toBeTruthy()
   vm.$destroy()
@@ -27,7 +27,7 @@ test('should add click listener', () => {
     onClick
   }
 
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'click')
   expect(onClick.called).toBeTruthy()
   vm.$destroy()
@@ -50,7 +50,7 @@ test('should add a click listener to child element', () => {
       event.preventDefault()
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   fireEvent(vm.$el.children[0], 'click')
   fireEvent(vm.$el.children[0].children[0], 'click')
   expect(onClick.callCount).toBe(1)

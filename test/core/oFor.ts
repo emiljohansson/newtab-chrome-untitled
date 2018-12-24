@@ -10,7 +10,7 @@ test('should create an element for each item in the list', () => {
       list: array
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   const rootEl = vm.$el
   expect(rootEl.children.length).toBe(2)
   const firstChild = rootEl.children[0]
@@ -30,7 +30,7 @@ test('should update view when item in list changes', () => {
       list: array
     }
   }
-  const vm = Instance(Foo, el)
+  const vm: any = Instance(Foo, el)
   const rootEl = vm.$el
   expect(rootEl.children.length).toBe(2)
   vm.list[0] = 'Hello'

@@ -5,18 +5,18 @@ const subjects: any = {}
 
 export const destroy: any = (vm: any): void => {
   if (subjects[vm.$id]) {
-    const destroySubject: Subject<void> = subjects[vm.$id]['$destroy']
+    const destroySubject: Subject<any> = subjects[vm.$id]['$destroy']
     if (destroySubject) {
       destroySubject.next()
     }
-    forEach(subjects[vm.$id], (subject: Subject<void>, key: string) => {
+    forEach(subjects[vm.$id], (subject: Subject<any>, key: string) => {
       subject.complete()
     })
   }
   delete subjects[vm.$id]
 }
 
-export default (vm: any, key: string): Subject<void> => {
+export default (vm: any, key: string): Subject<any> => {
   const id: string = typeof vm === 'string'
     ? vm
     : vm.$id

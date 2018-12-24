@@ -1,6 +1,6 @@
 import * as sinon from 'sinon'
 import { noop } from 'lodash'
-import instanceMixin from '../../src/core/Instance'
+import instanceFactory from '../../src/core/Instance'
 import directive from '../../src/core/directive'
 import { remove } from '../../src/core/directives'
 
@@ -11,7 +11,7 @@ test('should do nothing', () => {
   document.body.appendChild(el)
   directive('foo', callback)
   directive('bar', {})
-  const vm = instanceMixin({}, el)
+  const vm: any = instanceFactory({}, el)
   expect(callback.called).toBeFalsy()
   vm.$destroy()
   remove('foo')
@@ -27,7 +27,7 @@ test('should call when found', () => {
   directive('foo-bar', el => {
     expect(el.innerHTML).toBe('Foo')
   })
-  vm = instanceMixin({}, el)
+  vm = instanceFactory({}, el)
   vm.$destroy()
   remove('foo-bar')
 })
@@ -51,7 +51,7 @@ test('should call each element found', () => {
     expect(el.innerHTML).toBe(index === 0 ? 'Foo' : 'Bar')
     index++
   })
-  vm = instanceMixin({}, el)
+  vm = instanceFactory({}, el)
   expect(index).toBe(2)
   vm.$destroy()
   remove('foo-bar')
@@ -66,7 +66,7 @@ test('should call all directives', () => {
   document.body.appendChild(el)
   directive('foo', fooCallback)
   directive('bar', barCallback)
-  vm = instanceMixin({}, el)
+  vm = instanceFactory({}, el)
   expect(fooCallback.called).toBeTruthy()
   expect(barCallback.called).toBeTruthy()
   vm.$destroy()
@@ -84,7 +84,7 @@ test('should not share bindings', () => {
     binding.id = 'foo' + bindings.length
     bindings.push(binding)
   })
-  vm = instanceMixin({}, el)
+  vm = instanceFactory({}, el)
   expect(bindings[0].id).toBe('foo0')
   expect(bindings[1].id).toBe('foo1')
   vm.$destroy()
@@ -101,7 +101,7 @@ test('should link this to vm', () => {
   directive('foo-bar', function (this: any, el: HTMLElement, binding: any) {
     context = this
   })
-  vm = instanceMixin({
+  vm = instanceFactory({
     data: {
       message: 'hello!'
     }
@@ -133,7 +133,7 @@ test('should bind binding.value to a data variable', () => {
       count++
     }
   })
-  vm = instanceMixin({
+  vm = instanceFactory({
     data: {
       message: 'hello 1'
     }
@@ -155,7 +155,7 @@ test('should convert object literal value to binding.value', () => {
     expect(binding.value.text).toBe('hello!')
     expect(binding.expression).toBe(`{ border-color: 'white', text: 'hello!' }`)
   })
-  vm = instanceMixin({}, el)
+  vm = instanceFactory({}, el)
   vm.$destroy()
   remove('foo-bar')
 })
@@ -175,7 +175,7 @@ test('should call same function for both bind and update', () => {
     oldValue = binding.value
     count++
   })
-  vm = instanceMixin({
+  vm = instanceFactory({
     data: {
       message: 'hello 1'
     }
@@ -206,7 +206,7 @@ test('should watch object literal values', () => {
       count++
     }
   })
-  vm = instanceMixin({
+  vm = instanceFactory({
     data: {
       message: 'hello 1'
     }
@@ -226,7 +226,7 @@ test('should call unbind on destroy', () => {
   directive('foo-bar', {
     unbind: callback
   })
-  const vm = instanceMixin({}, el)
+  const vm: any = instanceFactory({}, el)
   vm.$destroy()
   expect(callback.called).toBeTruthy()
   remove('foo-bar')
