@@ -17,7 +17,10 @@ export default (definition: any): any => {
         if (isString(value)) {
           instance[key] = value
         } else if (isPlainObject(value)) {
-          instance[key] = { ...value }
+          instance[key] = {
+            ...instance[key],
+            ...value
+          }
         }
       }
     })

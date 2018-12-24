@@ -1,5 +1,7 @@
 import extendWindowApp from './WindowApp'
 import directive from '../core/directive'
+import InstanceConstructor from '../core/InstanceConstructor'
+import { Component } from '../core/decorators'
 
 directive('playground-foo-bar', el => {
   // tslint:disable-next-line:no-console
@@ -79,9 +81,7 @@ Playground.onIncrement = function () {
   this.sum++
 }
 
-export const PlaygroundItem: any = {
-  debug: false,
-  styles: {},
+@Component({
   template: `
 <div class="playground-item">
   <slot></slot>
@@ -92,11 +92,14 @@ export const PlaygroundItem: any = {
     text: '',
     counter: 0
   }
-}
+})
+export class PlaygroundItem extends InstanceConstructor {
+  public debug: false
 
-PlaygroundItem.onIncrementClick = function () {
-  this.counter++
-  this.$emit('increment')
+  public onIncrementClick (): void {
+    (this as any).counter++ // TODO remove any
+    this.$emit('increment')
+  }
 }
 
 export const PlaygroundIfItem = {
