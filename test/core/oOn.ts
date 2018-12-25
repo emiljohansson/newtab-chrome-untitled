@@ -44,7 +44,7 @@ test('should add a click listener to child element', () => {
   <div o-on-click="onClick2($event)"></div>
 </div>`,
     onClick,
-    onClick2 (event) {
+    onClick2 (event: Event) {
       onClick2()
       event.stopPropagation()
       event.preventDefault()

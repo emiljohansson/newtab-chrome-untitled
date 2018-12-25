@@ -16,6 +16,9 @@ module.exports = {
     '!test/**/*',
     '!**/node_modules/**'
   ],
+  watchPathIgnorePatterns: [
+    'src/apps'
+  ],
   moduleFileExtensions: [
     'ts',
     'js'
@@ -33,7 +36,8 @@ module.exports = {
     }
   },
   coveragePathIgnorePatterns: [
-    '/node_modules/'
+    '/node_modules/',
+    '/src/apps/'
   ],
   coverageReporters: [
     'json',
@@ -42,7 +46,5 @@ module.exports = {
     'text-summary'
   ],
   moduleNameMapper: {},
-  transformIgnorePatterns: [
-    '/node_modules/(?!lodash-es).+\\.js$'
-  ]
+  transformIgnorePatterns: []
 }

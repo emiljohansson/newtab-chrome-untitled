@@ -1,4 +1,4 @@
-import replaceBracketContent from "../../src/core/replaceBracketContent"
+import replaceBracketContent from '../../src/core/replaceBracketContent'
 
 test('should do no-operations', () => {
   expect(replaceBracketContent(`

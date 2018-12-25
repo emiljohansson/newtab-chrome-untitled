@@ -2,10 +2,10 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: './src/main.ts',
-  // entry: {
-  //   core: './src/core.js'
-  // },
+  // entry: './src/main.ts',
+  entry: {
+    os: './src/apps/main.ts'
+  },
   resolve: {
     extensions: [
       '.ts',
