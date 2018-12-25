@@ -4,7 +4,8 @@ module.exports = {
   mode: 'development',
   // entry: './src/main.ts',
   entry: {
-    os: './src/apps/main.ts'
+    os: './src/apps/main.ts',
+    snake: './src/snake/main.ts'
   },
   resolve: {
     extensions: [
@@ -19,7 +20,19 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'bundle.js'
+    filename: '[name].js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'initial',
+          minChunks: 2
+        }
+      }
+    }
   },
   devtool: 'source-map',
   devServer: {

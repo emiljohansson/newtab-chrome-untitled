@@ -5,7 +5,7 @@ import { Subject } from './Subject'
 
 interface Directive {
   bind: () => void
-  unbind: () => void
+  unbind: (el: HTMLElement, binding: any) => void
   update: () => void
 }
 
@@ -99,7 +99,7 @@ export const directives: any = (vm: any) => {
   })
 }
 
-export const initDirective: any = (vm: Instance, selector: string, directive: any, context: any = {}): (el: HTMLElement) => void =>
+export const initDirective: any = (vm: Instance, selector: string, directive: Directive, context: any = {}): (el: HTMLElement) => void =>
   (el: HTMLElement): void => {
     const expression: string = toString(el.getAttribute(`${selector}`))
     const binding: any = {}
