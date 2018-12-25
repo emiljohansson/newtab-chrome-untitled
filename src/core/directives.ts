@@ -1,6 +1,7 @@
-import { forEach, isFunction, isPlainObject, keys, noop } from 'lodash'
+import { forEach, isFunction, isPlainObject, keys, noop, toString } from 'lodash'
 import watch from './watch'
 import { Instance } from './Instance'
+import { Subject } from './Subject'
 
 interface Directive {
   bind: () => void
@@ -80,31 +81,36 @@ export const add: any = (name: string, definition: any) => {
   list[name] = definition
 }
 
+export const getDirective: any = (name: string): any => list[name]
+
 export const getDirectiveAttributes: any = () => keys(list)
 
 export const directives: any = (vm: any) => {
   if (!vm.$host) {
     return
   }
-  forEach(getDirectiveAttributes(), selector => {
-    const directive: any = list[selector]
-    const elements = [
+  forEach(getDirectiveAttributes(), (selector: string) => {
+    const directive: any = getDirective(selector)
+    const elements: HTMLElement[] = [
       ...vm.$host.querySelectorAll(`[${selector}]`),
       ...vm.$el.querySelectorAll(`[${selector}]`)
     ]
-    forEach(elements, el => {
-      const expression = el.getAttribute(`${selector}`)
-      const binding: any = {}
-      el.removeAttribute(selector)
-      defaultDirective(directive)
-      binding.name = selector
-      binding.value = getObjectLiteralValue(vm, el, expression, directive.update, binding)
-      directive.bind.call(vm, el, binding)
-
-      const destroySubject = watch(vm, '$destroy')
-      destroySubject.subscribe(() => {
-        directive.unbind(el, binding)
-      })
-    })
+    forEach(elements, initDirective(vm, selector, directive))
   })
 }
+
+export const initDirective: any = (vm: Instance, selector: string, directive: any, context: any = {}): (el: HTMLElement) => void =>
+  (el: HTMLElement): void => {
+    const expression: string = toString(el.getAttribute(`${selector}`))
+    const binding: any = {}
+    el.removeAttribute(selector)
+    defaultDirective(directive)
+    binding.name = selector
+    binding.value = getObjectLiteralValue(vm, el, expression, directive.update, binding)
+    directive.bind.call(vm, el, binding, context)
+
+    const destroySubject: Subject<any> = watch(vm, '$destroy')
+    destroySubject.subscribe(() => {
+      directive.unbind(el, binding)
+    })
+  }

@@ -1,4 +1,4 @@
-import { forEach, isElement, map, toString, uniqueId } from 'lodash'
+import { filter, forEach, isElement, map, toString, uniqueId } from 'lodash'
 import attachStyleSheet from './styleSheet'
 import apps from './apps'
 import instanceFactory, { Instance } from './Instance'
@@ -8,6 +8,7 @@ import findKeysInTemplate from './findKeysInTemplate'
 import getAllTextNodes from './getAllTextNodes'
 import replaceBracketContent from './replaceBracketContent'
 import { Subject } from './Subject'
+import { initDirective, getDirective } from './directives'
 
 export const forSelector = 'o-for'
 
@@ -38,7 +39,7 @@ function CacheArray (vm: Instance, ref: string | null): any[] {
   return array
 }
 
-export default function (this: Instance, el: HTMLElement, binding: any) {
+export default function (this: Instance, el: HTMLElement, binding: any, context: any = {}) {
   const vm: Instance = this
   const parentEl: HTMLElement = el.parentElement || (el.parentNode as any).host
   const id: string = uniqueId('oFor_')
@@ -49,7 +50,14 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
   const forValues: string[] = binding.expression.split(' ')
   const valueString: string = forValues[0]
   const dataKey: string = forValues[2]
-  const dataItems: any[] = vm.data[dataKey]
+  const dataItems: any[] = ({
+    ...vm.data,
+    ...context
+  })[dataKey]
+  const currentContextKeys: string[] = [
+    ...Object.keys(vm.data),
+    valueString
+  ]
 
   const cache: any[] = CacheArray(vm, ref)
 
@@ -83,7 +91,7 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
     })
   })
 
-  const insertNode = (dataItem, index, container, method = 'push') => {
+  const insertNode: any = (dataItem: any, index: number, container: any, method: string = 'push'): void => {
     container = container != null && (isElement(container) || container.toString() === '[object ShadowRoot]' || container.toString() === '[object DocumentFragment]')
       ? container
       : tempContainer
@@ -99,41 +107,69 @@ export default function (this: Instance, el: HTMLElement, binding: any) {
       })
       return
     }
-    const textNodes = getAllTextNodes(cloneNode)
-    let tempValue = dataItem
+    const childContext: any = {}
+    childContext[valueString] = dataItem
+    const textNodes: any = getAllTextNodes(cloneNode)
+    let tempValue: any = dataItem
     const subjects: Subject<any>[] = []
 
-    Object.defineProperty(vm.data[dataKey], index.toString(), {
-      get () {
-        return tempValue
-      },
-      set (newValue: any) {
-        subjects[index].next(newValue)
-      }
-    })
+    if (vm.data[dataKey]) {
+      Object.defineProperty(vm.data[dataKey], index.toString(), {
+        get () {
+          return tempValue
+        },
+        set (newValue: any) {
+          subjects[index].next(newValue)
+        }
+      })
+    }
 
-    forEach(keys, key => {
-      const historyNodes = HistoryNodes(key, textNodes)
-      const update = newValue => {
-        tempValue = newValue
-        forEach(historyNodes, historyNode => {
-          historyNode.node.textContent = replaceBracketContent(
-            historyNode.orgContent,
-            newValue,
-            key,
-            valueString
-          )
-        })
-      }
-      const subject: Subject<any> = watch(id, index)
-      subject.subscribe(update)
-      subjects[index] = subject
+    forEach(
+      filter(keys, (key: string): boolean => {
+        return currentContextKeys.indexOf(key) > -1
+          || currentContextKeys.filter(
+            (contextKey: string) => key.indexOf(`${contextKey}.`) > -1
+          ).length > 0
+      }),
+      (key: string): void => {
+        const historyNodes = HistoryNodes(key, textNodes)
+        const update: any = (newValue: any): void => {
+          tempValue = newValue
+          forEach(historyNodes, historyNode => {
+            historyNode.node.textContent = replaceBracketContent(
+              historyNode.orgContent,
+              newValue,
+              key,
+              valueString
+            )
+          })
+        }
+        const subject: Subject<any> = watch(id, index)
+        subject.subscribe(update)
+        subjects[index] = subject
 
-      update(dataItem)
-    })
+        update(dataItem)
+      }
+    )
 
     cloneNode.removeAttribute(forSelector)
     container.appendChild(cloneNode)
+
+    if (findForLoopEl(cloneNode.children, childContext)) {
+      // console.log('TODO fix observer')
+    }
+  }
+
+  const findForLoopEl: any = (children: HTMLElement[], context: any): boolean => {
+    let found: boolean = false
+    const handleEl: (el: HTMLElement) => void = initDirective(vm, forSelector, getDirective(forSelector), context)
+    forEach(children, (el: HTMLElement) => {
+      if (el.hasAttribute(forSelector)) {
+        found = true
+        handleEl(el)
+      }
+    })
+    return found
   }
 
   const App = (el: HTMLElement, parent, context, appendFirst) => {

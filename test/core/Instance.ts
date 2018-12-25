@@ -494,7 +494,7 @@ test('moving around array values should update view', () => {
   const el: HTMLElement = document.createElement('div')
   document.body.appendChild(el)
   const Foo = {
-    template: `<span o-for="values in values">{{value}}</span>`,
+    template: `<span o-for="value in values">{{value}}</span>`,
     data: {
       values: [1, 2, 3, 4]
     }

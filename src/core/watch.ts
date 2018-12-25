@@ -16,7 +16,7 @@ export const destroy: any = (vm: any): void => {
   delete subjects[vm.$id]
 }
 
-export default (vm: any, key: string): Subject<any> => {
+export default (vm: any, key: string | number): Subject<any> => {
   const id: string = typeof vm === 'string'
     ? vm
     : vm.$id

@@ -1,5 +1,4 @@
 module.exports = {
-  verbose: true,
   testEnvironment: 'node',
   setupFiles: [
     './test/helpers/setup-test-env.js'
