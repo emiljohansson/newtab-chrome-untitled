@@ -36,6 +36,7 @@ export default class extends InstanceConstructor {
   public update (): void {
     const self: any = (this as any)
     self.isActive = self.value === 1
+    // tslint:disable-next-line:no-console
     console.log('update', self.isActive)
   }
 }

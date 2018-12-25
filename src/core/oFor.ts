@@ -39,7 +39,7 @@ function CacheArray (vm: Instance, ref: string | null): any[] {
   return array
 }
 
-export default function (this: Instance, el: HTMLElement, binding: any, context: any = {}): void {
+export default function (this: Instance, el: HTMLElement, binding: any, context: any) {
   const vm: Instance = this
   const parentEl: HTMLElement = el.parentElement || (el.parentNode as any).host
   const id: string = uniqueId('oFor_')

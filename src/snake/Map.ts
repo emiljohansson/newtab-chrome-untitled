@@ -39,6 +39,7 @@ export default class extends InstanceConstructor {
     // tslint:disable-next-line:no-console
     console.log('Map mounted')
     keyboardHandler.keyIsDown(keyboardHandler.codes.right, () => {
+      // tslint:disable-next-line:no-console
       console.log('right')
       this.moveRight()
       this.update()
@@ -47,6 +48,7 @@ export default class extends InstanceConstructor {
   }
 
   private update (): void {
+    // tslint:disable-next-line:no-console
     console.log('update map')
     const components: any[] = (this as any).$children
     components.forEach((component: any) => {
