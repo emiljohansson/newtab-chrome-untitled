@@ -26,7 +26,7 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest'
   },
   testMatch: [
-    '**/test/core/*.ts'
+    '**/test/**/*.ts'
   ],
   globals: {
     'ts-jest': {
