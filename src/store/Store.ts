@@ -1,11 +1,15 @@
 import { Subject } from '../core/Subject'
 
 export default class Store<T> {
-  private state: any
+  private localState: T
   private subject: Subject<T> = new Subject()
 
+  protected get state (): T {
+    return this.localState
+  }
+
   constructor (state: T) {
-    this.state = state
+    this.localState = state
   }
 
   public subscribe (callback: (state: T) => void): void {
@@ -13,8 +17,8 @@ export default class Store<T> {
   }
 
   protected mutate (handler: (state: T) => T): void {
-    const newState: T = handler(this.state)
-    this.state = newState
-    this.subject.next(this.state)
+    const newState: T = handler(this.localState)
+    this.localState = newState
+    this.subject.next(this.localState)
   }
 }
