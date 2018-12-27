@@ -3,7 +3,7 @@ import attachStyleSheet from '../../src/core/styleSheet'
 const attachStyle = styles => {
   const el: HTMLElement = document.createElement('div')
   attachStyleSheet(styles, el)
-  if (el.firstChild == null) {
+  if (el.firstChild === null) {
     return null
   }
   return (el.firstChild as Element).innerHTML

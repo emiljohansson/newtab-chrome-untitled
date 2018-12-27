@@ -12,7 +12,7 @@
     "test:ci": "npm run test:coverage -- --coverageReporters=text-summary",
     "lint": "standard",
     "ts:check": "tsc --noEmit",
-    "ts:lint": "tslint --project tsconfig.json --config tslint.json",
+    "ts:lint": "tslint -p tsconfig.json -c tslint.json",
     "validate": "npm run validate:code && npm run test:ci",
     "validate:code": "npm run ts:check && npm run ts:lint"
   },
