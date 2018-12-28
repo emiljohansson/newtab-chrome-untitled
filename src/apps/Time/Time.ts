@@ -1,5 +1,7 @@
 import { Subject } from '../../core/Subject'
 import { date } from '../Terminal/cmd'
+import { LitComponent, html } from '../../core/LitComponent'
+import { Component } from '../../core/decorators'
 
 const updateSubject: Subject<void> = new Subject()
 let currentMin = -1
@@ -11,23 +13,29 @@ setInterval(() => {
   }
 }, 1000)
 
-const template = `<slot></slot><span>{{time}}</span>`
-
-const Time: any = {
-  styles: {},
-  template,
+@Component({
   data: {
-    time: '00:00'
+    time: '00:00',
+    timezone: ''
   }
-}
+})
+class Time extends LitComponent {
+  public mounted (): void {
+    const update: any = (): void => {
+      (this as any).time = `${(window as any)
+        .moment()
+        .tz((this as any)
+        .timezone)
+        .format('h:mm A')}`
+    }
 
-Time.mounted = function () {
-  const update = () => {
-    this.time = `${(window as any).moment().tz(this.timezone).format('h:mm A')}`
+    updateSubject.subscribe(update)
+    update()
   }
 
-  updateSubject.subscribe(update)
-  update()
+  public render (): () => string {
+    return html`<slot></slot><span>${'time'}</span>`
+  }
 }
 
 export default Time

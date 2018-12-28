@@ -1,6 +1,8 @@
 import { html, render } from '../../src/core/plain-html'
 
 test('should render template', () => {
+  expect(render('')).toBeUndefined()
+
   const el: HTMLElement = document.createElement('div')
   const template: any = html`<div>Hello</div>`
   render(template, el)

@@ -8,8 +8,12 @@ export const html: any = (template: string, ...keys: string[]): (props: any) => 
     return result.join('')
   }
 
-export const render: any = (templateOrFn: () => string, el: HTMLElement): void => {
-  el.innerHTML = typeof templateOrFn === 'function'
+export function render (templateOrFn: any, el?: HTMLElement): void {
+  if (!el) {
+    return
+  }
+  const content: string = typeof templateOrFn === 'function'
     ? templateOrFn()
     : templateOrFn
+  el.innerHTML = content
 }

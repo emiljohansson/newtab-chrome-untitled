@@ -3,6 +3,7 @@ import replaceWithTemplate from './replaceWithTemplate'
 import storeAttributes from './storeAttributes'
 import callHook from './callHook'
 import { Instance } from './Instance'
+import initRender from './render'
 
 export default (vm: Instance, el: HTMLElement | null) => {
   // TODO init events & lifecycle
@@ -15,6 +16,10 @@ export default (vm: Instance, el: HTMLElement | null) => {
     vm.$el = el
   }
   oEmit(vm)
-  replaceWithTemplate(vm)
+  if (typeof (vm as any).render === 'undefined') {
+    replaceWithTemplate(vm)
+  } else {
+    initRender(vm)
+  }
   return vm
 }

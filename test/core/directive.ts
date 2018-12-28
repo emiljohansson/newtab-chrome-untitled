@@ -20,11 +20,11 @@ test('should do nothing', () => {
 
 test('should call when found', () => {
   expect.assertions(1)
-  let vm
+  let vm: any
   const el = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
   document.body.appendChild(el)
-  directive('foo-bar', el => {
+  directive('foo-bar', (el: HTMLElement) => {
     expect(el.innerHTML).toBe('Foo')
   })
   vm = instanceFactory({}, el)
@@ -219,8 +219,8 @@ test('should watch object literal values', () => {
 })
 
 test('should call unbind on destroy', () => {
-  const callback = sinon.spy()
-  const el = document.createElement('div')
+  const callback: any = sinon.spy()
+  const el: HTMLElement = document.createElement('div')
   el.innerHTML = `<span foo-bar>Foo</span>`
   document.body.appendChild(el)
   directive('foo-bar', {

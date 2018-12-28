@@ -89,9 +89,9 @@ const iterateData = vm => {
       fn()
     }
   }
-  const addWatch = (value, key) => {
+  const addWatch = (value: any, key: string) => {
     const subject: Subject<any> = new Subject()
-    const viewSubject = watch(vm, key)
+    const viewSubject: Subject<any> = watch(vm, key)
     if (isArray(value)) {
       ObserverArray(vm, key, value, viewSubject)
       vm[key] = value

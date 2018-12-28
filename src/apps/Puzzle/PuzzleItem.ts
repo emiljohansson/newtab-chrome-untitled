@@ -27,8 +27,8 @@ import { Component } from '../../core/decorators'
 })
 class PuzzleItem extends InstanceConstructor {
   public mounted (): void {
-    // tslint:disable-next-line:no-console
-    console.log('PuzzleItem mounted')
+    // // tslint:disable-next-line:no-console
+    // console.log('PuzzleItem mounted')
   }
 
   public onClick (): void {

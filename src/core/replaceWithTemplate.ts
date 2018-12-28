@@ -48,7 +48,7 @@ const replaceWithTemplate = vm => {
   }
 }
 
-const getElFromTemplate = template => {
+const getElFromTemplate = (template: string) => {
   if (template.indexOf('<template') < 0) {
     template = `<template>${template}</template>`
   }
