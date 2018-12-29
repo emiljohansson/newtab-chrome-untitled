@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Snake</title>
+
+  <style media="screen">
+    html {
+      box-sizing: border-box;
+      line-height: 1.15;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      background-color: #F6F6F6;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .hline,
+    .vline {
+      /*background-color: red;*/
+      position: absolute;
+    }
+
+    .vline {
+      height: 100%;
+      width: 1px;
+      left: 50%;
+    }
+
+    .hline {
+      height: 1px;
+      width: 100%;
+      top: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hline"></div>
+  <div class="vline"></div>
+  <div is="Root"></div>
+
+  <script type="module" src="commons.js"></script>
+  <script type="module" src="devground.js"></script>
+</body>
+
+</html>

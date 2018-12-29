@@ -8,6 +8,7 @@ module.exports = {
   collectCoverageFrom: [
     '!**/*.{js}',
     '**/core/**/*.{ts}',
+    '**/store/**/*.{ts}',
     '!**/AppTemplate.ts',
     '!**/*.d.ts',
     '!src/*.ts',
@@ -26,7 +27,8 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest'
   },
   testMatch: [
-    '**/test/**/*.ts'
+    '**/test/core/*.ts',
+    '**/test/store/*.ts'
   ],
   globals: {
     'ts-jest': {

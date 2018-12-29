@@ -5,7 +5,8 @@ module.exports = {
   // entry: './src/main.ts',
   entry: {
     os: './src/apps/main.ts',
-    snake: './src/snake/main.ts'
+    snake: './src/snake/main.ts',
+    devground: './src/devground/main.ts'
   },
   resolve: {
     extensions: [
