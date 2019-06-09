@@ -21,12 +21,17 @@ setInterval(() => {
 })
 class Time extends LitComponent {
   public mounted (): void {
-    const update: any = (): void => {
-      (this as any).time = `${(window as any)
-        .moment()
-        .tz((this as any)
-        .timezone)
-        .format('h:mm A')}`
+    const update: () => void = (): void => {
+      const date: string = new Date().toLocaleString('en-US', {
+        timeZone: (this as any).timezone
+      })
+      const sections: string[] = date.slice(10).split(':')
+      const hours: string = sections[0]
+      const minutes: string = sections[1]
+      // const seconds: string = sections[2].split(' ')[0]
+      const meridiem: string = sections[2].split(' ')[1]
+
+      ;(this as any).time = `${hours}:${minutes} ${meridiem}`
     }
 
     updateSubject.subscribe(update)

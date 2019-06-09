@@ -1,7 +1,7 @@
 import { filter, forEach, reduce } from 'lodash'
 import extendWindowApp from '../WindowApp'
 
-const styles = {
+const styles: any = {
   ':host': {
     fontSize: '2rem',
     textAlign: 'center',
@@ -17,7 +17,7 @@ const styles = {
   }
 }
 
-const template = `
+const template: string = `
 <div is="PuzzleItem"
   o-for="context in values"
   o-emit-click="onItemClick"></div>
@@ -27,12 +27,12 @@ const template = `
 </div>
 `
 
-const numberOfValues = 15
+const numberOfValues: number = 15
 
-const swapEl = (el1, el2) => {
+const swapEl = (el1: HTMLElement, el2: HTMLElement) => {
   const tempEl: HTMLElement = document.createElement('div')
-  el1.parentNode.insertBefore(tempEl, el1)
-  el2.parentNode.insertBefore(el1, el2)
+  el1.parentNode!.insertBefore(tempEl, el1)
+  el2.parentNode!.insertBefore(el1, el2)
   if (tempEl.parentNode) {
     tempEl.parentNode.insertBefore(el2, tempEl)
     tempEl.parentNode.removeChild(tempEl)
